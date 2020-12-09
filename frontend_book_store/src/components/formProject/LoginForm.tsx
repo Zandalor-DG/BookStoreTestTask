@@ -1,20 +1,25 @@
 import React from 'react';
-import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { useForm } from 'react-hook-form';
 
-let LoginForm: React.FunctionComponent<InjectedFormProps> = ({ handleSubmit }) => {
+interface Inputs {
+    loginUser: string;
+    passwordUser: string;
+}
+
+const LoginForm = () => {
+    const { register, handleSubmit, watch, errors } = useForm<Inputs>();
+    const onSubmit = (data: any) => console.log(data);
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <label htmlFor="loginUser">Введите Email</label>
-            <br />
-            <Field component="input" type="text" placeholder="Enter email pls" name="loginUser" />
+            <input type="text" placeholder="Enter email pls" name="loginUser" ref={register({ required: true })} />
+            {errors.loginUser && <span>This field is required</span>}
             <label htmlFor="passwordUser">Введите пароль</label>
-            <br />
-            <Field component="input" type="password" placeholder="Password pls" name="passwordUser" />
-            <button>Authorization</button>
+            {errors.passwordUser && <span>This field is required</span>}
+            <input type="password" placeholder="Password pls" name="passwordUser" />
+            <input type="submit" />
         </form>
     );
 };
 
-export default LoginForm = reduxForm({
-    form: 'loginForm',
-})(LoginForm);
+export default LoginForm;
