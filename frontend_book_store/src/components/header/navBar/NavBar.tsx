@@ -7,9 +7,9 @@ import { NavLink } from 'react-router-dom';
 const NavBar: React.FunctionComponent = () => {
     const isAuthorized = false;
     const signOrProfilePage = !isAuthorized ? (
-        <NavLink to="">signIn/signUp</NavLink>
+        <NavLink to="/signin">signIn</NavLink>
     ) : (
-        <NavLink to="">profilePage</NavLink>
+        <NavLink to="/profilepage">profilePage</NavLink>
     );
     return (
         <div className="bookstore__navBar">

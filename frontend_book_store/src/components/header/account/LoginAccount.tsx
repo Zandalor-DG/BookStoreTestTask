@@ -1,31 +1,31 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
-import LoginForm from '../FormProject/LoginForm/LoginForm';
 
-interface PropsLoginAccount {
+interface InputsLogin {
     loginUser: string;
     passwordUser: string;
-    postLoginUser(loginUser: string, passwordUser: string): void;
 }
-type Props = { type: true } & { name: string };
-type NeProps = { type: false } & { age: number };
-type Common = Props | NeProps;
-const foo = (opt: Common) => {
-    if (opt.type) {
-        return opt.name;
-    }
-    return opt.age;
-};
-const a: Common = {
-    type: true,
-};
-const LoginAccount = () => {
+
+const LoginAccount: React.FunctionComponent = () => {
+    const { register, handleSubmit, watch, errors } = useForm<InputsLogin>();
+    const onSubmit = (data: InputsLogin) => console.log(data);
+    console.log(watch('loginUser'));
     return (
         <div>
-            <h2>Вход на сайт</h2>
+            <h2>Sign In</h2>
 
-            <NavLink to="/Register">Регистрация</NavLink>
-            <LoginForm onSubmit={onLoginNewUser} />
+            <NavLink to="/signup">Sign Up</NavLink>
+
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="loginUser">enter Email</label>
+                <input type="text" placeholder="Enter email pls" name="loginUser" ref={register({ required: true })} />
+                {errors.loginUser && <span>This field is required</span>}
+                <label htmlFor="passwordUser">enter password</label>
+                {errors.passwordUser && <span>This field is required</span>}
+                <input type="password" placeholder="Password pls" name="passwordUser" />
+                <input type="submit" />
+            </form>
         </div>
     );
 };
