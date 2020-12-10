@@ -1,9 +1,7 @@
-frontend_book_store/.eslintcache
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-frontend_book_store/node_modules
-backend_book_store/node_modules
+/node_modules
 /.pnp
 .pnp.js
 

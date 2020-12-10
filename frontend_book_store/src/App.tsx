@@ -8,7 +8,7 @@ import LoginAccount from './components/header/account/LoginAccount';
 import RegisterAccount from './components/header/account/RegisterAccount';
 import { Layout } from 'antd';
 
-const { Header: Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Sider, Content } = Layout;
 
 const App: React.FunctionComponent = () => {
     return (
