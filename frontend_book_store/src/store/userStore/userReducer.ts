@@ -7,6 +7,12 @@ const userReducer = (state = initialState, action: ActionUser): UserState => {
         case ActionTypeUser.Register: {
             return { ...state };
         }
+        case ActionTypeUser.Login: {
+            return { ...state };
+        }
+        case ActionTypeUser.UpdateAvatar: {
+            return { ...state };
+        }
         default:
             return { ...state };
     }

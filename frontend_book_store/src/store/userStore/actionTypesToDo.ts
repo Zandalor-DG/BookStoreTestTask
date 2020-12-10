@@ -1,12 +1,24 @@
+import { InputsRegister } from '../../components/header/account/RegisterAccount';
+import { InputsLogin } from '../../components/header/account/LoginAccount';
+
 export enum ActionTypeUser {
     Register = 'Register',
-    Authorization = 'Authorization',
+    Login = 'Login',
     UpdateAvatar = 'UpdateAvatar',
 }
 
-export type ActionStringPayloadUser = {
+export type ActionRegisterUser = {
     type: ActionTypeUser.Register;
-    payload: string;
+    payload: InputsRegister;
 };
 
-export type ActionUser = ActionStringPayloadUser;
+export type ActionLoginUser = {
+    type: ActionTypeUser.Login;
+    payload: InputsLogin;
+};
+
+export type ActionUpdateAvatar = {
+    type: ActionTypeUser.UpdateAvatar;
+};
+
+export type ActionUser = ActionRegisterUser | ActionLoginUser | ActionUpdateAvatar;
