@@ -1,10 +1,11 @@
 import React from 'react';
+import css from './Logo.module.css';
 
 const Logo: React.FunctionComponent = () => {
     return (
-        <div className="header__logo">
-            <a href="!" className="header__linkLogo">
-                <img src="" alt="" className="header__img" />
+        <div className={css.header__logo}>
+            <a href="!" className={css.header__linkLogo}>
+                <img src="myStore.png" alt="logo" className={css.header__img} />
             </a>
         </div>
     );

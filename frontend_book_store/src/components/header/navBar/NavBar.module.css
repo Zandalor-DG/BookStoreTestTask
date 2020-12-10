@@ -1,0 +1,17 @@
+.bookstore__navBar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+}
+
+.navLink {
+    margin-left: 40px;
+    color: black;
+    text-decoration: none;
+    text-align: center;
+}
+
+.navLink .active {
+    color: black;
+}

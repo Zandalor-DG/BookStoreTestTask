@@ -1,0 +1,14 @@
+.header__logo{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+}
+.header__linkLogo{
+    
+}
+.header__img{
+    width: 35%;
+    border-radius: 40px;
+}

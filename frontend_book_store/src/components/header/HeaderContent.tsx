@@ -2,10 +2,11 @@ import React from 'react';
 import Logo from './logo/Logo';
 import NavBar from './navBar/NavBar';
 import SearchHeader from './search/SearchHeader';
+import css from './HeaderContent.module.css';
 
-const Header: React.FunctionComponent = () => {
+const HeaderContent: React.FunctionComponent = () => {
     return (
-        <div className="bookstore__wrapper">
+        <div className={css.headerContent}>
             <Logo />
             <SearchHeader />
             <NavBar />
@@ -13,4 +14,4 @@ const Header: React.FunctionComponent = () => {
     );
 };
 
-export default Header;
+export default HeaderContent;
