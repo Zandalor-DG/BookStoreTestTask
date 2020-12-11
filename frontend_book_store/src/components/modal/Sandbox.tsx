@@ -1,48 +1,41 @@
-/* eslint-disable */
-import React, { Component, Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from './Modal';
-import { Button } from 'antd';
+import css from '../header/navBar/NavBar.module.css';
 
 interface PropsSandbox {
-
+    title: string;
+    icon: string;
 }
+type Props = React.PropsWithChildren<PropsSandbox>;
 
-const Sandbox: React.FunctionComponent = () => {
+const Sandbox: React.FC<Props> = ({ title, children, icon }: Props) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false)
+    const openModal = () => {
+        console.log('set true');
+        setIsOpen(true);
+    };
 
-  const openModal = () => {
-    setIsOpen (true );
-  }
+    const handleSubmit = () => {
+        console.log('Submit function!');
+        setIsOpen(false);
+    };
 
-  const handleSubmit = () => {
-    console.log('Submit function!');
-    setIsOpen(false);
-  }
+    const handleCancel = () => {
+        console.log('Cancel function!');
+        setIsOpen(false);
+    };
 
-  const handleCancel = () => {
-    console.log('Cancel function!');
-    setIsOpen(false );
-  }
-
-  
     return (
-      <Fragment>
-
-        <h2><span>1. Base Dialog (Modal) window:</span></h2>
-        <Button onClick={openModal}>Show modal</Button>
-        <Modal
-          title="Test Dialog window"
-          isOpen={isOpen}
-          onCancel={handleCancel}
-          onSubmit={handleSubmit}
-        >
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a</p>
-        </Modal>
-
-      </Fragment>
+        <>
+            <a className={css.navLink} onClick={openModal}>
+                <img className={css.imgIcon} src={icon} alt="" />
+            </a>
+            <Modal title={title} isOpen={isOpen} onCancel={handleCancel} onSubmit={handleSubmit}>
+                {children}
+            </Modal>
+        </>
     );
-  
-}
+};
 
 export default Sandbox;

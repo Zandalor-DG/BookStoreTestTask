@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
-import Portal from '../portal/portal';
-import PropTypes, { node } from 'prop-types';
-import 'antd/dist/antd.css';
-import { Button } from 'antd';
-
+import React from 'react';
+import Portal from '../portal/Portal';
+import { Button, Radio } from 'antd';
 import './Modal.css';
+import { CloseCircleFilled } from '@ant-design/icons';
 
 interface PropsModal {
     title: string;
     isOpen: boolean;
-    onCancel: PropTypes.Requireable<(...args: any[]) => any>;
-    onSubmit: PropTypes.Requireable<(...args: any[]) => any>;
-    children: PropTypes.Requireable<PropTypes.ReactNodeLike>;
+    onCancel: () => void;
+    onSubmit: () => void;
 }
+type Props = React.PropsWithChildren<PropsModal>;
 
-const Modal: React.FunctionComponent<PropsModal> = ({ title, isOpen, onCancel, onSubmit, children }: PropsModal) => {
+const Modal: React.FC<Props> = ({ isOpen, onCancel, onSubmit, title, children }: Props) => {
     return (
         <>
             {isOpen && (
@@ -23,14 +21,16 @@ const Modal: React.FunctionComponent<PropsModal> = ({ title, isOpen, onCancel, o
                         <div className="modalWindow">
                             <div className="modalHeader">
                                 <div className="modalTitle">{title}</div>
-                                <Icon name="times" onClick={onCancel} />
+                                <CloseCircleFilled onClick={onCancel} />
                             </div>
                             <div className="modalBody">{children}</div>
                             <div className="modalFooter">
-                                <Button onClick={onCancel} invert>
-                                    Cancel
+                                <Button onClick={onCancel} type="primary" danger>
+                                    Primary
                                 </Button>
-                                <Button onClick={onSubmit}>Submit</Button>
+                                <Radio.Button onClick={onSubmit} value="submit">
+                                    Submit
+                                </Radio.Button>
                             </div>
                         </div>
                     </div>

@@ -20,8 +20,11 @@ const App: React.FunctionComponent = () => {
                 <Sider>Sider</Sider>
                 <Content>
                     Content
-                    <Route path="/signin" render={() => <LoginAccount />} />
-                    <Route path="/signup" render={() => <RegisterAccount />} />
+                    <Route path="/signin" component={LoginAccount} />
+                    <Route path="/signup" component={RegisterAccount} />
+                    {/* <PrivateRoute>
+                        <LoginAccount />
+                    </PrivateRoute> */}
                     <Body />
                 </Content>
             </Layout>

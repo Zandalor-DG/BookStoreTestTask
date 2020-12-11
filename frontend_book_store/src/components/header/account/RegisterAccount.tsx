@@ -16,11 +16,7 @@ const RegisterAccount: React.FunctionComponent = () => {
     console.log(watch('loginUser'));
 
     return (
-        <div>
-            <h2>Sign Up</h2>
-
-            <NavLink to="/signin">Sign In</NavLink>
-
+        <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="loginUser">Enter your email</label>
                 <input type="text" placeholder="Enter email" name="loginUser" ref={register({ required: true })} />
@@ -59,7 +55,7 @@ const RegisterAccount: React.FunctionComponent = () => {
 
                 <input type="submit" />
             </form>
-        </div>
+        </>
     );
 };
 

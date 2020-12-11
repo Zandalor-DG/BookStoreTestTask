@@ -12,6 +12,11 @@
     text-align: center;
 }
 
+.imgIcon {
+    height: 40px;
+    width: 40px;
+}
+
 .navLink .active {
     color: black;
 }

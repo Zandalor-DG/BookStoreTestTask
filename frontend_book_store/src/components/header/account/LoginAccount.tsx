@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
 
 export interface InputsLogin {
     loginUser: string;
@@ -12,11 +11,7 @@ const LoginAccount: React.FunctionComponent = () => {
     const onSubmit = (data: InputsLogin) => console.log(data);
     // console.log(watch('loginUser'));
     return (
-        <div>
-            <h2>Sign In</h2>
-
-            <NavLink to="/signup">Sign Up</NavLink>
-
+        <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="loginUser">enter Email</label>
                 <input type="text" placeholder="Enter email pls" name="loginUser" ref={register({ required: true })} />
@@ -31,7 +26,7 @@ const LoginAccount: React.FunctionComponent = () => {
                 {errors.passwordUser && <span>This field is required</span>}
                 <input type="submit" />
             </form>
-        </div>
+        </>
     );
 };
 

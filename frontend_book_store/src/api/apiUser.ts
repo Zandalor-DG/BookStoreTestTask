@@ -12,9 +12,7 @@ export const userAPI = {
         return instance
             .post('users/signup', { user: registerUser })
             .then((res) => {
-                if (res.status === 200) {
-                    return res.data;
-                }
+                return res.data;
             })
             .catch((err) => {
                 console.error(err);
@@ -23,11 +21,9 @@ export const userAPI = {
 
     postLoginUser(loginUser: InputsLogin) {
         return instance
-            .post('user/signin')
+            .post('user/signin', { loginUser })
             .then((res) => {
-                if (res.status === 200) {
-                    return res.data;
-                }
+                return res.data;
             })
             .catch((err) => {
                 console.error(err);
@@ -35,12 +31,24 @@ export const userAPI = {
     },
 
     getProfilePageUser(id: number) {
-        return instance.get(`user/profilePage/${id}`).then((res) => {
-            return res.data;
-        });
+        return instance
+            .get(`user/profilePage/${id}`)
+            .then((res) => {
+                return res.data;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     },
 
     putProfilePageUser(updateProfile: InputsRegister) {
-        return instance.put(`user/profilePage`);
+        return instance
+            .put(`user/profilePage/`, { updateProfile })
+            .then((res) => {
+                return res.data;
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     },
 };
