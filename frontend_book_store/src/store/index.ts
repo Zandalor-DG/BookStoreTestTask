@@ -6,4 +6,11 @@ import thunkMiddleware from 'redux-thunk';
 const devTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 const store = createStore(reducers, compose(applyMiddleware(thunkMiddleware), devTools));
 //
+// (async () => {
+//     if (localStorage.getItem('token') {
+//         const resp = await getuserBytoken();
+//         store.dispatch(InitialloginUser())
+//     }
+// })
+// )()
 export default store;
