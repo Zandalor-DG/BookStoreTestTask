@@ -1,16 +1,25 @@
-import axios from 'axios';
+import axios from './axios';
 import { InputsLogin } from '../components/header/account/LoginAccount';
 import { InputsRegister } from '../components/header/account/RegisterAccount';
+import { UserData } from '../models/User/userData';
 
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/',
-    headers: { 'Content-Type': 'application/json', 'x-access-token': '' },
-});
+type LoginUser = {
+    token: { accessToken: string };
+    user: UserData;
+};
+
+export const loginUser = async (registerUser: InputsLogin): Promise<UserData> => {
+    const resp = await axios.post('/auth/signin', registerUser);
+    const data: LoginUser = resp.data;
+
+    localStorage.setItem('token', data.token.accessToken);
+    return data.user;
+};
 
 export const userAPI = {
     postRegisterUser(registerUser: InputsRegister) {
-        return instance
-            .post('users/signup', { user: registerUser })
+        return axios
+            .post('/auth/signup', { user: registerUser })
             .then((res) => {
                 return res.data;
             })
@@ -19,11 +28,15 @@ export const userAPI = {
             });
     },
 
-    postLoginUser(loginUser: InputsLogin) {
-        return instance
-            .post('user/signin', { loginUser })
+    postLoginUser({ email, password }: InputsLogin) {
+        return axios
+            .post('/auth/signin', { email, password })
             .then((res) => {
-                return res.data;
+                if (res.status !== 200) {
+                    throw new Error(`${res.status} bad request`);
+                }
+                localStorage.setItem('token', res.data.tokens.accessToken);
+                return res.data.userData;
             })
             .catch((err) => {
                 console.error(err);
@@ -31,7 +44,7 @@ export const userAPI = {
     },
 
     getProfilePageUser(id: number) {
-        return instance
+        return axios
             .get(`user/profilePage/${id}`)
             .then((res) => {
                 return res.data;
@@ -42,7 +55,7 @@ export const userAPI = {
     },
 
     putProfilePageUser(updateProfile: InputsRegister) {
-        return instance
+        return axios
             .put(`user/profilePage/`, { updateProfile })
             .then((res) => {
                 return res.data;

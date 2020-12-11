@@ -1,5 +1,10 @@
 import { UserState } from '../models/userState';
 
 export const initialState: UserState = {
-    user: '',
+    user: {
+        id: 0,
+        fullName: '',
+        email: '',
+    },
+    isAuthorized: false,
 };

@@ -1,6 +1,6 @@
 import { initialState } from '../../data/initialState';
 import { UserState } from '../../models/userState';
-import { ActionTypeUser, ActionUser } from './actionTypesToDo';
+import { ActionTypeUser, ActionUser } from './actionTypesUser';
 
 const userReducer = (state = initialState, action: ActionUser): UserState => {
     switch (action.type) {
@@ -8,11 +8,19 @@ const userReducer = (state = initialState, action: ActionUser): UserState => {
             return { ...state };
         }
         case ActionTypeUser.Login: {
-            return { ...state };
+            return { ...state, user: { ...state.user }, isAuthorized: true };
         }
         case ActionTypeUser.UpdateAvatar: {
             return { ...state };
         }
+        case ActionTypeUser.ProfilePage: {
+            return { ...state };
+        }
+        case 'set_error':
+            return {
+                ...initialState,
+                error: action.error,
+            };
         default:
             return { ...state };
     }

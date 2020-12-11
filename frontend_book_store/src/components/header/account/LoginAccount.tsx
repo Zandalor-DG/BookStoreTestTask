@@ -1,29 +1,28 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { postLoginUser } from '../../../store/userStore/thunkUser';
 
 export interface InputsLogin {
-    loginUser: string;
-    passwordUser: string;
+    email: string;
+    password: string;
 }
 
 const LoginAccount: React.FunctionComponent = () => {
-    const { register, handleSubmit, watch, errors } = useForm<InputsLogin>();
-    const onSubmit = (data: InputsLogin) => console.log(data);
-    // console.log(watch('loginUser'));
+    const { register, handleSubmit, errors } = useForm<InputsLogin>();
+    const dispatch = useDispatch();
+    const onSubmit = ({ email, password }: InputsLogin) => {
+        dispatch(postLoginUser({ email, password }));
+    };
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="loginUser">enter Email</label>
-                <input type="text" placeholder="Enter email pls" name="loginUser" ref={register({ required: true })} />
-                {errors.loginUser && <span>This field is required</span>}
-                <label htmlFor="passwordUser">enter password</label>
-                <input
-                    type="password"
-                    placeholder="Password pls"
-                    name="passwordUser"
-                    ref={register({ required: true })}
-                />
-                {errors.passwordUser && <span>This field is required</span>}
+                <label htmlFor="email">enter Email</label>
+                <input type="text" placeholder="Enter email pls" name="email" ref={register({ required: true })} />
+                {errors.email && <span>This field is required</span>}
+                <label htmlFor="password">enter password</label>
+                <input type="password" placeholder="Password pls" name="password" ref={register({ required: true })} />
+                {errors.password && <span>This field is required</span>}
                 <input type="submit" />
             </form>
         </>

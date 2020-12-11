@@ -1,17 +1,17 @@
-import { InputsLogin } from '../../components/header/account/LoginAccount';
 import { InputsRegister } from '../../components/header/account/RegisterAccount';
-import { ActionLoginUser, ActionRegisterUser, ActionTypeUser, ActionUpdateAvatar } from './actionTypesToDo';
+import { UserData } from '../../models/User/userData';
+import { ActionLoginUser, ActionRegisterUser, ActionTypeUser, ActionUpdateAvatar } from './actionTypesUser';
 
-export const registerUser = (payload: InputsRegister): ActionRegisterUser => ({
+export const getRegisterUser = (payload: InputsRegister): ActionRegisterUser => ({
     type: ActionTypeUser.Register,
     payload,
 });
 
-export const loginUser = (payload: InputsLogin): ActionLoginUser => ({
+export const setLoginUser = (payload: UserData): ActionLoginUser => ({
     type: ActionTypeUser.Login,
     payload,
 });
 
-export const updateAvatarUser = (): ActionUpdateAvatar => ({
+export const setUpdateAvatarUser = (): ActionUpdateAvatar => ({
     type: ActionTypeUser.UpdateAvatar,
 });

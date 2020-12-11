@@ -1,16 +1,9 @@
 {
     "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "editor.formatOnSave": false
-},
-    "cSpell.words": [
-        "antd",
-        "craco",
-        "todos"
-    ],
+        "source.fixAll.eslint": true,
+        "editor.formatOnSave": false
+    },
+    "cSpell.words": ["antd", "craco", "todos"],
     "typescript.tsdk": "node_modules/typescript/lib",
-    "cSpell.ignoreWords": [
-        "signin",
-        "signup"
-    ]
+    "cSpell.ignoreWords": ["signin", "signup"]
 }

@@ -38,7 +38,7 @@ exports.signIn = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "incorrect password" });
 
-    const tokens = await updateTokens(user.id); //проверка токена возможна
+    const token = await updateTokens(user.id); //проверка токена возможна
     const roleUserAuth = await models.Role.findByPk(user.roleId);
 
     const userData = {
@@ -48,7 +48,7 @@ exports.signIn = async (req, res) => {
       dob: user.dob,
       role: roleUserAuth.dataValues.name,
     };
-    res.json({ userData, tokens });
+    res.json({ userData, token });
   } catch (err) {
     res.status(500).json({ message: "server error, please try again" });
   }

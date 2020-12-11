@@ -1,6 +1,5 @@
 import { Button } from 'antd';
 import React, { useState } from 'react';
-import Sandbox from '../../modal/Sandbox';
 import LoginAccount from './LoginAccount';
 import RegisterAccount from './RegisterAccount';
 
@@ -14,6 +13,7 @@ const AccountPage: React.FC = () => {
     const textLinkAccountOrRegister = isToggle ? 'Sign Up' : 'Sign In';
     const textTitle = isToggle ? 'Sign In' : 'Sign Up';
     const bodyAccountPage = isToggle ? <LoginAccount /> : <RegisterAccount />;
+
     return (
         <>
             <h2>{textTitle}</h2>
