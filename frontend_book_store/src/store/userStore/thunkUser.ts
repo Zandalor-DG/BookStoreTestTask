@@ -1,6 +1,5 @@
-import { loginUser, userAPI } from '../../api/apiUser';
+import { loginUser } from '../../api/apiUser';
 import { InputsLogin } from '../../components/header/account/LoginAccount';
-import { UserData } from '../../models/User/userData';
 import { AppDispatch } from '../reducers';
 import { setLoginUser } from '../userStore/actionCreatedUser';
 

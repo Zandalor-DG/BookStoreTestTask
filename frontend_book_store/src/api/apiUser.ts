@@ -5,7 +5,7 @@ import { UserData } from '../models/User/userData';
 
 type LoginUser = {
     token: { accessToken: string };
-    user: UserData;
+    userData: UserData;
 };
 
 export const loginUser = async (registerUser: InputsLogin): Promise<UserData> => {
@@ -13,7 +13,7 @@ export const loginUser = async (registerUser: InputsLogin): Promise<UserData> =>
     const data: LoginUser = resp.data;
 
     localStorage.setItem('token', data.token.accessToken);
-    return data.user;
+    return data.userData;
 };
 
 export const userAPI = {

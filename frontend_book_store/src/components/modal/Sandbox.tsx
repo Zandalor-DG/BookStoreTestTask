@@ -12,17 +12,14 @@ const Sandbox: React.FC<Props> = ({ title, children, icon }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const openModal = () => {
-        console.log('set true');
         setIsOpen(true);
     };
 
     const handleSubmit = () => {
-        console.log('Submit function!');
         setIsOpen(false);
     };
 
     const handleCancel = () => {
-        console.log('Cancel function!');
         setIsOpen(false);
     };
 

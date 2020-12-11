@@ -12,7 +12,6 @@ const Portal: React.FC = (props) => {
         };
     }, []);
     //if (!elemRef.current) return null;
-    console.log('there');
     return ReactDom.createPortal(props.children, element);
 };
 

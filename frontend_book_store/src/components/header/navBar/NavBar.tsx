@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 
 const NavBar: React.FunctionComponent = () => {
-    const isAuthorized = useSelector<StateReduxType>((state) => state.userState.isAuthorized);
+    const isAuthorized = useSelector((state: StateReduxType) => state.userState.isAuthorized);
     const signOrProfilePage = !isAuthorized ? (
         <Sandbox title="" icon={'Sign In.png'}>
             <AccountPage />

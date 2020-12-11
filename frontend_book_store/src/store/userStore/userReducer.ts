@@ -8,7 +8,7 @@ const userReducer = (state = initialState, action: ActionUser): UserState => {
             return { ...state };
         }
         case ActionTypeUser.Login: {
-            return { ...state, user: { ...state.user }, isAuthorized: true };
+            return { ...state, user: { ...action.payload }, isAuthorized: true };
         }
         case ActionTypeUser.UpdateAvatar: {
             return { ...state };

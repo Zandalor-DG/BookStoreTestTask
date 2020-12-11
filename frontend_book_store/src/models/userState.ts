@@ -1,8 +1,8 @@
 export type UserState = {
     user: {
-        id: number;
         fullName: string;
         email: string;
+        id?: number;
         password?: string;
         dob?: Date;
         roleId?: number;
