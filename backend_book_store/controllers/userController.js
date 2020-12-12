@@ -1,6 +1,6 @@
-const models = require("../database/models");
-const tokenChecker = require("../middleware/tokenChecker");
-const bcrypt = require("bcryptjs");
+const models = require('../database/models');
+const tokenChecker = require('../middleware/tokenChecker');
+const bcrypt = require('bcryptjs');
 
 const checkValue = (valueCheck, method) => {
   if (!valueCheck) {
@@ -12,7 +12,7 @@ exports.putUser = async (req, res) => {
   try {
     const { fullName, email, password, dob, roleId } = req.body;
     if (!fullName && !email && !password && !dob && !roleId) {
-      throw new Error("Full data is not presented");
+      throw new Error('Full data is not presented');
     }
 
     models.User.update(
@@ -25,7 +25,7 @@ exports.putUser = async (req, res) => {
       },
       { where: { email: email } }
     );
-    res.status(200).json({ error: false, message: "user update" });
+    res.status(200).json({ error: false, message: 'user update' });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }
@@ -33,10 +33,10 @@ exports.putUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    checkValue(req.body, res, "deleteUser");
+    checkValue(req.body, res, 'deleteUser');
     const { id } = req.body;
     if (!id) {
-      throw new Error("Id is not presented");
+      throw new Error('Id is not presented');
     }
 
     models.User.destroy({
@@ -44,7 +44,7 @@ exports.deleteUser = async (req, res) => {
         id: id,
       },
     });
-    res.status(200).json({ error: false, message: "User deleted" });
+    res.status(200).json({ error: false, message: 'User deleted' });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }
@@ -54,9 +54,9 @@ exports.getAllUsers = async (req, res) => {
   try {
     const allUsers = await models.User.findAll({
       raw: true,
-      attributes: { exclude: ["password"] },
+      attributes: { exclude: ['password'] },
     });
-    res.status(200).json({ message: "All users", allUsers });
+    res.status(200).json({ message: 'All users', allUsers });
   } catch (err) {
     res.status(500).json({ error: true, message: err.message });
   }

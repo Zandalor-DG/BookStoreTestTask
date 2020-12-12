@@ -1,15 +1,25 @@
-import { InputsRegister } from '../../components/header/account/RegisterAccount';
 import { UserData } from '../../models/User/userData';
-import { ActionLoginUser, ActionRegisterUser, ActionTypeUser, ActionUpdateAvatar } from './actionTypesUser';
+import {
+    ActionSetAuthorized,
+    ActionSetError,
+    ActionTypeUser,
+    ActionUpdateAvatar,
+    ActionUpdateProfilePage,
+} from './actionTypesUser';
 
-export const getRegisterUser = (payload: InputsRegister): ActionRegisterUser => ({
-    type: ActionTypeUser.Register,
-    payload,
+export const setAuthorizedUser = (profilePage: UserData): ActionSetAuthorized => ({
+    type: ActionTypeUser.Authorized,
+    profilePage,
 });
 
-export const setLoginUser = (payload: UserData): ActionLoginUser => ({
-    type: ActionTypeUser.Login,
-    payload,
+export const updateProfilePage = (updateData: UserData): ActionUpdateProfilePage => ({
+    type: ActionTypeUser.UpdateProfilePage,
+    updateData,
+});
+
+export const setError = (error: string): ActionSetError => ({
+    type: ActionTypeUser.SetError,
+    error,
 });
 
 export const setUpdateAvatarUser = (): ActionUpdateAvatar => ({

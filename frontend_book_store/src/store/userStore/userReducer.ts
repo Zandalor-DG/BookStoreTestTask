@@ -4,19 +4,16 @@ import { ActionTypeUser, ActionUser } from './actionTypesUser';
 
 const userReducer = (state = initialState, action: ActionUser): UserState => {
     switch (action.type) {
-        case ActionTypeUser.Register: {
-            return { ...state };
+        case ActionTypeUser.Authorized: {
+            return { ...state, user: { ...action.profilePage }, isAuthorized: true };
         }
-        case ActionTypeUser.Login: {
-            return { ...state, user: { ...action.payload }, isAuthorized: true };
+        case ActionTypeUser.UpdateProfilePage: {
+            return { ...state, user: { ...action.updateData } };
         }
         case ActionTypeUser.UpdateAvatar: {
             return { ...state };
         }
-        case ActionTypeUser.ProfilePage: {
-            return { ...state };
-        }
-        case 'set_error':
+        case ActionTypeUser.SetError:
             return {
                 ...initialState,
                 error: action.error,

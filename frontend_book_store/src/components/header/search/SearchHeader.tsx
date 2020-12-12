@@ -7,7 +7,7 @@ interface InputsSearch {
 }
 
 const SearchHeader: React.FunctionComponent = () => {
-    const { register, handleSubmit, watch, errors } = useForm<InputsSearch>();
+    const { register, handleSubmit, watch } = useForm<InputsSearch>();
     const onSubmit = (data: InputsSearch) => console.log(data);
     console.log(watch('loginUser'));
     return (

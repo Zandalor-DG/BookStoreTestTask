@@ -1,14 +1,14 @@
-require("dotenv").config();
-const { v4: uuidv4 } = require("uuid");
-const jwt = require("jsonwebtoken");
-const models = require("../database/models");
+require('dotenv').config();
+const { v4: uuidv4 } = require('uuid');
+const jwt = require('jsonwebtoken');
+const models = require('../database/models');
 
 const secret = process.env.JWT_SECRET;
 
 const generateAccessToken = (userId) => {
   const payload = {
     userId,
-    type: "access",
+    type: 'access',
   };
   const options = { expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN };
   return jwt.sign(payload, secret, options);
@@ -17,7 +17,7 @@ const generateAccessToken = (userId) => {
 const generateRefreshToken = () => {
   const payload = {
     id: uuidv4(),
-    type: "refresh",
+    type: 'refresh',
   };
   const options = { expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN };
   return {
@@ -44,7 +44,7 @@ const updateTokens = async (userId) => {
   try {
     await updateDbRefreshToken(refreshToken.id, userId);
   } catch (error) {
-    console.log("token has not been updated", error.message);
+    console.log('token has not been updated', error.message);
   }
   return {
     accessToken,

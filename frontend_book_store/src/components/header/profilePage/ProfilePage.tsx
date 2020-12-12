@@ -1,14 +1,16 @@
 import { useForm } from 'react-hook-form';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserData } from '../../../models/User/userData';
 import { StateReduxType } from '../../../store/reducers';
+import { updateUserData } from '../../../store/userStore/thunkUser';
 
 const ProfilePage: React.FunctionComponent = () => {
     const { fullName, email, password, dob, roleId } = useSelector((state: StateReduxType) => state.userState.user);
     const { register, handleSubmit, errors } = useForm<UserData>();
-    const onSubmit = ({ fullName, email, password, dob, roleId, id }: UserData) => {
-        console.log(fullName, email, password, dob, roleId, id);
+    const dispatch = useDispatch();
+    const onSubmit = ({ fullName, email, password, dob, roleId }: UserData) => {
+        dispatch(updateUserData({ fullName, email, password, dob, roleId }));
     };
     return (
         <div className="header__profilePage">

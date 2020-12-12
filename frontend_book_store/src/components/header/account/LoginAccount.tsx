@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { postLoginUser } from '../../../store/userStore/thunkUser';
+import { loginUser } from '../../../store/userStore/thunkUser';
 
 export interface InputsLogin {
     email: string;
@@ -12,7 +12,7 @@ const LoginAccount: React.FunctionComponent = () => {
     const { register, handleSubmit, errors } = useForm<InputsLogin>();
     const dispatch = useDispatch();
     const onSubmit = ({ email, password }: InputsLogin) => {
-        dispatch(postLoginUser({ email, password }));
+        dispatch(loginUser({ email, password }));
     };
     return (
         <>
