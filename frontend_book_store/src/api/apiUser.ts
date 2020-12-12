@@ -8,11 +8,24 @@ type LoginUser = {
     userData: UserData;
 };
 
-export const loginUser = async (registerUser: InputsLogin): Promise<UserData> => {
-    const resp = await axios.post('/auth/signin', registerUser);
+type RegisterUser = {
+    userData: UserData;
+    token: { accessToken: string };
+};
+
+export const loginUser = async (loginDataUser: InputsLogin): Promise<UserData> => {
+    const resp = await axios.post('/auth/signin', loginDataUser);
     const data: LoginUser = resp.data;
 
     localStorage.setItem('token', data.token.accessToken);
+    return data.userData;
+};
+
+export const registerUser = async (registerDataUser: InputsRegister): Promise<UserData> => {
+    const resp = await axios.post('/auth/signup', registerDataUser);
+    const data: RegisterUser = resp.data;
+
+    loginUser({ email: data.userData.email, password: data.userData.password });
     return data.userData;
 };
 

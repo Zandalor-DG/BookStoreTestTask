@@ -1,29 +1,35 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../../api/apiUser';
+import { userRole } from '../../../models/User/userRoleEnum';
 
 export interface InputsRegister {
-    loginUser: string;
-    emailUser: string;
-    passwordUser: string;
-    confirmPasswordUser: string;
-    dateOfBirthdayUser: Date;
+    fullName: string;
+    email: string;
+    password: string;
+    dob: Date;
+    roleId: userRole;
+    confirmPasswordUser?: string;
 }
 
 const RegisterAccount: React.FunctionComponent = () => {
     const { register, handleSubmit, watch, errors } = useForm<InputsRegister>();
-    const onSubmit = (data: InputsRegister) => console.log(data);
-    console.log(watch('loginUser'));
+    const dispatch = useDispatch();
+    const onSubmit = ({ fullName, email, password, dob }: InputsRegister) => {
+        dispatch(registerUser({ fullName, email, password, dob, roleId: userRole.user }));
+    };
 
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="loginUser">Enter your email</label>
                 <input type="text" placeholder="Enter email" name="loginUser" ref={register({ required: true })} />
-                {errors.loginUser && <span>Please enter your login</span>}
+                {errors.fullName && <span>Please enter your login</span>}
 
                 <label htmlFor="emailUser">Enter your email</label>
                 <input type="text" placeholder="Enter email" name="emailUser" ref={register({ required: true })} />
-                {errors.emailUser && <span>Please enter your email</span>}
+                {errors.email && <span>Please enter your email</span>}
 
                 <label htmlFor="dateOfBirthdayUser">Enter your date of birthday</label>
                 <input
@@ -32,7 +38,7 @@ const RegisterAccount: React.FunctionComponent = () => {
                     name="dateOfBirthdayUser"
                     ref={register({ required: true })}
                 />
-                {errors.dateOfBirthdayUser && <span>Please enter your date of birthday</span>}
+                {errors.dob && <span>Please enter your date of birthday</span>}
 
                 <label htmlFor="passwordUser">Enter password</label>
                 <input
@@ -41,7 +47,7 @@ const RegisterAccount: React.FunctionComponent = () => {
                     name="passwordUser"
                     ref={register({ required: true })}
                 />
-                {errors.passwordUser && <span>Please enter your password</span>}
+                {errors.password && <span>Please enter your password</span>}
 
                 <label htmlFor="confirmPasswordUser">Repeat password</label>
                 <input
