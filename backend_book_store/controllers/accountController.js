@@ -2,6 +2,8 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const models = require('../database/models');
 const updateTokens = require('../middleware/updateTokens');
+const jwt = require('jsonwebtoken');
+const jwtSecret = process.env.JWT_SECRET;
 
 exports.signUp = async (req, res) => {
   try {
@@ -63,28 +65,31 @@ exports.signIn = async (req, res) => {
 };
 
 exports.signInByToken = async (req, res) => {
+  const { accessToken } = req.body;
+  if (!accessToken)
+    return res.status(400).json({ message: 'invalid access-token' });
+
+  const token = accessToken.replace('Bearer ', '');
+  if (token == 'null') {
+    next();
+    return;
+  }
+
   try {
-    const { tokenId } = req.body;
-    if (!tokenId)
-      return res.status(400).json({ message: 'invalid access-token' });
+    const payload = jwt.verify(token, jwtSecret);
+    if (payload.type !== 'access') {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+    const userId = payload.userId;
+    const tokenNew = await updateTokens(userId);
 
-    const { userId } = await models.Token.findOne({
+    const userData = await models.User.findOne({
       raw: true,
-      where: { tokenId: tokenId },
+      attributes: { exclude: ['password'] },
+      where: { id: userId },
     });
-    if (!userId) return res.status(400).json({ message: 'token expired' });
 
-    const token = await updateTokens(userId);
-
-    const userData = await models.User.findByPk(
-      {
-        raw: true,
-        attributes: { exclude: ['password'] },
-      },
-      userId
-    );
-
-    res.json({ userData, token });
+    res.json({ userData, token: tokenNew });
   } catch (err) {
     res.status(500).json({ message: 'server error, please try again' });
   }
