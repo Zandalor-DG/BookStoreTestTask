@@ -2,28 +2,28 @@ import React from 'react';
 import css from './NavBar.module.css';
 import Sandbox from '../../modal/Sandbox';
 import AccountPage from '../account/AccountPage';
-import ProfilePage from '../profilePage/ProfilePage';
-import ShoppingCart from '../shoppingCart/ShoppengCart';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
+import { NavLink } from 'react-router-dom';
+import { ShoppingOutlined, UserOutlined } from '@ant-design/icons';
 
 const NavBar: React.FunctionComponent = () => {
     const isAuthorized = useSelector((state: StateReduxType) => state.userState.isAuthorized);
     const signOrProfilePage = !isAuthorized ? (
-        <Sandbox title="" icon={'Sign In.png'}>
+        <Sandbox title="">
             <AccountPage />
         </Sandbox>
     ) : (
-        <Sandbox title="Profile page" icon={'ProfilePage.png'}>
-            <ProfilePage />
-        </Sandbox>
+        <NavLink className={css.navLink} to="/profile">
+            <UserOutlined style={{ fontSize: '30px' }} />
+        </NavLink>
     );
     return (
         <div className={css.bookstore__navBar}>
             {signOrProfilePage}
-            <Sandbox title="" icon={'shopping-basket.png'}>
-                <ShoppingCart />
-            </Sandbox>
+            <NavLink className={css.navLink} to="/cart">
+                <ShoppingOutlined style={{ fontSize: '30px' }} />
+            </NavLink>
         </div>
     );
 };

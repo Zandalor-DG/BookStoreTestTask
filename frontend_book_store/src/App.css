@@ -23,13 +23,13 @@
 }
 .ant-layout-sider {
     color: #fff;
-    line-height: 120px;
+    line-height: 20px;
     border-right: 1px solid black;
     background: #7dbcea;
 }
 .ant-layout-content {
     min-height: 120px;
     color: black;
-    line-height: 120px;
+    line-height: 20px;
     background: white;
 }

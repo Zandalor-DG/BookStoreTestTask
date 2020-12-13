@@ -1,0 +1,43 @@
+
+.header__profilePage{
+    
+}
+.profilePage__form{
+    display: flex;
+    max-height: 500px;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.profilePage__input{
+    margin-bottom: 10px;
+    height: 40px;
+    width: 150px;
+    border-color: #3ba0e9;
+    border-width: 1px;
+    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    padding-left: 10px;
+    background-color: #b3d4ec;
+    outline-style: none;
+}
+.profilePage__input:focus {
+    border: none;
+}
+
+.profilePage__error{
+    text-align: center;
+    margin-top: -5px;
+    color: red;
+}
+
+.profilePage__submit{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 40px;
+    width: 70px;
+    border-radius: 5px;
+    border-color: #3ba0e9;
+    background-color: #3ba0e9;
+    text-align: center;
+}

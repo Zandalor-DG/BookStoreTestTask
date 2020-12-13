@@ -8,11 +8,10 @@
     padding-left: 10px;
     border-color: #3ba0e9;
     border-width: 1px;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     outline-color: #3ba0e9;
     background-color: #b3d4ec;
-    /* outline: none; */
 }
 
 .bookstore__input:focus {

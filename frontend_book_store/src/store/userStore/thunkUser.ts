@@ -16,7 +16,8 @@ export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: 
 export const registerUser = ({ fullName, email, password, dob, roleId }: UserData) => async (dispatch: AppDispatch) => {
     try {
         postRegisterUser({ fullName, email, password, dob, roleId }).then(async () => {
-            const user = await postLoginByToken();
+            const accessToken = localStorage.getItem('token');
+            const user = await postLoginByToken(accessToken);
             dispatch(setAuthorizedUser(user));
         });
     } catch (err) {
@@ -37,7 +38,8 @@ export const updateUserData = ({ fullName, email, password, dob, roleId }: UserD
 
 export const loginUserByToken = () => async (dispatch: AppDispatch) => {
     try {
-        const user = await postLoginByToken();
+        const accessToken = localStorage.getItem('token');
+        const user = await postLoginByToken(accessToken);
         dispatch(setAuthorizedUser(user));
     } catch (err) {
         dispatch(setError(err.message));

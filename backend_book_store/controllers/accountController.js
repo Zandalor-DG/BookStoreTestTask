@@ -48,7 +48,7 @@ exports.signIn = async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: 'incorrect password' });
 
-    const token = await updateTokens(user.id); //проверка токена возможна
+    const token = await updateTokens(user.id);
     const roleUserAuth = await models.Role.findByPk(user.roleId);
 
     const userData = {
