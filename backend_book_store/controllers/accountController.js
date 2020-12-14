@@ -65,18 +65,8 @@ exports.signIn = async (req, res) => {
 };
 
 exports.signInByToken = async (req, res) => {
-  const { accessToken } = req.body;
-  if (!accessToken)
-    return res.status(400).json({ message: 'invalid access-token' });
-
-  const token = accessToken.replace('Bearer ', '');
-  if (token == 'null') {
-    next();
-    return;
-  }
-
   try {
-    const payload = jwt.verify(token, jwtSecret);
+    const payload = req.decoded;
     if (payload.type !== 'access') {
       return res.status(400).json({ message: 'Invalid token' });
     }

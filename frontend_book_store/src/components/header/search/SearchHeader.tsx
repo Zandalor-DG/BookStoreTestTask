@@ -1,25 +1,18 @@
+import { Input } from 'antd';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import css from './searchHeader.module.css';
 
-interface InputsSearch {
-    searchText: string;
-}
+const { Search } = Input;
 
 const SearchHeader: React.FunctionComponent = () => {
-    const { register, handleSubmit, watch } = useForm<InputsSearch>();
-    const onSubmit = (data: InputsSearch) => console.log(data);
-    console.log(watch('loginUser'));
+    const onSearch = (value: string) => console.log(value);
+
     return (
-        <form className={css.bookstore__search} onSubmit={handleSubmit(onSubmit)}>
-            <input
-                className={css.bookstore__input}
-                type="search"
-                placeholder="What to read..."
-                name="searchText"
-                ref={register()}
-            />
-        </form>
+        <Search
+            placeholder="input search text"
+            allowClear
+            onSearch={onSearch}
+            style={{ width: 500, margin: '0 10px' }}
+        />
     );
 };
 

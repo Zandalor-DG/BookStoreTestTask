@@ -1,4 +1,4 @@
-import { postLoginByToken, postLoginUser, postRegisterUser, putProfilePage } from '../../api/apiUser';
+import { getLoginByToken, postLoginUser, postRegisterUser, putProfilePage } from '../../api/apiUser';
 import { InputsLogin } from '../../components/header/account/LoginAccount';
 import { UserData } from '../../models/User/userData';
 import { AppDispatch } from '../reducers';
@@ -15,11 +15,9 @@ export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: 
 
 export const registerUser = ({ fullName, email, password, dob, roleId }: UserData) => async (dispatch: AppDispatch) => {
     try {
-        postRegisterUser({ fullName, email, password, dob, roleId }).then(async () => {
-            const accessToken = localStorage.getItem('token');
-            const user = await postLoginByToken(accessToken);
-            dispatch(setAuthorizedUser(user));
-        });
+        await postRegisterUser({ fullName, email, password, dob, roleId });
+        const user = await getLoginByToken();
+        dispatch(setAuthorizedUser(user));
     } catch (err) {
         dispatch(setError(err.message));
     }
@@ -39,7 +37,7 @@ export const updateUserData = ({ fullName, email, password, dob, roleId }: UserD
 export const loginUserByToken = () => async (dispatch: AppDispatch) => {
     try {
         const accessToken = localStorage.getItem('token');
-        const user = await postLoginByToken(accessToken);
+        const user = await getLoginByToken();
         dispatch(setAuthorizedUser(user));
     } catch (err) {
         dispatch(setError(err.message));

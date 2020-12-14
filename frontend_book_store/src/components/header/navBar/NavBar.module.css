@@ -7,11 +7,14 @@
 
 .navLink {
     margin-left: 40px;
+    font-size: 30px;
     color: black;
     text-decoration: none;
     text-align: center;
 }
-
+.navLink:hover {
+    color: blue;
+}
 .imgIcon {
     height: 40px;
     width: 40px;

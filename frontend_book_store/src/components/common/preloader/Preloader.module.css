@@ -1,0 +1,14 @@
+.bookStore__preloader {
+    min-width: 100vh;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.preloader__row {
+    
+}
+.preloader__img {
+    min-width: 30%;
+    min-height: 30%;
+}

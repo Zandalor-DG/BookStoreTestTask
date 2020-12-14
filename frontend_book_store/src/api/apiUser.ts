@@ -29,8 +29,9 @@ export const putProfilePage = async (profilePage: UserData): Promise<UserData> =
     return data;
 };
 
-export const postLoginByToken = async (accessToken: string | null): Promise<UserData> => {
-    const res = await axios.post('/auth/signinbytoken', accessToken);
-    const data: UserData = res.data;
-    return data;
+export const getLoginByToken = async (): Promise<UserData> => {
+    const res = await axios.get('/auth/signinbytoken');
+    const data: UserDataAndToken = res.data;
+    localStorage.setItem('token', data.token.accessToken);
+    return data.userData;
 };
