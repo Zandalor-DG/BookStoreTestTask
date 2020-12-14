@@ -6,6 +6,7 @@ export enum ActionTypeUser {
     UpdateAvatar = 'UpdateAvatar',
     ProfilePage = 'ProfilePage',
     SetError = 'SetError',
+    SetIsOpenModal = 'SetIsOpenModal',
 }
 
 export type ActionUpdateProfilePage = {
@@ -22,9 +23,19 @@ export type ActionUpdateAvatar = {
     type: ActionTypeUser.UpdateAvatar;
 };
 
+export type ActionSetIsOpenModal = {
+    type: ActionTypeUser.SetIsOpenModal;
+    isOpen: boolean;
+};
+
 export type ActionSetError = {
     type: ActionTypeUser.SetError;
     error: string;
 };
 
-export type ActionUser = ActionUpdateProfilePage | ActionSetAuthorized | ActionUpdateAvatar | ActionSetError;
+export type ActionUser =
+    | ActionUpdateProfilePage
+    | ActionSetAuthorized
+    | ActionUpdateAvatar
+    | ActionSetIsOpenModal
+    | ActionSetError;

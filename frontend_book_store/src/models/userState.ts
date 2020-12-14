@@ -8,5 +8,6 @@ export type UserState = {
         roleId?: number;
     };
     isAuthorized: boolean;
+    isOpenModal: boolean;
     error?: string;
 };

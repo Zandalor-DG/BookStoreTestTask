@@ -1,18 +1,19 @@
 import React from 'react';
-import Portal from '../portal/Portal';
+import Portal from '../../../common/portal/Portal';
 import { Button, Radio } from 'antd';
 import './Modal.css';
 import { CloseCircleFilled } from '@ant-design/icons';
+import { StateReduxType } from '../../../../store/reducers';
+import { useSelector } from 'react-redux';
 
 interface PropsModal {
     title: string;
-    isOpen: boolean;
     onCancel: () => void;
-    onSubmit: () => void;
 }
 type Props = React.PropsWithChildren<PropsModal>;
 
-const Modal: React.FC<Props> = ({ isOpen, onCancel, onSubmit, title, children }: Props) => {
+const Modal: React.FC<Props> = ({ onCancel, title, children }: Props) => {
+    const isOpen = useSelector((state: StateReduxType) => state.userState.isOpenModal);
     return (
         <>
             {isOpen && (
@@ -24,14 +25,7 @@ const Modal: React.FC<Props> = ({ isOpen, onCancel, onSubmit, title, children }:
                                 <CloseCircleFilled onClick={onCancel} />
                             </div>
                             <div className="modalBody">{children}</div>
-                            <div className="modalFooter">
-                                <Button onClick={onCancel} type="primary" danger>
-                                    Primary
-                                </Button>
-                                <Radio.Button onClick={onSubmit} value="submit">
-                                    Submit
-                                </Radio.Button>
-                            </div>
+                            {/* <div className="modalFooter"></div> */}
                         </div>
                     </div>
                 </Portal>

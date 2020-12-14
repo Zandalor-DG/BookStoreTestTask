@@ -1,6 +1,6 @@
 import React from 'react';
 import css from './NavBar.module.css';
-import Sandbox from '../../modal/Sandbox';
+import Sandbox from '../account/modal/Sandbox';
 import AccountPage from '../account/AccountPage';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';

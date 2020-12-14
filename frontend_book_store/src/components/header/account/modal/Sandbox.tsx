@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from './Modal';
 import { UserAddOutlined } from '@ant-design/icons';
-import css from '../header/navBar/NavBar.module.css';
+import css from '../../../header/navBar/NavBar.module.css';
+import { useDispatch } from 'react-redux';
+import { setIsOpenModal } from '../../../../store/userStore/actionCreatedUser';
 
 interface PropsSandbox {
     title: string;
@@ -10,24 +12,20 @@ interface PropsSandbox {
 type Props = React.PropsWithChildren<PropsSandbox>;
 
 const Sandbox: React.FC<Props> = ({ title, children }: Props) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
 
     const openModal = () => {
-        setIsOpen(true);
-    };
-
-    const handleSubmit = () => {
-        setIsOpen(false);
+        dispatch(setIsOpenModal(true));
     };
 
     const handleCancel = () => {
-        setIsOpen(false);
+        dispatch(setIsOpenModal(false));
     };
 
     return (
         <>
             <UserAddOutlined className={css.navLink} onClick={openModal} style={{ fontSize: '30px' }} />
-            <Modal title={title} isOpen={isOpen} onCancel={handleCancel} onSubmit={handleSubmit}>
+            <Modal title={title} onCancel={handleCancel}>
                 {children}
             </Modal>
         </>

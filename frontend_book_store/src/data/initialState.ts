@@ -7,4 +7,5 @@ export const initialState: UserState = {
         email: '',
     },
     isAuthorized: false,
+    isOpenModal: false,
 };

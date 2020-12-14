@@ -13,6 +13,12 @@ const userReducer = (state = initialState, action: ActionUser): UserState => {
         case ActionTypeUser.UpdateAvatar: {
             return { ...state };
         }
+        case ActionTypeUser.SetIsOpenModal: {
+            return {
+                ...state,
+                isOpenModal: action.isOpen,
+            };
+        }
         case ActionTypeUser.SetError:
             return {
                 ...initialState,

@@ -3,6 +3,7 @@ import 'antd/dist/antd.css';
 import { Form, Input, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../store/userStore/thunkUser';
+import { setIsOpenModal } from '../../../store/userStore/actionCreatedUser';
 
 const layout = {
     labelCol: {
@@ -29,6 +30,7 @@ const LoginAccount: React.FC = () => {
     const dispatch = useDispatch();
     const onFinish = ({ email, password }: InputsLogin) => {
         dispatch(loginUser({ email, password }));
+        dispatch(setIsOpenModal(false));
     };
 
     return (
