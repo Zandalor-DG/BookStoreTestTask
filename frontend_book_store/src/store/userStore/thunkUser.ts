@@ -36,7 +36,6 @@ export const updateUserData = ({ fullName, email, password, dob, roleId }: UserD
 
 export const loginUserByToken = () => async (dispatch: AppDispatch) => {
     try {
-        const accessToken = localStorage.getItem('token');
         const user = await getLoginByToken();
         dispatch(setAuthorizedUser(user));
     } catch (err) {
