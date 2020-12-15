@@ -2,7 +2,7 @@ import React from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import css from './ProfilePage.module.css';
-import { UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
+import { HttpRequestHeader, UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 
 interface File {
     type: string;
@@ -67,8 +67,17 @@ class UploadAvatar extends React.Component {
                 <div style={{ marginTop: 8 }}>Upload</div>
             </div>
         );
+
+        const headerFotHttp: { [key: string]: string } = {};
+        headerFotHttp['Content-type'] = 'multipart/form-data; boundary=----WebKitFormBoundary0wSL7e10uI4cARXu';
+
         return (
+            // <form action="http://localhost:4000/account/uploadavatar" method="post" encType="multipart/form-data">
+            //     <input type="file" name="filedata" />
+            //     <input type="submit" value="submit" />
+            // </form>
             <Upload
+                headers={headerFotHttp}
                 name="avatar"
                 listType="picture-card"
                 className={css.profilePage__photo}
