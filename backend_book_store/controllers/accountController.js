@@ -84,3 +84,16 @@ exports.signInByToken = async (req, res) => {
     res.status(500).json({ message: 'server error, please try again' });
   }
 };
+
+exports.uploadAvatar = (req, res, next) => {
+  try {
+    let filedata = req.file;
+    if (!filedata) {
+      res.status(400).json({ message: 'File upload error' });
+    }
+
+    res.status(202).json({ message: 'Accepted' });
+  } catch (error) {
+    return null;
+  }
+};

@@ -11,5 +11,6 @@ accountRouter.get(
   tokenChecker,
   accountController.signInByToken
 );
+accountRouter.post('/uploadavatar', accountController.uploadAvatar);
 
 module.exports = accountRouter;

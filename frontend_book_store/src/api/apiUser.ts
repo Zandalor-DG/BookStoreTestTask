@@ -10,7 +10,7 @@ type UserDataAndToken = {
 };
 
 export const postLoginUser = async (loginDataUser: InputsLogin): Promise<UserData> => {
-    const res = await axios.post('/auth/signin', loginDataUser);
+    const res = await axios.post('/account/signin', loginDataUser);
     const data: UserDataAndToken = res.data;
     localStorage.setItem('token', data.token.accessToken);
     localStorage.setItem('refreshToken', data.token.refreshToken);
@@ -18,7 +18,7 @@ export const postLoginUser = async (loginDataUser: InputsLogin): Promise<UserDat
 };
 
 export const postRegisterUser = async (registerDataUser: InputsRegister): Promise<void> => {
-    const res = await axios.post('/auth/signup', registerDataUser);
+    const res = await axios.post('/account/signup', registerDataUser);
     const data: UserDataAndToken = res.data;
     localStorage.setItem('token', data.token.accessToken);
     localStorage.setItem('refreshToken', data.token.refreshToken);
@@ -31,7 +31,7 @@ export const putProfilePage = async ({ fullName, email, dob, roleId }: PropsUpda
 };
 
 export const getLoginByToken = async (): Promise<UserData> => {
-    const res = await axios.get('/auth/signinbytoken');
+    const res = await axios.get('/account/signinbytoken');
     const data: UserDataAndToken = res.data;
     localStorage.setItem('token', data.token.accessToken);
     return data.userData;
