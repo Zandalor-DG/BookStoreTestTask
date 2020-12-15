@@ -3,19 +3,15 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 import { StateReduxType } from '../../../store/reducers';
 
-interface PropsProvateRoute {
-    [x: string]: any;
-}
-
 type Props = React.PropsWithChildren<RouteProps>;
 
 const PrivateRoute: React.FC<Props> = ({ children, ...rest }: Props) => {
-    const isAuthorized = useSelector((state: StateReduxType) => state.userState.isAuthorized);
+    const user = useSelector((state: StateReduxType) => state.userState.user);
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                isAuthorized ? (
+                user ? (
                     children
                 ) : (
                     <Redirect

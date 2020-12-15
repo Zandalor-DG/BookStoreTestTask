@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
 import HeaderContent from './components/header/HeaderContent';
@@ -8,21 +8,26 @@ import { Layout } from 'antd';
 import ProfilePage from './components/header/profilePage/ProfilePage';
 import ShoppingCart from './components/header/shoppingCart/ShoppengCart';
 import Preloader from './components/common/preloader/Preloader';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUserByToken } from './store/userStore/thunkUser';
 import PrivateRoute from './components/common/privateRoute/PrivateRoute';
+import { StateReduxType } from './store/reducers';
 
 const { Header, Footer, Sider, Content } = Layout;
 
 const App: React.FC = () => {
+    const isInitialize = useSelector((state: StateReduxType) => state.userState.isInitialize);
     const dispatch = useDispatch();
-    const [isLoading, setisLoading] = useState(true);
+
     useEffect(() => {
+        if (isInitialize) {
+            return;
+        }
+
         dispatch(loginUserByToken());
-        setisLoading(false);
     }, []);
 
-    if (isLoading) {
+    if (!isInitialize) {
         return <Preloader />;
     }
     return (

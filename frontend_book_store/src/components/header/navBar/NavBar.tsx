@@ -8,8 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { ShoppingOutlined, UserOutlined } from '@ant-design/icons';
 
 const NavBar: React.FunctionComponent = () => {
-    const isAuthorized = useSelector((state: StateReduxType) => state.userState.isAuthorized);
-    const signOrProfilePage = !isAuthorized ? (
+    const user = useSelector((state: StateReduxType) => state.userState.user);
+    const signOrProfilePage = !user ? (
         <Sandbox title="">
             <AccountPage />
         </Sandbox>

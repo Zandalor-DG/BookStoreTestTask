@@ -1,43 +1,19 @@
-
-.header__profilePage{
-    
+.login__form {
+    margin: auto;
+    max-width: 300px;
 }
-.profilePage__form{
-    display: flex;
-    max-height: 500px;
-    flex-flow: column;
-    align-items: center;
-    justify-content: space-around;
+.avatar_uploader > .ant_upload {
+    width: 128px;
+    height: 128px;
 }
-.profilePage__input{
-    margin-bottom: 10px;
-    height: 40px;
-    width: 150px;
-    border-color: #3ba0e9;
-    border-width: 1px;
-    border-bottom-right-radius: 20px;
-    border-top-left-radius: 20px;
-    padding-left: 10px;
-    background-color: #b3d4ec;
-    outline-style: none;
-}
-.profilePage__input:focus {
-    border: none;
-}
-
-.profilePage__error{
+.profilePage__title {
     text-align: center;
-    margin-top: -5px;
-    color: red;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: bolder;
 }
 
-.profilePage__submit{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    height: 40px;
-    width: 70px;
-    border-radius: 5px;
-    border-color: #3ba0e9;
-    background-color: #3ba0e9;
+.profilePage__photo {
+    margin-left: 8px;
     text-align: center;
 }

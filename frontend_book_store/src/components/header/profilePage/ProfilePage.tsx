@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Radio, Select, Cascader, DatePicker, InputNumber, TreeSelect, Switch } from 'antd';
-import { useForm } from 'react-hook-form';
-import { updateUserData } from '../../../store/userStore/thunkUser';
+import React from 'react';
+import { Form, Input, Button, Select, DatePicker } from 'antd';
+import { PropsUpdateUserData, updateUserData } from '../../../store/userStore/thunkUser';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
-import { UserData } from '../../../models/User/userData';
+import moment from 'moment';
+import css from './ProfilePage.module.css';
+import UploadAvatar from './UploadAvatar';
 
-const ProfilePage = () => {
+const ProfilePage: React.FC = () => {
     const [form] = Form.useForm();
-    const { fullName, email, password } = useSelector((state: StateReduxType) => state.userState.user);
+    const user = useSelector((state: StateReduxType) => state.userState.user);
     const dispatch = useDispatch();
-    const onSubmit = ({ fullName, email, password, dob, roleId }: UserData) => {
-        dispatch(updateUserData({ fullName, email, password, dob, roleId }));
+    const onSubmit = ({ fullName, email, dob, roleId }: PropsUpdateUserData) => {
+        dispatch(updateUserData({ fullName, email, dob, roleId }));
     };
+    if (!user) return null;
+    const { dob, email, fullName } = user;
     return (
         <>
-            <Form onFinish={(value) => onSubmit(value)} form={form}>
+            <h3 className={css.profilePage__title}>Your photo</h3>
+
+            <UploadAvatar />
+
+            <h3 className={css.profilePage__title}>Your data</h3>
+
+            <Form onFinish={(value) => onSubmit(value)} form={form} className={css.login__form}>
                 <Form.Item
                     label="Full name"
                     name="fullName"
@@ -56,20 +65,6 @@ const ProfilePage = () => {
                 </Form.Item>
 
                 <Form.Item
-                    name="password"
-                    label="Password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password!',
-                        },
-                    ]}
-                    hasFeedback
-                >
-                    <Input.Password defaultValue={password} />
-                </Form.Item>
-
-                <Form.Item
                     label="Date of birthday"
                     name="dob"
                     rules={[
@@ -80,10 +75,12 @@ const ProfilePage = () => {
                         },
                     ]}
                 >
-                    <DatePicker />
+                    <DatePicker defaultValue={moment(dob)} />
                 </Form.Item>
-                <Form.Item label="Button">
-                    <Button htmlType="submit">Button</Button>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Save changes
+                    </Button>
                 </Form.Item>
             </Form>
         </>

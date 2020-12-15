@@ -78,27 +78,3 @@ const LoginAccount: React.FC = () => {
 };
 
 export default LoginAccount;
-
-// import React from 'react';
-// import { useForm } from 'react-hook-form';
-// import { useDispatch } from 'react-redux';
-// import { loginUser } from '../../../store/userStore/thunkUser';
-
-// const LoginAccount: React.FunctionComponent = () => {
-
-//     return (
-//         <>
-//             <form onSubmit={handleSubmit(onSubmit)}>
-//                 <label htmlFor="email">enter Email</label>
-//                 <input type="text" placeholder="Enter email pls" name="email" ref={register({ required: true })} />
-//                 {errors.email && <span>This field is required</span>}
-//                 <label htmlFor="password">enter password</label>
-//                 <input type="password" placeholder="Password pls" name="password" ref={register({ required: true })} />
-//                 {errors.password && <span>This field is required</span>}
-//                 <input type="submit" />
-//             </form>
-//         </>
-//     );
-// };
-
-// export default LoginAccount;

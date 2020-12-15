@@ -7,7 +7,19 @@ export enum ActionTypeUser {
     ProfilePage = 'ProfilePage',
     SetError = 'SetError',
     SetIsOpenModal = 'SetIsOpenModal',
+    InitUser = 'InitUser',
+    UserInitError = 'UserInitError',
 }
+
+export type ActionInitUser = {
+    type: ActionTypeUser.InitUser;
+    user: UserData;
+};
+
+export type ActionUserInitError = {
+    type: ActionTypeUser.UserInitError;
+    error: string;
+};
 
 export type ActionUpdateProfilePage = {
     type: ActionTypeUser.UpdateProfilePage;
@@ -34,8 +46,10 @@ export type ActionSetError = {
 };
 
 export type ActionUser =
+    | ActionInitUser
     | ActionUpdateProfilePage
     | ActionSetAuthorized
     | ActionUpdateAvatar
     | ActionSetIsOpenModal
+    | ActionUserInitError
     | ActionSetError;
