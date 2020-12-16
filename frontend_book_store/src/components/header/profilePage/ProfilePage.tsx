@@ -7,9 +7,9 @@ import moment from 'moment';
 import css from './ProfilePage.module.css';
 import UploadAvatar from './UploadAvatar';
 import { UserData } from '../../../models/User/userData';
+import ChangePassword from './ChangePassword';
 
 const ProfilePage: React.FC = () => {
-    const [form] = Form.useForm();
     const user = useSelector((state: StateReduxType) => state.userState.user);
     const id = user?.id as number;
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const ProfilePage: React.FC = () => {
 
             <h3 className={css.profilePage__title}>Your data</h3>
 
-            <Form onFinish={(value) => onSubmit(value)} form={form} className={css.login__form}>
+            <Form onFinish={(value) => onSubmit(value)} className={css.login__form}>
                 <Form.Item
                     label="Full name"
                     name="fullName"
@@ -37,8 +37,9 @@ const ProfilePage: React.FC = () => {
                             whitespace: true,
                         },
                     ]}
+                    initialValue={fullName}
                 >
-                    <Input defaultValue={fullName} />
+                    <Input />
                 </Form.Item>
 
                 <Form.Item
@@ -54,12 +55,13 @@ const ProfilePage: React.FC = () => {
                             message: 'Please input your E-mail!',
                         },
                     ]}
+                    initialValue={email}
                 >
-                    <Input defaultValue={email} />
+                    <Input />
                 </Form.Item>
 
-                <Form.Item label="Select" name="roleId">
-                    <Select defaultValue="User">
+                <Form.Item label="Select" name="roleId" initialValue="User">
+                    <Select>
                         <Select.Option value="1">Admin</Select.Option>
                         <Select.Option value="2">Moderator</Select.Option>
                         <Select.Option value="3">User</Select.Option>
@@ -69,15 +71,16 @@ const ProfilePage: React.FC = () => {
                 <Form.Item
                     label="Date of birthday"
                     name="dob"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your date of birthday!',
-                            whitespace: true,
-                        },
-                    ]}
+                    // rules={[
+                    //     {
+                    //         required: true,
+                    //         message: 'Please input your date of birthday!',
+                    //         whitespace: true,
+                    //     },
+                    // ]}
+                    initialValue={moment(dob)}
                 >
-                    <DatePicker defaultValue={moment(dob)} />
+                    <DatePicker />
                 </Form.Item>
                 <Form.Item>
                     <Button type="primary" htmlType="submit">
@@ -85,6 +88,7 @@ const ProfilePage: React.FC = () => {
                     </Button>
                 </Form.Item>
             </Form>
+            <ChangePassword />
         </>
     );
 };

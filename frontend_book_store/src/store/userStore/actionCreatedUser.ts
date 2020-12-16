@@ -1,6 +1,7 @@
 import { UserData } from '../../models/User/userData';
 import {
     ActionInitUser,
+    ActionLogOut,
     ActionSetAuthorized,
     ActionSetError,
     ActionSetIsOpenModal,
@@ -19,6 +20,10 @@ export const setInitialUser = (user: UserData): ActionInitUser => ({
 export const setUserAvatar = (url: string): ActionSetUserAvatar => ({
     type: ActionTypeUser.SetUserAvatar,
     url,
+});
+
+export const logOut = (): ActionLogOut => ({
+    type: ActionTypeUser.LogOut,
 });
 
 export const setAuthorizedUser = (profilePage: UserData): ActionSetAuthorized => ({

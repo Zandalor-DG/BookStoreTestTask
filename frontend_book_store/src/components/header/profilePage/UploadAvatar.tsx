@@ -7,22 +7,28 @@ import css from './ProfilePage.module.css';
 
 const UploadAvatar: React.FC = () => {
     const [isFormEmpty, setForm] = useState(true);
-    const { iconUrl } = useSelector((state: StateReduxType) => ({
+    const { iconUrl, user } = useSelector((state: StateReduxType) => ({
         iconUrl: state.userState.avatar,
+        user: state.userState.user,
     }));
-    const [file, setFile] = useState<string | Blob>('');
+    const [userAvatar, setUserAvatar] = useState<string>('');
     const formData = new FormData();
 
     const submitUserImg = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         e.preventDefault();
-        formData.append('filedata', file);
-        postUploadAvatar(formData);
+        if (user === null) {
+            return;
+        }
+        formData.append('filedata', userAvatar);
+        postUploadAvatar(formData, user);
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.currentTarget.files![0];
-        setFile(file);
-        if (file) {
+        if (e.currentTarget.files?.length) {
+            const currentAvatar = e.currentTarget.files[0];
+            setUserAvatar('currentAvatar');
+        }
+        if (userAvatar) {
             setForm(false);
         } else {
             setForm(true);
@@ -51,6 +57,7 @@ const UploadAvatar: React.FC = () => {
                                 // label="Example file input"
                             />
                             <Button
+                                style={{ marginTop: '10px' }}
                                 variant="outline-primary"
                                 className="mt-2"
                                 as="input"

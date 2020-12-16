@@ -10,10 +10,8 @@ const checkValue = (valueCheck, method) => {
 exports.putUser = async (req, res) => {
   try {
     const { oldPassword, newPassword, user } = req.body;
-    let userPass;
+    let userPass = await models.User.findByPk(user.id);
     if (oldPassword && newPassword) {
-      userPass = await models.User.findByPk(user.id);
-
       const isMatch = await bcrypt.compare(oldPassword, userPass.password);
       if (!isMatch)
         return res.status(400).json({ message: 'incorrect old password' });
@@ -26,18 +24,17 @@ exports.putUser = async (req, res) => {
     }
 
     const changePassword = newPassword
-      ? newPassword
-      : bcrypt.hashSync(userPass.password, 10);
+      ? bcrypt.hashSync(newPassword, 10)
+      : userPass.password;
 
     models.User.update(
       {
         fullName: fullName,
         email: email,
-        password: bcrypt.hashSync(changePassword, 10),
+        password: changePassword,
         dob: dob,
-        roleId: roleId,
       },
-      { where: { email: email } }
+      { where: { id: id } }
     );
     res.status(200).json({ error: false, message: 'user update' });
   } catch (err) {
@@ -47,26 +44,19 @@ exports.putUser = async (req, res) => {
 
 exports.uploadAvatar = async (req, res) => {
   try {
-    const { path, originalname } = req.file;
+    const { path, filename } = req.file;
     if (!path && !originalname) {
       res.status(400).json({ message: 'File upload error' });
     }
-    const duplicate = await models.Files.findOne({
-      where: { original_name: originalname },
-    });
-
-    if (duplicate) {
-      throw new Error('Email already used');
-    }
 
     await models.Files.create({
-      original_name: originalname,
+      original_name: filename,
       path_name: path,
     });
 
     const avatar = await models.Files.findOne({
       raw: true,
-      where: { original_name: originalname },
+      where: { original_name: filename },
     });
 
     res.status(202).json({ message: 'Accepted' });

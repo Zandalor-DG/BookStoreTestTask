@@ -26,7 +26,7 @@ export const postRegisterUser = async (registerDataUser: InputsRegister): Promis
 };
 
 export const putProfilePage = async (user: PropsUpdateUserData): Promise<UserData> => {
-    const res = await axios.put('/user/put', { user });
+    const res = await axios.put('/user/putuser', { user });
     const data: UserData = res.data;
     return data;
 };
@@ -38,18 +38,22 @@ export const getLoginByToken = async (): Promise<UserData> => {
     return data.userData;
 };
 
-export const postUploadAvatar = async (formData: FormData) => {
-    const res = await axios.post('/user/uploadavatar', formData, {
-        headers: {
-            'content-type': 'multipart/form-data',
-        },
-    });
+export const postUploadAvatar = async (formData: FormData, user: UserData) => {
+    const res = await axios.post(
+        '/user/uploadavatar',
+        { formData, user },
+        // {
+        //     headers: {
+        //         'content-type': 'multipart/form-data',
+        //     },
+        // },
+    );
     const avatarUrl: string = res.data;
     return avatarUrl;
 };
 
 export const postChangePassword = async ({ oldPassword, newPassword }: onChangePassword, user: UserData | null) => {
-    const res = await axios.post('/account/changepassword', { oldPassword, newPassword, user });
+    const res = await axios.put('/user/putuser', { oldPassword, newPassword, user });
     const data: UserData = res.data.userData;
     return data;
 };

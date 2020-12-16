@@ -10,11 +10,16 @@ export enum ActionTypeUser {
     InitUser = 'InitUser',
     UserInitError = 'UserInitError',
     SetUserAvatar = 'SetUserAvatar',
+    LogOut = 'LogOut',
 }
 
 export type ActionInitUser = {
     type: ActionTypeUser.InitUser;
     user: UserData;
+};
+
+export type ActionLogOut = {
+    type: ActionTypeUser.LogOut;
 };
 
 export type ActionSetUserAvatar = {
@@ -59,4 +64,5 @@ export type ActionUser =
     | ActionSetIsOpenModal
     | ActionUserInitError
     | ActionSetError
-    | ActionSetUserAvatar;
+    | ActionSetUserAvatar
+    | ActionLogOut;

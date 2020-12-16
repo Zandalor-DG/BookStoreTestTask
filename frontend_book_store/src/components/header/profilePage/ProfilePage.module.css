@@ -2,10 +2,6 @@
     margin: auto;
     max-width: 300px;
 }
-.avatar_uploader > .ant_upload {
-    width: 128px;
-    height: 128px;
-}
 .profilePage__title {
     text-align: center;
     margin-top: 30px;
@@ -15,4 +11,8 @@
 
 .profilePage__photo {
     margin: auto;
+}
+.profilePage__changePassword {
+    margin: auto;
+    max-width: 300px;
 }

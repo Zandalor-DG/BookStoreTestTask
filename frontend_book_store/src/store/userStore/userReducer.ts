@@ -7,6 +7,9 @@ const userReducer = (state = userInitialState, action: ActionUser): UserState =>
         case ActionTypeUser.InitUser: {
             return { ...state, user: action.user, isInitialize: true };
         }
+        case ActionTypeUser.LogOut: {
+            return { ...state, user: null };
+        }
         case ActionTypeUser.Authorized: {
             return { ...state, user: { ...action.profilePage } };
         }
