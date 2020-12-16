@@ -3,7 +3,14 @@
         "source.fixAll.eslint": true,
         "editor.formatOnSave": false
     },
-    "cSpell.words": ["antd", "craco", "todos"],
+    "cSpell.words": [
+        "antd",
+        "craco",
+        "filedata",
+        "signinbytoken",
+        "todos",
+        "uploadavatar"
+    ],
     "typescript.tsdk": "node_modules/typescript/lib",
     "cSpell.ignoreWords": ["signin", "signup"]
 }

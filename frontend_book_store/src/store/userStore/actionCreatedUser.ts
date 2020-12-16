@@ -4,6 +4,7 @@ import {
     ActionSetAuthorized,
     ActionSetError,
     ActionSetIsOpenModal,
+    ActionSetUserAvatar,
     ActionTypeUser,
     ActionUpdateAvatar,
     ActionUpdateProfilePage,
@@ -13,6 +14,11 @@ import {
 export const setInitialUser = (user: UserData): ActionInitUser => ({
     type: ActionTypeUser.InitUser,
     user,
+});
+
+export const setUserAvatar = (url: string): ActionSetUserAvatar => ({
+    type: ActionTypeUser.SetUserAvatar,
+    url,
 });
 
 export const setAuthorizedUser = (profilePage: UserData): ActionSetAuthorized => ({

@@ -21,14 +21,6 @@
   ],
   "author": "Zandalor-DG",
   "license": "ISC",
-  "devDependencies": {
-    "concurrently": "^5.3.0",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-prettier": "^3.2.0",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.2.1",
-    "sequelize-cli": "^6.2.0"
-  },
   "bugs": {
     "url": "https://github.com/Zandalor-DG/BaseAPINode.js/issues"
   },
@@ -46,6 +38,12 @@
     "sequelize": "^6.3.5",
     "sequelize-virtual-fields": "^1.1.0",
     "socket.io": "^3.0.2",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "concurrently": "^5.3.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-prettier": "^3.2.0",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.2.1",
+    "sequelize-cli": "^6.2.0"
   }
 }

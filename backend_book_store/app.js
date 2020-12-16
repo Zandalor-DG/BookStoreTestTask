@@ -15,6 +15,10 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname));
+app.use(function (err, req, res, next) {
+  console.log('This is the invalid field ->', err.field);
+  next(err);
+});
 app.use(
   multer({
     storage: multerUpload.storageConfig,

@@ -1,6 +1,14 @@
-import { getLoginByToken, postLoginUser, postRegisterUser, putProfilePage } from '../../api/apiUser';
+import {
+    getLoginByToken,
+    postChangePassword,
+    postLoginUser,
+    postRegisterUser,
+    postUploadAvatar,
+    putProfilePage,
+} from '../../api/apiUser';
 import { InputsLogin } from '../../components/header/account/LoginAccount';
 import { InputsRegister } from '../../components/header/account/RegisterAccount';
+import { onChangePassword } from '../../components/header/profilePage/ChangePassword';
 import { UserData } from '../../models/User/userData';
 import { userRole } from '../../models/User/userRoleEnum';
 import { AppDispatch } from '../reducers';
@@ -10,13 +18,15 @@ import {
     updateProfilePage,
     setInitialUser,
     setUserInitError,
+    setUserAvatar,
 } from '../userStore/actionCreatedUser';
 
 export interface PropsUpdateUserData {
+    id: number;
     fullName: string;
     email: string;
     dob: Date;
-    roleId: userRole;
+    roleId?: userRole;
 }
 
 export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: AppDispatch) => {
@@ -40,11 +50,9 @@ export const registerUser = ({ fullName, email, password, dob, roleId }: InputsR
     }
 };
 
-export const updateUserData = ({ fullName, email, dob, roleId }: PropsUpdateUserData) => async (
-    dispatch: AppDispatch,
-) => {
+export const updateUserData = ({ fullName, email, dob, id }: PropsUpdateUserData) => async (dispatch: AppDispatch) => {
     try {
-        const user = await putProfilePage({ fullName, email, dob, roleId });
+        const user = await putProfilePage({ fullName, email, dob, id });
         dispatch(updateProfilePage(user));
     } catch (err) {
         dispatch(setError(err.message));
@@ -57,5 +65,25 @@ export const loginUserByToken = () => async (dispatch: AppDispatch) => {
         dispatch(setInitialUser(user));
     } catch (err) {
         dispatch(setUserInitError(err.message));
+    }
+};
+
+export const changePassword = ({ oldPassword, newPassword }: onChangePassword, user: UserData | null) => async (
+    dispatch: AppDispatch,
+) => {
+    try {
+        const userData = await postChangePassword({ oldPassword, newPassword }, user);
+        dispatch(updateProfilePage(userData));
+    } catch (err) {
+        dispatch(setError(err.message));
+    }
+};
+
+export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch) => {
+    try {
+        const avatarUrl = await postUploadAvatar(formData);
+        dispatch(setUserAvatar(avatarUrl));
+    } catch (err) {
+        dispatch(setError(err.message));
     }
 };

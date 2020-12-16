@@ -3,6 +3,7 @@ import { InputsLogin } from '../components/header/account/LoginAccount';
 import { InputsRegister } from '../components/header/account/RegisterAccount';
 import { UserData } from '../models/User/userData';
 import { PropsUpdateUserData } from '../store/userStore/thunkUser';
+import { onChangePassword } from '../components/header/profilePage/ChangePassword';
 
 type UserDataAndToken = {
     token: { accessToken: string; refreshToken: string };
@@ -24,8 +25,8 @@ export const postRegisterUser = async (registerDataUser: InputsRegister): Promis
     localStorage.setItem('refreshToken', data.token.refreshToken);
 };
 
-export const putProfilePage = async ({ fullName, email, dob, roleId }: PropsUpdateUserData): Promise<UserData> => {
-    const res = await axios.put('/user/put', { fullName, email, dob, roleId });
+export const putProfilePage = async (user: PropsUpdateUserData): Promise<UserData> => {
+    const res = await axios.put('/user/put', { user });
     const data: UserData = res.data;
     return data;
 };
@@ -35,4 +36,20 @@ export const getLoginByToken = async (): Promise<UserData> => {
     const data: UserDataAndToken = res.data;
     localStorage.setItem('token', data.token.accessToken);
     return data.userData;
+};
+
+export const postUploadAvatar = async (formData: FormData) => {
+    const res = await axios.post('/user/uploadavatar', formData, {
+        headers: {
+            'content-type': 'multipart/form-data',
+        },
+    });
+    const avatarUrl: string = res.data;
+    return avatarUrl;
+};
+
+export const postChangePassword = async ({ oldPassword, newPassword }: onChangePassword, user: UserData | null) => {
+    const res = await axios.post('/account/changepassword', { oldPassword, newPassword, user });
+    const data: UserData = res.data.userData;
+    return data;
 };

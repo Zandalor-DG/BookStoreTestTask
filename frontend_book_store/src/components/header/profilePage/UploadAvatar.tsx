@@ -1,97 +1,71 @@
-import React from 'react';
-import { Upload, message } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Card, Form, Button, Figure } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { postUploadAvatar } from '../../../api/apiUser';
+import { StateReduxType } from '../../../store/reducers';
 import css from './ProfilePage.module.css';
-import { HttpRequestHeader, UploadChangeParam, UploadFile } from 'antd/lib/upload/interface';
 
-interface File {
-    type: string;
-    size: number;
-}
+const UploadAvatar: React.FC = () => {
+    const [isFormEmpty, setForm] = useState(true);
+    const { iconUrl } = useSelector((state: StateReduxType) => ({
+        iconUrl: state.userState.avatar,
+    }));
+    const [file, setFile] = useState<string | Blob>('');
+    const formData = new FormData();
 
-interface State {
-    imageUrl?: string;
-    loading: boolean;
-}
-
-function getBase64(img: Blob, callback: (reader: string) => void) {
-    const reader = new FileReader();
-    reader.onloadend = function () {
-        callback(reader.result as string);
-    };
-    // reader.addEventListener('load', () => {
-    //     callback(reader.result);
-    // });
-    reader.readAsDataURL(img);
-}
-
-function beforeUpload(file: File) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-}
-
-class UploadAvatar extends React.Component {
-    state: State = {
-        loading: false,
+    const submitUserImg = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        e.preventDefault();
+        formData.append('filedata', file);
+        postUploadAvatar(formData);
     };
 
-    handleChange = (info: UploadChangeParam<UploadFile<any>>) => {
-        if (info.file.status === 'uploading') {
-            this.setState({ loading: true });
-            return;
-        }
-
-        if (info.file.status === 'done' && info.file.originFileObj) {
-            // Get this url from response in real world.
-            getBase64(info.file.originFileObj, (imageUrl) =>
-                this.setState({
-                    imageUrl,
-                    loading: false,
-                }),
-            );
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.currentTarget.files![0];
+        setFile(file);
+        if (file) {
+            setForm(false);
+        } else {
+            setForm(true);
         }
     };
 
-    render() {
-        const { loading, imageUrl } = this.state;
-        const uploadButton = (
-            <div>
-                {loading ? <LoadingOutlined /> : <PlusOutlined />}
-                <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-        );
-
-        const headerFotHttp: { [key: string]: string } = {};
-        headerFotHttp['Content-type'] = 'multipart/form-data; boundary=----WebKitFormBoundary0wSL7e10uI4cARXu';
-
-        return (
-            // <form action="http://localhost:4000/account/uploadavatar" method="post" encType="multipart/form-data">
-            //     <input type="file" name="filedata" />
-            //     <input type="submit" value="submit" />
-            // </form>
-            <Upload
-                headers={headerFotHttp}
-                name="avatar"
-                listType="picture-card"
-                className={css.profilePage__photo}
-                showUploadList={false}
-                action="http://localhost:4000/account/uploadavatar"
-                method="POST"
-                multiple={true}
-                beforeUpload={beforeUpload}
-                onChange={this.handleChange}
-            >
-                {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-            </Upload>
-        );
-    }
-}
+    return (
+        <div className={css.profilePage__photo}>
+            <Card style={{ maxWidth: '15rem', margin: 'auto', textAlign: 'center' }}>
+                <Figure className="text-center mt-3">
+                    <Figure.Image
+                        width={200}
+                        height={200}
+                        alt="171x180"
+                        src={iconUrl}
+                        // roundedCircle
+                    />
+                </Figure>
+                <Card.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.File
+                                onChange={handleChange}
+                                id="exampleFormControlFile1"
+                                name="filedata"
+                                // label="Example file input"
+                            />
+                            <Button
+                                variant="outline-primary"
+                                className="mt-2"
+                                as="input"
+                                onClick={submitUserImg}
+                                type="submit"
+                                value="Load"
+                                size="sm"
+                                disabled={isFormEmpty}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Card.Body>
+            </Card>
+        </div>
+    );
+};
 
 export default UploadAvatar;

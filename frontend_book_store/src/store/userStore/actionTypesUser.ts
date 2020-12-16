@@ -9,11 +9,17 @@ export enum ActionTypeUser {
     SetIsOpenModal = 'SetIsOpenModal',
     InitUser = 'InitUser',
     UserInitError = 'UserInitError',
+    SetUserAvatar = 'SetUserAvatar',
 }
 
 export type ActionInitUser = {
     type: ActionTypeUser.InitUser;
     user: UserData;
+};
+
+export type ActionSetUserAvatar = {
+    type: ActionTypeUser.SetUserAvatar;
+    url: string;
 };
 
 export type ActionUserInitError = {
@@ -52,4 +58,5 @@ export type ActionUser =
     | ActionUpdateAvatar
     | ActionSetIsOpenModal
     | ActionUserInitError
-    | ActionSetError;
+    | ActionSetError
+    | ActionSetUserAvatar;

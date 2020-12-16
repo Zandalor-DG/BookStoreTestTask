@@ -7,12 +7,14 @@ const getInitialState = (): UserState => {
             user: null,
             isInitialize: true,
             isOpenModal: false,
+            avatar: 'images.jpeg',
         };
     }
     return {
         user: null,
         isInitialize: false,
         isOpenModal: false,
+        avatar: 'images.jpeg',
     };
 };
 

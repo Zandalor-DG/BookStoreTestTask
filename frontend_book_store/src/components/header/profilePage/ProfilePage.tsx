@@ -6,13 +6,15 @@ import { StateReduxType } from '../../../store/reducers';
 import moment from 'moment';
 import css from './ProfilePage.module.css';
 import UploadAvatar from './UploadAvatar';
+import { UserData } from '../../../models/User/userData';
 
 const ProfilePage: React.FC = () => {
     const [form] = Form.useForm();
     const user = useSelector((state: StateReduxType) => state.userState.user);
+    const id = user?.id as number;
     const dispatch = useDispatch();
-    const onSubmit = ({ fullName, email, dob, roleId }: PropsUpdateUserData) => {
-        dispatch(updateUserData({ fullName, email, dob, roleId }));
+    const onSubmit = ({ fullName, email, dob }: PropsUpdateUserData) => {
+        dispatch(updateUserData({ fullName, email, dob, id }));
     };
     if (!user) return null;
     const { dob, email, fullName } = user;
