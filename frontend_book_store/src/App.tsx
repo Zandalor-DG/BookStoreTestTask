@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUserByToken } from './store/userStore/thunkUser';
 import PrivateRoute from './components/common/privateRoute/PrivateRoute';
 import { StateReduxType } from './store/reducers';
+import SiderFilter from './components/body/sider/SiderFilter';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -36,10 +37,12 @@ const App: React.FC = () => {
                 <HeaderContent />
             </Header>
             <Layout>
-                <Sider>Sider</Sider>
+                <Sider>
+                    <SiderFilter />
+                </Sider>
                 <Content>
                     <Switch>
-                        <Route path="/" render={() => <h1>Hello</h1>} exact />
+                        <Route path="/" render={() => <Body />} exact />
                         <PrivateRoute path="/profile" exact>
                             <ProfilePage />
                         </PrivateRoute>
@@ -47,7 +50,6 @@ const App: React.FC = () => {
                             <ShoppingCart />
                         </PrivateRoute>
                     </Switch>
-                    <Body />
                 </Content>
             </Layout>
             <Footer>Footer</Footer>

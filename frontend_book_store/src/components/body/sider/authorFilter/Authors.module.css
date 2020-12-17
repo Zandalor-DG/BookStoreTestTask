@@ -1,0 +1,10 @@
+.authorFilter__dropdown {
+    display: flex;
+    flex-flow: row;
+}
+
+.authorFilter__button {
+    width: 199px;
+    text-align: left;
+    padding-left: 11px;
+}
