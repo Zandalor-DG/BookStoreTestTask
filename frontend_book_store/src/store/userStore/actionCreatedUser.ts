@@ -1,3 +1,4 @@
+import { baseURL } from '../../api/axios';
 import { UserData } from '../../models/User/userData';
 import {
     ActionInitUser,
@@ -7,7 +8,6 @@ import {
     ActionSetIsOpenModal,
     ActionSetUserAvatar,
     ActionTypeUser,
-    ActionUpdateAvatar,
     ActionUpdateProfilePage,
     ActionUserInitError,
 } from './actionTypesUser';
@@ -19,7 +19,7 @@ export const setInitialUser = (user: UserData): ActionInitUser => ({
 
 export const setUserAvatar = (url: string): ActionSetUserAvatar => ({
     type: ActionTypeUser.SetUserAvatar,
-    url,
+    url: baseURL + url,
 });
 
 export const logOut = (): ActionLogOut => ({
@@ -39,10 +39,6 @@ export const updateProfilePage = (updateData: UserData): ActionUpdateProfilePage
 export const setIsOpenModal = (isOpen: boolean): ActionSetIsOpenModal => ({
     type: ActionTypeUser.SetIsOpenModal,
     isOpen,
-});
-
-export const setUpdateAvatarUser = (): ActionUpdateAvatar => ({
-    type: ActionTypeUser.UpdateAvatar,
 });
 
 export const setUserInitError = (error: string): ActionUserInitError => ({

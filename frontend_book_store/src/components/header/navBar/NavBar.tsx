@@ -2,19 +2,20 @@ import React from 'react';
 import css from './NavBar.module.css';
 import Sandbox from '../account/modal/Sandbox';
 import AccountPage from '../account/AccountPage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { NavLink } from 'react-router-dom';
 import { ShoppingOutlined, UserDeleteOutlined, UserOutlined } from '@ant-design/icons';
-import { userInitialState } from '../../../data/UserInitialState';
 import { logOut } from '../../../store/userStore/actionCreatedUser';
 
 const NavBar: React.FunctionComponent = () => {
-    // const onlogOut = () => {
-    //     localStorage.removeItem('token');
-    //     localStorage.removeItem('refreshToken');
-    //     logOut();
-    // };
+    const dispatch = useDispatch();
+
+    const onLogOut = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        dispatch(logOut());
+    };
 
     const user = useSelector((state: StateReduxType) => state.userState.user);
     const signOrProfilePage = !user ? (
@@ -29,7 +30,7 @@ const NavBar: React.FunctionComponent = () => {
 
             <UserDeleteOutlined
                 className={css.navLink}
-                //onClick={onlogOut}
+                onClick={onLogOut}
                 style={{ fontSize: '30px', marginLeft: '40px' }}
             />
         </>

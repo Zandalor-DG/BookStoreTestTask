@@ -7,6 +7,6 @@ const userRouter = express.Router();
 userRouter.put('/putuser', tokenChecker, userController.putUser);
 userRouter.delete('/delete', tokenChecker, userController.deleteUser);
 userRouter.get('/getall', tokenChecker, userController.getAllUsers);
-userRouter.post('/uploadavatar', userController.uploadAvatar);
+userRouter.post('/uploadavatar', tokenChecker, userController.uploadAvatar);
 
 module.exports = userRouter;

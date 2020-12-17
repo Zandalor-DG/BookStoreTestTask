@@ -3,7 +3,7 @@ import {
     postChangePassword,
     postLoginUser,
     postRegisterUser,
-    postUploadAvatar,
+    putUploadAvatar,
     putProfilePage,
 } from '../../api/apiUser';
 import { InputsLogin } from '../../components/header/account/LoginAccount';
@@ -81,7 +81,7 @@ export const changePassword = ({ oldPassword, newPassword }: onChangePassword, u
 
 export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch, user: UserData) => {
     try {
-        const avatarUrl = await postUploadAvatar(formData, user);
+        const avatarUrl = await putUploadAvatar(formData, user);
         dispatch(setUserAvatar(avatarUrl));
     } catch (err) {
         dispatch(setError(err.message));

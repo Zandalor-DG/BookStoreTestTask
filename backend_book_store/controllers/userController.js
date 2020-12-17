@@ -44,24 +44,39 @@ exports.putUser = async (req, res) => {
 
 exports.uploadAvatar = async (req, res) => {
   try {
-    const { path, filename } = req.file;
-    if (!path && !originalname) {
+    let { filename, path } = req.file;
+    const payload = req.decoded;
+    if (payload.type !== 'access') {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+    // const format = originalname.split('.');
+
+    const userId = payload.userId;
+
+    if (!path && !filename) {
       res.status(400).json({ message: 'File upload error' });
     }
 
-    await models.Files.create({
+    // const fileCreated = await models.Files.create({
+    //   original_name: filename + '.' + format[1],
+    //   path_name: path + '.' + format[1],
+    // });
+
+    const avatar = await models.Files.create({
       original_name: filename,
       path_name: path,
     });
 
-    const avatar = await models.Files.findOne({
-      raw: true,
-      where: { original_name: filename },
-    });
+    await models.User.update(
+      {
+        avatarId: avatar.id,
+      },
+      { where: { id: userId } }
+    );
 
-    res.status(202).json({ message: 'Accepted' });
-  } catch (error) {
-    return null;
+    res.status(202).json({ message: 'Accepted', avatar: avatar.path_name });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message }).end();
   }
 };
 

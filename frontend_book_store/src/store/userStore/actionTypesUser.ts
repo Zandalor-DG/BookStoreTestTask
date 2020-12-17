@@ -3,7 +3,6 @@ import { UserData } from '../../models/User/userData';
 export enum ActionTypeUser {
     UpdateProfilePage = 'UpdateProfilePage',
     Authorized = 'Authorized',
-    UpdateAvatar = 'UpdateAvatar',
     ProfilePage = 'ProfilePage',
     SetError = 'SetError',
     SetIsOpenModal = 'SetIsOpenModal',
@@ -42,10 +41,6 @@ export type ActionSetAuthorized = {
     profilePage: UserData;
 };
 
-export type ActionUpdateAvatar = {
-    type: ActionTypeUser.UpdateAvatar;
-};
-
 export type ActionSetIsOpenModal = {
     type: ActionTypeUser.SetIsOpenModal;
     isOpen: boolean;
@@ -60,7 +55,6 @@ export type ActionUser =
     | ActionInitUser
     | ActionUpdateProfilePage
     | ActionSetAuthorized
-    | ActionUpdateAvatar
     | ActionSetIsOpenModal
     | ActionUserInitError
     | ActionSetError
