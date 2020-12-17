@@ -7,6 +7,8 @@ const checkValue = (valueCheck, method) => {
   }
 };
 
+const baseUrl = 'http://localhost:4000/';
+
 exports.putUser = async (req, res) => {
   try {
     const { oldPassword, newPassword, user } = req.body;
@@ -49,7 +51,6 @@ exports.uploadAvatar = async (req, res) => {
     if (payload.type !== 'access') {
       return res.status(400).json({ message: 'Invalid token' });
     }
-    // const format = originalname.split('.');
 
     const userId = payload.userId;
 
@@ -57,14 +58,9 @@ exports.uploadAvatar = async (req, res) => {
       res.status(400).json({ message: 'File upload error' });
     }
 
-    // const fileCreated = await models.Files.create({
-    //   original_name: filename + '.' + format[1],
-    //   path_name: path + '.' + format[1],
-    // });
-
     const avatar = await models.Files.create({
       original_name: filename,
-      path_name: path,
+      path_name: baseUrl + path,
     });
 
     await models.User.update(

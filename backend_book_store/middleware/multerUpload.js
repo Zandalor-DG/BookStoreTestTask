@@ -2,8 +2,11 @@ const multer = require('multer');
 
 exports.storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads');
+    cb(null, 'public/uploads');
   },
+  // filename: (req, file, cb) => {
+  //   cb(null, encoding + file.originalname);
+  // },
 });
 
 exports.fileFilter = (req, file, cb) => {

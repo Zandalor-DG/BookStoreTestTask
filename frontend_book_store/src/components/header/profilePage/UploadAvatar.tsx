@@ -1,26 +1,20 @@
 import React, { useState } from 'react';
 import { Card, Form, Button, Figure } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import { putUploadAvatar } from '../../../api/apiUser';
+import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
+import { uploadAvatar } from '../../../store/userStore/thunkUser';
 import css from './ProfilePage.module.css';
 
 const UploadAvatar: React.FC = () => {
-    const { iconUrl, user } = useSelector((state: StateReduxType) => ({
-        iconUrl: state.userState.avatar,
-        user: state.userState.user,
-    }));
+    const iconUrl = useSelector((state: StateReduxType) => state.userState.user?.avatar);
     const [userAvatar, setUserAvatar] = useState<string | Blob>('');
+    const dispatch = useDispatch();
+
     const submitUserImg = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const formData = new FormData();
         e.preventDefault();
-        if (user === null) {
-            return;
-        }
         formData.append('filedata', userAvatar);
-        console.log(formData.getAll('filedata'));
-
-        putUploadAvatar(formData, user);
+        dispatch(uploadAvatar(formData));
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +28,7 @@ const UploadAvatar: React.FC = () => {
         <div className={css.profilePage__photo}>
             <Card style={{ maxWidth: '15rem', margin: 'auto', textAlign: 'center' }}>
                 <Figure className="text-center mt-3">
-                    <Figure.Image width={200} height={200} alt="171x180" src={iconUrl} />
+                    <Figure.Image width={200} height={200} alt="171x180" src={iconUrl || 'images.jpeg'} />
                 </Figure>
                 <Card.Body>
                     <Form>

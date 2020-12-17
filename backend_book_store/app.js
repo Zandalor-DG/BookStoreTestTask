@@ -14,7 +14,7 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(__dirname + '/uploads'));
+app.use('/public', express.static(__dirname + '/public'));
 app.use(
   multer({
     storage: multerUpload.storageConfig,

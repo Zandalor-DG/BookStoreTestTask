@@ -38,13 +38,13 @@ export const getLoginByToken = async (): Promise<UserData> => {
     return data.userData;
 };
 
-export const putUploadAvatar = async (formData: FormData, user: UserData) => {
+export const putUploadAvatar = async (formData: FormData) => {
     const res = await axios.post('/user/uploadavatar', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     });
-    const avatarUrl: string = res.data;
+    const avatarUrl: string = res.data.avatar;
     return avatarUrl;
 };
 

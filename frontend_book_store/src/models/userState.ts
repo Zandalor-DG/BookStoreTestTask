@@ -5,5 +5,4 @@ export type UserState = {
     isInitialize: boolean;
     isOpenModal: boolean;
     error?: string;
-    avatar?: string;
 };

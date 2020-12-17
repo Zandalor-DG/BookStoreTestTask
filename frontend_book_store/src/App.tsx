@@ -38,7 +38,6 @@ const App: React.FC = () => {
             <Layout>
                 <Sider>Sider</Sider>
                 <Content>
-                    Content
                     <Switch>
                         <Route path="/" render={() => <h1>Hello</h1>} exact />
                         <PrivateRoute path="/profile" exact>

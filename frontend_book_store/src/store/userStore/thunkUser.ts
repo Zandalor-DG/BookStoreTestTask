@@ -79,9 +79,9 @@ export const changePassword = ({ oldPassword, newPassword }: onChangePassword, u
     }
 };
 
-export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch, user: UserData) => {
+export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch) => {
     try {
-        const avatarUrl = await putUploadAvatar(formData, user);
+        const avatarUrl = await putUploadAvatar(formData);
         dispatch(setUserAvatar(avatarUrl));
     } catch (err) {
         dispatch(setError(err.message));

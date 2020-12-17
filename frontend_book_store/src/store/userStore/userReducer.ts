@@ -17,7 +17,14 @@ const userReducer = (state = userInitialState, action: ActionUser): UserState =>
             return { ...state, user: { ...action.updateData } };
         }
         case ActionTypeUser.SetUserAvatar: {
-            return { ...state, avatar: action.url };
+            if (!state.user) return state;
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    avatar: action.url,
+                },
+            };
         }
         case ActionTypeUser.SetIsOpenModal: {
             return {

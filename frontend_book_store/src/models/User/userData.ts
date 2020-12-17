@@ -7,4 +7,5 @@ export interface UserData {
     dob: Date;
     roleId: userRole;
     id?: number;
+    avatar: string | null;
 }
