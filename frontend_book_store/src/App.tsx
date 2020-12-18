@@ -36,22 +36,17 @@ const App: React.FC = () => {
             <Header>
                 <HeaderContent />
             </Header>
-            <Layout>
-                <Sider>
-                    <SiderFilter />
-                </Sider>
-                <Content>
-                    <Switch>
-                        <Route path="/" render={() => <Body />} exact />
-                        <PrivateRoute path="/profile" exact>
-                            <ProfilePage />
-                        </PrivateRoute>
-                        <PrivateRoute path="/cart" exact>
-                            <ShoppingCart />
-                        </PrivateRoute>
-                    </Switch>
-                </Content>
-            </Layout>
+
+            <Switch>
+                <Route path="/" render={() => <Body />} exact />
+                <PrivateRoute path="/profile" exact>
+                    <ProfilePage />
+                </PrivateRoute>
+                <PrivateRoute path="/cart" exact>
+                    <ShoppingCart />
+                </PrivateRoute>
+            </Switch>
+
             <Footer>Footer</Footer>
         </Layout>
     );
