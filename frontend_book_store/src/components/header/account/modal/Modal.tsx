@@ -1,6 +1,5 @@
 import React from 'react';
 import Portal from '../../../common/portal/Portal';
-import { Button, Radio } from 'antd';
 import './Modal.css';
 import { CloseCircleFilled } from '@ant-design/icons';
 import { StateReduxType } from '../../../../store/reducers';

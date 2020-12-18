@@ -1,0 +1,17 @@
+.body__booksCard {
+    max-width: 90%;
+    margin: auto;
+}
+.booksCard__wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: auto;
+}
+
+.booksCard__cardBook {
+    min-width: 28%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
