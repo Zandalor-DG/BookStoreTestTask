@@ -59,7 +59,7 @@ exports.signIn = async (req, res) => {
       email: user.email,
       dob: user.dob,
       role: roleUserAuth.dataValues.name,
-      avatar: avatarUrl.path_name,
+      avatar: !avatarUrl ? '' : avatarUrl.path_name,
     };
     res.json({ userData, token });
   } catch (err) {
@@ -89,7 +89,7 @@ exports.signInByToken = async (req, res) => {
 
     const userData = {
       ...user,
-      avatar: avatarUrl.path_name,
+      avatar: !avatarUrl ? '' : avatarUrl.path_name,
     };
     res.json({ userData, token: tokenNew });
   } catch (err) {
