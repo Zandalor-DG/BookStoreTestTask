@@ -58,7 +58,7 @@ exports.uploadAvatar = async (req, res) => {
       res.status(400).json({ message: 'File upload error' });
     }
 
-    const avatar = await models.Files.create({
+    const avatar = await models.File.create({
       original_name: filename,
       path_name: baseUrl + path,
     });

@@ -2,7 +2,6 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const models = require('../database/models');
 const updateTokens = require('../middleware/updateTokens');
-const { use } = require('../routes/userRouter');
 
 exports.signUp = async (req, res) => {
   try {
@@ -51,7 +50,7 @@ exports.signIn = async (req, res) => {
     const token = await updateTokens(user.id);
     const roleUserAuth = await models.Role.findByPk(user.roleId);
     if (user.avatarId) {
-      avatarUrl = await models.Files.findByPk(user.avatarId);
+      avatarUrl = await models.File.findByPk(user.avatarId);
     }
     const userData = {
       id: user.id,
@@ -84,7 +83,7 @@ exports.signInByToken = async (req, res) => {
     });
 
     if (user.avatarId) {
-      avatarUrl = await models.Files.findByPk(user.avatarId);
+      avatarUrl = await models.File.findByPk(user.avatarId);
     }
 
     const userData = {
