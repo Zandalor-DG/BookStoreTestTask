@@ -8,14 +8,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      File.belongsTo(models.User, {
+      // File.belongsTo(models.User, {
+      //   foreignKey: 'avatarId',
+      //   as: 'userAvatar',
+      //   /* options */
+      // });
+      // File.belongsTo(models.Book, {
+      //   foreignKey: 'coverId',
+      //   as: 'bookCover',
+      //   /* options */
+      // });
+      models.User.belongsTo(File, {
+        foreignKey: 'avatarId',
+        //as: 'userAvatar',
         /* options */
       });
-      /*Foo.hasOne(Bar, {
-        foreignKey: 'myFooId'
-      });
-        Bar.belongsTo(Foo);*/
-      File.belongsTo(models.Book, {
+      models.Book.belongsTo(File, {
+        foreignKey: 'coverId',
+        //as: 'bookCover',
         /* options */
       });
       // define association here

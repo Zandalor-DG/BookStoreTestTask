@@ -1,4 +1,6 @@
 export interface BookStoreData {
+    id: number;
+    name: string;
     author: string;
     publishHouse: string;
     genre: string;

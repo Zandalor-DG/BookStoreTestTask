@@ -8,15 +8,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.File.hasOne(User, {
+      // models.File.hasOne(User, {
+      //   foreignKey: 'avatarId',
+      //   as: 'avatar',
+      //   onDelete: 'CASCADE',
+      //   /* options */
+      // });
+      User.hasOne(models.File, {
         foreignKey: 'avatarId',
+        //as: 'avatar',
+        onDelete: 'CASCADE',
         /* options */
       });
-      // User.hasOne(models.File, {
-      //   // foreignKey: 'avatarId',
-      //   // as: 'avatar',
-      //   onDelete: 'cascade',
-      // });
     }
   }
   User.init(

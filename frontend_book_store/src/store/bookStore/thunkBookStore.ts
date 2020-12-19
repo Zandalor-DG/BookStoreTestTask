@@ -1,12 +1,13 @@
 import { postAllBooks } from '../../api/apiBookStore';
 import { PaginationParams } from '../../models/BookStore/paginationParams';
 import { AppDispatch } from '../reducers';
-import { SetBookStoreState, setErrorBookStore } from './actionCreatedUser';
+import { SetBookStoreState, setErrorBookStore, setTotalPage } from './actionCreatedUser';
 
-export const allBooks = ({ pageSize, page }: PaginationParams) => async (dispatch: AppDispatch) => {
+export const allBooks = ({ page, pageSize }: PaginationParams) => async (dispatch: AppDispatch) => {
     try {
-        const books = await postAllBooks({ pageSize, page });
-        dispatch(SetBookStoreState(books));
+        const data = await postAllBooks({ page, pageSize });
+        dispatch(SetBookStoreState(data.booksVM));
+        dispatch(setTotalPage(data.left));
     } catch (err) {
         dispatch(setErrorBookStore(err.message));
     }
