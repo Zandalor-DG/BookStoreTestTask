@@ -3,7 +3,7 @@ import {
     ActionInitUser,
     ActionLogOut,
     ActionSetAuthorized,
-    ActionSetError,
+    ActionSetErrorUser,
     ActionSetIsOpenModal,
     ActionSetUserAvatar,
     ActionTypeUser,
@@ -45,7 +45,7 @@ export const setUserInitError = (error: string): ActionUserInitError => ({
     error,
 });
 
-export const setError = (error: string): ActionSetError => ({
+export const setErrorUser = (error: string): ActionSetErrorUser => ({
     type: ActionTypeUser.SetError,
     error,
 });

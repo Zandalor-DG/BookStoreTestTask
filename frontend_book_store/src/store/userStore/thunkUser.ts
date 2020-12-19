@@ -13,7 +13,7 @@ import { UserData } from '../../models/User/userData';
 import { userRole } from '../../models/User/userRoleEnum';
 import { AppDispatch } from '../reducers';
 import {
-    setError,
+    setErrorUser,
     setAuthorizedUser,
     updateProfilePage,
     setInitialUser,
@@ -34,7 +34,7 @@ export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: 
         const user = await postLoginUser({ email, password });
         dispatch(setAuthorizedUser(user));
     } catch (err) {
-        dispatch(setError(err.message));
+        dispatch(setErrorUser(err.message));
     }
 };
 
@@ -46,7 +46,7 @@ export const registerUser = ({ fullName, email, password, dob, roleId }: InputsR
         const user = await getLoginByToken();
         dispatch(setAuthorizedUser(user));
     } catch (err) {
-        dispatch(setError(err.message));
+        dispatch(setErrorUser(err.message));
     }
 };
 
@@ -55,7 +55,7 @@ export const updateUserData = ({ fullName, email, dob, id }: PropsUpdateUserData
         const user = await putProfilePage({ fullName, email, dob, id });
         dispatch(updateProfilePage(user));
     } catch (err) {
-        dispatch(setError(err.message));
+        dispatch(setErrorUser(err.message));
     }
 };
 
@@ -75,7 +75,7 @@ export const changePassword = ({ oldPassword, newPassword }: onChangePassword, u
         const userData = await postChangePassword({ oldPassword, newPassword }, user);
         dispatch(updateProfilePage(userData));
     } catch (err) {
-        dispatch(setError(err.message));
+        dispatch(setErrorUser(err.message));
     }
 };
 
@@ -84,6 +84,6 @@ export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch
         const avatarUrl = await putUploadAvatar(formData);
         dispatch(setUserAvatar(avatarUrl));
     } catch (err) {
-        dispatch(setError(err.message));
+        dispatch(setErrorUser(err.message));
     }
 };

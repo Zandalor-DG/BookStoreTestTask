@@ -46,7 +46,7 @@ export type ActionSetIsOpenModal = {
     isOpen: boolean;
 };
 
-export type ActionSetError = {
+export type ActionSetErrorUser = {
     type: ActionTypeUser.SetError;
     error: string;
 };
@@ -57,6 +57,6 @@ export type ActionUser =
     | ActionSetAuthorized
     | ActionSetIsOpenModal
     | ActionUserInitError
-    | ActionSetError
+    | ActionSetErrorUser
     | ActionSetUserAvatar
     | ActionLogOut;

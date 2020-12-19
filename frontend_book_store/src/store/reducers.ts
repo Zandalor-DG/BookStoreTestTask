@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import store from '.';
+import bookStoreReducer from './bookStore/bookStroeReducer';
 import userReducer from './userStore/userReducer';
 
 const reducers = combineReducers({
     userState: userReducer,
+    bookStoreState: bookStoreReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

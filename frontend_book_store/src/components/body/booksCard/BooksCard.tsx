@@ -2,9 +2,11 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Card } from 'antd';
 import css from './BooksCard.module.css';
+import PaginationBookStore from './PaginationBookStore';
 
 const BooksCard: React.FunctionComponent = () => {
     const { Meta } = Card;
+
     return (
         <div className={css.booksCard__wrapper}>
             <Card
@@ -79,6 +81,7 @@ const BooksCard: React.FunctionComponent = () => {
             >
                 <Meta title="Europe Street beat" description="www.instagram.com" />
             </Card>
+            <PaginationBookStore />
         </div>
     );
 };
