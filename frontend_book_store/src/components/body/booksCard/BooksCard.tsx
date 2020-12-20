@@ -6,7 +6,6 @@ import PaginationBookStore from './PaginationBookStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { allBooks } from '../../../store/bookStore/thunkBookStore';
-import { BookStoreData } from '../../../models/BookStore/bookStoreData';
 import Preloader from '../../common/preloader/Preloader';
 
 const BooksCard: React.FunctionComponent = () => {
@@ -33,7 +32,7 @@ const BooksCard: React.FunctionComponent = () => {
                     key={a.id}
                     className={css.booksCard__cardBook}
                     hoverable
-                    style={{ width: 240 }}
+                    style={{ width: 250 }}
                     cover={<img alt={a.name} src={a.pathCover} />}
                 >
                     <Meta title={`${a.name} by ${a.author}`} description="www.instagram.com" />

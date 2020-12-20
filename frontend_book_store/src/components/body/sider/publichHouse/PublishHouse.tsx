@@ -1,9 +1,20 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Select } from 'antd';
+import { useSelector } from 'react-redux';
+import { StateReduxType } from '../../../../store/reducers';
+import { BookStoreData } from '../../../../models/BookStore/bookStoreData';
 
 const PublishHouse: React.FC = () => {
     const { Option } = Select;
+    const publishHouse = useSelector((state: StateReduxType) => state.bookStoreState.books);
+    const publishHouseOption = publishHouse?.map((a: BookStoreData) => {
+        return (
+            <Option key={a.id} value={a.publishHouse}>
+                {a.publishHouse}
+            </Option>
+        );
+    });
 
     function onChange(value: string) {
         console.log(`selected ${value}`);
@@ -22,9 +33,7 @@ const PublishHouse: React.FC = () => {
             onChange={onChange}
             onSearch={onSearch}
         >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            {publishHouseOption}
         </Select>
     );
 };

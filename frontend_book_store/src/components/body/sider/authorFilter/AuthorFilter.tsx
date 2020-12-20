@@ -1,39 +1,40 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import css from './Authors.module.css';
-import { Menu, Dropdown, Button, Space } from 'antd';
+import { Select } from 'antd';
+import { useSelector } from 'react-redux';
+import { StateReduxType } from '../../../../store/reducers';
+import { BookStoreData } from '../../../../models/BookStore/bookStoreData';
 
 const AuthorFilter: React.FC = () => {
-    const menu = (
-        <Menu>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="/">
-                    1st menu item
-                </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="/">
-                    2nd menu item
-                </a>
-            </Menu.Item>
-            <Menu.Item>
-                <a target="_blank" rel="noopener noreferrer" href="/">
-                    3rd menu item
-                </a>
-            </Menu.Item>
-        </Menu>
-    );
+    const { Option } = Select;
+    const author = useSelector((state: StateReduxType) => state.bookStoreState.books);
+    const authorOption = author?.map((a: BookStoreData) => {
+        return (
+            <Option key={a.id} value={a.author}>
+                {a.author}
+            </Option>
+        );
+    });
+
+    function onChange(value: string) {
+        console.log(`selected ${value}`);
+    }
+
+    function onSearch(val: string) {
+        console.log('search:', val);
+    }
 
     return (
-        <>
-            <Space direction="vertical">
-                <Space wrap className={css.authorFilter__dropdown}>
-                    <Dropdown overlay={menu} placement="bottomCenter">
-                        <Button className={css.authorFilter__button}>Authors</Button>
-                    </Dropdown>
-                </Space>
-            </Space>
-        </>
+        <Select
+            showSearch
+            style={{ width: 199 }}
+            placeholder="Select an author"
+            optionFilterProp="children"
+            onChange={onChange}
+            onSearch={onSearch}
+        >
+            {authorOption}
+        </Select>
     );
 };
 
