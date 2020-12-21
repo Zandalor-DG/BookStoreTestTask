@@ -14,10 +14,22 @@ module.exports = (sequelize, DataTypes) => {
       //   onDelete: 'CASCADE',
       //   /* options */
       // });
+      Book.belongsTo(models.Author, {
+        foreignKey: 'id',
+      });
+      Book.belongsTo(models.Publish, {
+        foreignKey: 'id',
+      });
       Book.hasOne(models.File, {
         foreignKey: 'id',
         //as: 'cover',
         onDelete: 'CASCADE',
+      });
+      Book.belongsToMany(models.Genre, {
+        through: 'Genre_Book',
+        as: 'Genre',
+        //foreignKey: 'bookId',
+        foreignKey: 'genreId',
       });
       // define association here
     }
@@ -25,10 +37,9 @@ module.exports = (sequelize, DataTypes) => {
   Book.init(
     {
       name: DataTypes.STRING,
-      author: DataTypes.STRING,
-      genre: DataTypes.STRING,
+      authorId: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
-      publishHouse: DataTypes.STRING,
+      publishId: DataTypes.INTEGER,
       coverId: DataTypes.INTEGER,
     },
     {
