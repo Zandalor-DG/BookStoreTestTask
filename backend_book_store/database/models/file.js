@@ -18,16 +18,16 @@ module.exports = (sequelize, DataTypes) => {
       //   as: 'bookCover',
       //   /* options */
       // });
-      models.User.belongsTo(File, {
-        foreignKey: 'avatarId',
-        //as: 'userAvatar',
-        /* options */
-      });
-      models.Book.belongsTo(File, {
-        foreignKey: 'coverId',
-        //as: 'bookCover',
-        /* options */
-      });
+      // models.File.belongsTo(File, {
+      //   foreignKey: 'avatarId',
+      //   //as: 'userAvatar',
+      //   /* options */
+      // });
+      // models.Book.belongsTo(File, {
+      //   foreignKey: 'id',
+      //   //as: 'bookCover',
+      //   /* options */
+      // });
       // define association here
     }
   }

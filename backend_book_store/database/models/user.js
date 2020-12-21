@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       //   /* options */
       // });
       User.hasOne(models.File, {
-        foreignKey: 'avatarId',
+        foreignKey: 'id',
         //as: 'avatar',
         onDelete: 'CASCADE',
         /* options */

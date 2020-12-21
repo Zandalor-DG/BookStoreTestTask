@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       //   /* options */
       // });
       Book.hasOne(models.File, {
-        foreignKey: 'coverId',
+        foreignKey: 'id',
         //as: 'cover',
         onDelete: 'CASCADE',
       });

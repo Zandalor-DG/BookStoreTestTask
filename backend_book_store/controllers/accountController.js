@@ -13,7 +13,9 @@ exports.signUp = async (req, res) => {
     }
     const passwordHash = bcrypt.hashSync(password, 10);
 
-    await models.User.create({
+    const user = await models.User.create({
+      // raw: true,
+      // attributes: { exclude: ['password'] },
       fullName: fullName,
       email: email,
       password: passwordHash,

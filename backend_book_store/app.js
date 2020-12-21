@@ -8,9 +8,9 @@ const multerUpload = require('./middleware/multerUpload');
 
 const app = express();
 
-const http = require('http');
+//const http = require('http');
 const bookStoreRouter = require('./routes/bookStoreRouter');
-const server = http.createServer(app);
+//const server = http.createServer(app);
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,4 +27,4 @@ app.use('/account', accountRouter);
 app.use('/user', userRouter);
 app.use('/book', bookStoreRouter);
 
-server.listen(4000, () => console.log('server started'));
+app.listen(4000, () => console.log('server started'));
