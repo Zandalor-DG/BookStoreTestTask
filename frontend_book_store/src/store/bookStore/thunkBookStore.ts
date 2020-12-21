@@ -7,7 +7,7 @@ export const allBooks = ({ page, pageSize }: PaginationParams) => async (dispatc
     try {
         const data = await postAllBooks({ page, pageSize });
         dispatch(SetBookStoreState(data.booksVM));
-        dispatch(setTotalPage(data.left));
+        dispatch(setTotalPage(data.count));
     } catch (err) {
         dispatch(setErrorBookStore(err.message));
     }

@@ -4,7 +4,7 @@ import axios from './axios';
 
 export interface propsAllBoks {
     booksVM: BookStoreData[];
-    left: number;
+    count: number;
 }
 
 export const postAllBooks = async ({ pageSize, page }: PaginationParams): Promise<propsAllBoks> => {

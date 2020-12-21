@@ -6,7 +6,7 @@ const paginateMiddleware = (req, res, next) => {
       throw new Error('Not offset or limit data');
     }
     const paginate = (page, pageSize) => {
-      const offset = page * pageSize;
+      const offset = (page - 1) * pageSize;
       const limit = pageSize;
 
       return {

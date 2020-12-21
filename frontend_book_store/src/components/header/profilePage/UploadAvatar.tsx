@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Form, Button, Figure } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import { baseURL } from '../../../api/axios';
 import { StateReduxType } from '../../../store/reducers';
 import { uploadAvatar } from '../../../store/userStore/thunkUser';
 import css from './ProfilePage.module.css';
@@ -9,6 +10,7 @@ const UploadAvatar: React.FC = () => {
     const iconUrl = useSelector((state: StateReduxType) => state.userState.user?.avatar);
     const [userAvatar, setUserAvatar] = useState<string | Blob>('');
     const dispatch = useDispatch();
+    const urlImg = !iconUrl ? 'images.jpeg' : baseURL + iconUrl;
 
     const submitUserImg = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const formData = new FormData();
@@ -28,7 +30,7 @@ const UploadAvatar: React.FC = () => {
         <div className={css.profilePage__photo}>
             <Card style={{ maxWidth: '15rem', margin: 'auto', textAlign: 'center' }}>
                 <Figure className="text-center mt-3">
-                    <Figure.Image width={200} height={200} alt="171x180" src={iconUrl || 'images.jpeg'} />
+                    <Figure.Image width={200} height={200} alt="171x180" src={urlImg} />
                 </Figure>
                 <Card.Body>
                     <Form>

@@ -44,6 +44,7 @@ const userReducer = (state = userInitialState, action: ActionUser): UserState =>
             return {
                 ...userInitialState,
                 error: action.error,
+                isInitialize: true,
             };
         default:
             return { ...state };

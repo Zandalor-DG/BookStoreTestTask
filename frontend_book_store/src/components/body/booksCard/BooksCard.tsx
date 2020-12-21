@@ -17,9 +17,9 @@ const BooksCard: React.FunctionComponent = () => {
         if (books) {
             return;
         }
-        dispatch(allBooks({ page: 0, pageSize: 6 }));
+        dispatch(allBooks({ page: 1, pageSize: 6 }));
         return () => {
-            dispatch(allBooks({ page: 0, pageSize: 6 }));
+            dispatch(allBooks({ page: 1, pageSize: 6 }));
         };
     });
 
@@ -32,18 +32,28 @@ const BooksCard: React.FunctionComponent = () => {
                     key={a.id}
                     className={css.booksCard__cardBook}
                     hoverable
-                    style={{ width: 250 }}
-                    cover={<img alt={a.name} src={a.pathCover} />}
+                    style={{ width: '250px' }}
+                    cover={
+                        <img
+                            alt={a.name}
+                            src={a.pathCover}
+                            style={{ width: '250px', height: '500px', objectFit: 'cover' }}
+                        />
+                    }
                 >
-                    <Meta title={`${a.name} by ${a.author}`} description="www.instagram.com" />
+                    <Meta
+                        title={`${a.name} by ${a.author}`}
+                        description={`genre: ${a.genre} 
+                        publish house: ${a.publishHouse}`}
+                    />
                 </Card>
             );
         })
     );
 
     return (
-        <div className={css.booksCard__wrapper}>
-            {booksCart}
+        <div className="body__booksCard">
+            <div className={css.booksCard__wrapper}>{booksCart}</div>
             <PaginationBookStore />
         </div>
     );

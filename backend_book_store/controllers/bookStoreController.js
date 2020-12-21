@@ -22,7 +22,7 @@ exports.allBooks = async (req, res) => {
     });
 
     // const books = await models.Book.findAndCountAll({ limit, offset });
-    const left = books.count - books.rows.length;
+    const count = books.count;
     const booksVM = books.rows.map((a) => {
       return {
         id: a.id,
@@ -34,6 +34,30 @@ exports.allBooks = async (req, res) => {
         pathCover: a.File.path_name,
       };
     });
+
+    res.status(201).json({ booksVM, count });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.filterBook = async (req, res) => {
+  try {
+    const { offset, limit, author, genre, publishHouse } = req.body;
+
+    let filterBook;
+
+    if (!offset && !limit) {
+      throw new Error('Email already used');
+    }
+
+    switch (key) {
+      case value:
+        break;
+
+      default:
+        break;
+    }
 
     res.status(201).json({ booksVM, left });
   } catch (err) {

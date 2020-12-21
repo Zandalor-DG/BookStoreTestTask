@@ -22,10 +22,7 @@ app.use(
     fileFilter: multerUpload.fileFilter,
   }).single('filedata')
 );
-app.use(function (err, req, res, next) {
-  console.log('This is the invalid field ->', err.field);
-  next(err);
-});
+
 app.use('/account', accountRouter);
 app.use('/user', userRouter);
 app.use('/book', bookStoreRouter);

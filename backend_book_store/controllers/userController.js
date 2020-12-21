@@ -7,8 +7,6 @@ const checkValue = (valueCheck, method) => {
   }
 };
 
-const baseUrl = 'http://localhost:4000/';
-
 exports.putUser = async (req, res) => {
   try {
     const { oldPassword, newPassword, user } = req.body;
@@ -60,7 +58,7 @@ exports.uploadAvatar = async (req, res) => {
 
     const avatar = await models.File.create({
       original_name: filename,
-      path_name: baseUrl + path,
+      path_name: path,
     });
 
     await models.User.update(
