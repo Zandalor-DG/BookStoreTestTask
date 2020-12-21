@@ -1,9 +1,9 @@
 export interface BookStoreData {
     id: number;
     name: string;
-    author: string;
-    publishHouse: string;
-    genre: string;
+    Author: { name: string };
+    Publish: { name: string };
+    Genre: [{ name: string }];
     price: number;
-    pathCover: string;
+    File: { path_name: string };
 }

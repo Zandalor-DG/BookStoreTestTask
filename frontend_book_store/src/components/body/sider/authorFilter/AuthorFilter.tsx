@@ -10,8 +10,8 @@ const AuthorFilter: React.FC = () => {
     const author = useSelector((state: StateReduxType) => state.bookStoreState.books);
     const authorOption = author?.map((a: BookStoreData) => {
         return (
-            <Option key={a.id} value={a.author}>
-                {a.author}
+            <Option key={a.id} value={a.Author.name}>
+                {a.Author.name}
             </Option>
         );
     });

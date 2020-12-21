@@ -10,8 +10,8 @@ const PublishHouse: React.FC = () => {
     const publishHouse = useSelector((state: StateReduxType) => state.bookStoreState.books);
     const publishHouseOption = publishHouse?.map((a: BookStoreData) => {
         return (
-            <Option key={a.id} value={a.publishHouse}>
-                {a.publishHouse}
+            <Option key={a.id} value={a.Publish.name}>
+                {a.Publish.name}
             </Option>
         );
     });

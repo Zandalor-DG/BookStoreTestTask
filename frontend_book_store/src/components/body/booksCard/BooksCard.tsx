@@ -36,15 +36,15 @@ const BooksCard: React.FunctionComponent = () => {
                     cover={
                         <img
                             alt={a.name}
-                            src={a.pathCover}
+                            src={a.File.path_name}
                             style={{ width: '250px', height: '500px', objectFit: 'cover' }}
                         />
                     }
                 >
                     <Meta
-                        title={`${a.name} by ${a.author}`}
-                        description={`genre: ${a.genre} 
-                        publish house: ${a.publishHouse}`}
+                        title={`${a.name} by ${a.Author}`}
+                        description={`genre: ${a.Genre[0].name} 
+                        publish house: ${a.Publish.name}`}
                     />
                 </Card>
             );

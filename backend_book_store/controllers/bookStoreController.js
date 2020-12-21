@@ -8,7 +8,7 @@ exports.allBooks = async (req, res) => {
       throw new Error('Email already used');
     }
 
-    const books = await models.Book.findAndCountAll({
+    const booksResponse = await models.Book.findAndCountAll({
       include: [
         {
           model: models.File,
@@ -40,15 +40,15 @@ exports.allBooks = async (req, res) => {
     //   return {
     //     id: a.id,
     //     name: a.name,
-    //     author: a.author,
-    //     genre: a.genre,
+    //     author: a.Author.name,
+    //     genre: a.Genre.name,
     //     price: a.price,
-    //     publishHouse: a.publishHouse,
+    //     publishHouse: a.Publish.name,
     //     pathCover: a.File.path_name,
     //   };
     // });
 
-    res.status(201).json({ books });
+    res.status(201).json({ booksResponse });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

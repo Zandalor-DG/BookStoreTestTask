@@ -12,9 +12,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUserByToken } from './store/userStore/thunkUser';
 import PrivateRoute from './components/common/privateRoute/PrivateRoute';
 import { StateReduxType } from './store/reducers';
-import SiderFilter from './components/body/sider/SiderFilter';
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer } = Layout;
 
 const App: React.FC = () => {
     const isInitialize = useSelector((state: StateReduxType) => state.userState.isInitialize);
