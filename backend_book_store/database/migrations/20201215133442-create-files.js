@@ -4,7 +4,7 @@ module.exports = {
     await queryInterface.createTable('Files', {
       id: {
         allowNull: false,
-        autoIncrement: true, //ALTER SEQUENCE file_id_seq RESTART WITH 20
+        autoIncrement: true, //ALTER SEQUENCE "Files_id_seq" RESTART WITH 21;
         primaryKey: true,
         type: Sequelize.INTEGER,
       },

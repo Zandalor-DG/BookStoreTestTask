@@ -2,6 +2,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const models = require('../database/models');
 const updateTokens = require('../middleware/updateTokens');
+const _pick = require('lodash/pick');
 
 exports.signUp = async (req, res) => {
   try {
@@ -14,22 +15,15 @@ exports.signUp = async (req, res) => {
     const passwordHash = bcrypt.hashSync(password, 10);
 
     const user = await models.User.create({
-      // raw: true,
-      // attributes: { exclude: ['password'] },
       fullName: fullName,
       email: email,
       password: passwordHash,
       dob: dob,
       roleId: 3,
     });
+    //let data = _pick(user, ['id'], ['fullName'], ['email'], ['dob']); //пример как в созданной моделе уюрать пароль
 
-    const newUser = await models.User.findOne({
-      raw: true,
-      attributes: { exclude: ['password'] },
-      where: { email: email },
-    });
-
-    const token = await updateTokens(newUser.id);
+    const token = await updateTokens(user.id);
     res.status(201).json({ message: 'User created', token });
   } catch (err) {
     res.status(400).json({ message: err.message });
