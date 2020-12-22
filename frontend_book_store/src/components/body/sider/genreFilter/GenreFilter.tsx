@@ -4,26 +4,21 @@ import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../../store/reducers';
 
-const GenreFilter: React.FC = () => {
+interface PropsGenreFilter {
+    handleChange: (value: number[]) => void;
+}
+
+const GenreFilter: React.FC<PropsGenreFilter> = ({ handleChange }: PropsGenreFilter) => {
     const { Option } = Select;
 
     const allGenre = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.allGenre);
     const genreOptions = allGenre.map((a, idx) => {
         return (
-            <Option key={idx} value={a.name} label={a.name}>
-                <div className="demo-option-label-item">
-                    {/* <span role="img" aria-label={a.name}>
-                        Igor
-                    </span> */}
-                    {a.name}
-                </div>
+            <Option key={idx} value={a.id} label={a.name}>
+                <div className="demo-option-label-item">{a.name}</div>
             </Option>
         );
     });
-
-    function handleChange(value: string[]) {
-        console.log(`selected ${value}`);
-    }
 
     return (
         <Select

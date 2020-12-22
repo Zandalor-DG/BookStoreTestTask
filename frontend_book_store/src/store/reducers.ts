@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import store from '.';
-import bookStoreReducer from './bookStore/bookStroeReducer';
+import bookStoreReducer from './bookStore/bookStroreReducer';
 import userReducer from './userStore/userReducer';
 
 const reducers = combineReducers({

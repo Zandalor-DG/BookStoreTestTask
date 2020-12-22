@@ -4,7 +4,11 @@ import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../../store/reducers';
 
-const PublishHouse: React.FC = () => {
+interface PropsPublishHouse {
+    onChange(value: number): void;
+}
+
+const PublishHouse: React.FC<PropsPublishHouse> = ({ onChange }: PropsPublishHouse) => {
     const { Option } = Select;
     const allPublish = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions?.allPublish);
     const publishHouseOption = allPublish?.map((a, idx) => {
@@ -14,10 +18,6 @@ const PublishHouse: React.FC = () => {
             </Option>
         );
     });
-
-    function onChange(value: string) {
-        console.log(`selected ${value}`);
-    }
 
     function onSearch(val: string) {
         console.log('search:', val);

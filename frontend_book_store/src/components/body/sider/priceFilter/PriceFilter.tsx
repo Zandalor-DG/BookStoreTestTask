@@ -5,16 +5,16 @@ import css from './PriceFilter.module.css';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../../store/reducers';
 
-const PriceFilter: React.FC = () => {
+interface PropsPriceFilter {
+    onAfterChange: (value: [number, number]) => void;
+}
+
+const PriceFilter: React.FC<PropsPriceFilter> = ({ onAfterChange }: PropsPriceFilter) => {
     const minPrice: number = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.minPrice);
     const maxPrice: number = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.maxPrice);
-    const onChange = (value: [number, number]) => {
-        console.log('onChange: ', value);
-    };
-
-    const onAfterChange = (value: [number, number]) => {
-        console.log('onAfterChange: ', value);
-    };
+    // const onChange = (value: [number, number]) => {
+    //     console.log('onChange: ', value);
+    // };
 
     return (
         <div>
@@ -25,7 +25,6 @@ const PriceFilter: React.FC = () => {
                 min={minPrice}
                 max={maxPrice}
                 defaultValue={[minPrice, maxPrice]}
-                onChange={onChange}
                 onAfterChange={onAfterChange}
             />
         </div>

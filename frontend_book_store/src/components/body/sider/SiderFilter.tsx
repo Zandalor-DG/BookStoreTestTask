@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import AuthorFilter from './authorFilter/AuthorFilter';
 import GenreFilter from './genreFilter/GenreFilter';
 import PriceFilter from './priceFilter/PriceFilter';
 import PublishHouse from './publichHouse/PublishHouse';
+import { filterReducer, getInitialFilterState } from './filterReducer';
 
 const SiderFilter: React.FC = () => {
+    const [filterState, filterDispatch] = useReducer(filterReducer, undefined, getInitialFilterState);
+    const handleChangeGenre = (value: number[]) => {
+        filterDispatch({ type: 'set_genre', selectedGenres: value });
+    };
+
+    const onChangePublish = (value: number) => {
+        filterDispatch({ type: 'set_publish', selectedPublish: value });
+    };
+
+    const onChangeAuthor = (value: number) => {
+        filterDispatch({ type: 'set_author', selectedAuthors: value });
+    };
+
+    const onAfterChangePrice = (value: [number, number]) => {
+        filterDispatch({ type: 'set_price', min: value[0], max: value[1] });
+    };
+
     return (
         <div className="bookStore__sider">
-            <GenreFilter />
+            <GenreFilter handleChange={handleChangeGenre} />
 
-            <PublishHouse />
+            <PublishHouse onChange={onChangePublish} />
 
-            <AuthorFilter />
+            <AuthorFilter onChange={onChangeAuthor} />
 
-            <PriceFilter />
+            <PriceFilter onAfterChange={onAfterChangePrice} />
         </div>
     );
 };

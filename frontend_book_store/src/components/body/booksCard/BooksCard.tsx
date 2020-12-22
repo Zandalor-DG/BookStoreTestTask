@@ -11,19 +11,7 @@ import { baseURL } from '../../../api/axios';
 
 const BooksCard: React.FunctionComponent = () => {
     const { Meta } = Card;
-    const dispatch = useDispatch();
-    const books = useSelector((state: StateReduxType) => state.bookStoreState.books);
-
-    useEffect(() => {
-        if (books) {
-            return;
-        }
-        dispatch(allBooks({ page: 1, pageSize: 6 }));
-        dispatch(allFilteringOptions());
-        return () => {
-            dispatch(allBooks({ page: 1, pageSize: 6 }));
-        };
-    });
+    
 
     const booksCart = !books ? (
         <Preloader />

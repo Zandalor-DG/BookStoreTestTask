@@ -1,20 +1,20 @@
 export interface AllAuthor {
     name: string;
-    id?: number;
+    id: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
 export interface AllPublish {
     name: string;
-    id?: number;
+    id: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
 export interface AllGenre {
     name: string;
-    id?: number;
+    id: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
