@@ -6,7 +6,7 @@ import PublishHouse from './publichHouse/PublishHouse';
 import { filterReducer, getInitialFilterState } from './filterReducer';
 
 const SiderFilter: React.FC = () => {
-    const [filterState, filterDispatch] = useReducer(filterReducer, undefined, getInitialFilterState);
+    const [filterState, filterDispatch] = useReducer(filterReducer, {} as FilterState, getInitialFilterState);
     const handleChangeGenre = (value: number[]) => {
         filterDispatch({ type: 'set_genre', selectedGenres: value });
     };

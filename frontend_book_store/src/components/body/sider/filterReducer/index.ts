@@ -3,7 +3,7 @@ type FilterState = {
     author?: number;
     publish?: number;
     maxPrice?: number;
-    minPrice: number;
+    minPrice?: number;
 };
 
 type Actions =
@@ -40,6 +40,6 @@ export const filterReducer = (state: FilterState, action: Actions): FilterState 
     }
 };
 
-export const getInitialFilterState = (): FilterState => {
-    return { minPrice: 0 };
+export const getInitialFilterState = (opt: FilterState): FilterState => {
+    return opt;
 };
