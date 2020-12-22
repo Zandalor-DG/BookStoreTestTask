@@ -1,4 +1,4 @@
-type FilterState = {
+export type FilterState = {
     genres?: number[];
     author?: number;
     publish?: number;
@@ -6,7 +6,7 @@ type FilterState = {
     minPrice?: number;
 };
 
-type Actions =
+export type Actions =
     | { type: 'set_author'; selectedAuthors: number }
     | { type: 'set_publish'; selectedPublish: number }
     | { type: 'set_genre'; selectedGenres: number[] }

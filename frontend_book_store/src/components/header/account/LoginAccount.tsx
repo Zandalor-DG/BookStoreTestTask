@@ -1,9 +1,10 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../store/userStore/thunkUser';
 import { setIsOpenModal } from '../../../store/userStore/actionCreatedUser';
+import { StateReduxType } from '../../../store/reducers';
 
 const layout = {
     labelCol: {
@@ -28,9 +29,15 @@ export interface InputsLogin {
 
 const LoginAccount: React.FC = () => {
     const dispatch = useDispatch();
+    const error = useSelector((state: StateReduxType) => state.userState.error);
+    let textError: string | undefined;
     const onFinish = ({ email, password }: InputsLogin) => {
         dispatch(loginUser({ email, password }));
-        dispatch(setIsOpenModal(false));
+        if (!error) {
+            dispatch(setIsOpenModal(false));
+        } else {
+            textError = 'error authorized';
+        }
     };
 
     return (
@@ -69,6 +76,7 @@ const LoginAccount: React.FC = () => {
             </Form.Item>
 
             <Form.Item {...tailLayout}>
+                {error}
                 <Button type="primary" htmlType="submit">
                     Submit
                 </Button>

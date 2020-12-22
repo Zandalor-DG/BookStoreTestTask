@@ -1,12 +1,15 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import AuthorFilter from './authorFilter/AuthorFilter';
 import GenreFilter from './genreFilter/GenreFilter';
 import PriceFilter from './priceFilter/PriceFilter';
 import PublishHouse from './publichHouse/PublishHouse';
-import { filterReducer, getInitialFilterState } from './filterReducer';
+import { Actions } from './filterReducer';
 
-const SiderFilter: React.FC = () => {
-    const [filterState, filterDispatch] = useReducer(filterReducer, {} as FilterState, getInitialFilterState);
+interface PropsSiderFilter {
+    filterDispatch: React.Dispatch<Actions>;
+}
+
+const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch }: PropsSiderFilter) => {
     const handleChangeGenre = (value: number[]) => {
         filterDispatch({ type: 'set_genre', selectedGenres: value });
     };

@@ -11,8 +11,7 @@ import { baseURL } from '../../../api/axios';
 
 const BooksCard: React.FunctionComponent = () => {
     const { Meta } = Card;
-    
-
+    const books = useSelector((state: StateReduxType) => state.bookStoreState.books);
     const booksCart = !books ? (
         <Preloader />
     ) : (
