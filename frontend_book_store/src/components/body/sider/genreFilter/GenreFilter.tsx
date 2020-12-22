@@ -1,9 +1,25 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Select } from 'antd';
+import { useSelector } from 'react-redux';
+import { StateReduxType } from '../../../../store/reducers';
 
 const GenreFilter: React.FC = () => {
     const { Option } = Select;
+
+    const allGenre = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.allGenre);
+    const genreOptions = allGenre.map((a, idx) => {
+        return (
+            <Option key={idx} value={a.name} label={a.name}>
+                <div className="demo-option-label-item">
+                    {/* <span role="img" aria-label={a.name}>
+                        Igor
+                    </span> */}
+                    {a.name}
+                </div>
+            </Option>
+        );
+    });
 
     function handleChange(value: string[]) {
         console.log(`selected ${value}`);
@@ -13,43 +29,11 @@ const GenreFilter: React.FC = () => {
         <Select
             mode="multiple"
             style={{ width: '100%' }}
-            placeholder="select one country"
-            //defaultValue={['china']}
+            placeholder="select genre"
             onChange={handleChange}
             optionLabelProp="label"
         >
-            <Option value="china" label="China">
-                <div className="demo-option-label-item">
-                    <span role="img" aria-label="China">
-                        Igor
-                    </span>
-                    Nikolaev
-                </div>
-            </Option>
-            <Option value="usa" label="USA">
-                <div className="demo-option-label-item">
-                    <span role="img" aria-label="USA">
-                        🇺🇸
-                    </span>
-                    USA (美国)
-                </div>
-            </Option>
-            <Option value="japan" label="Japan">
-                <div className="demo-option-label-item">
-                    <span role="img" aria-label="Japan">
-                        🇯🇵
-                    </span>
-                    Japan (日本)
-                </div>
-            </Option>
-            <Option value="korea" label="Korea">
-                <div className="demo-option-label-item">
-                    <span role="img" aria-label="Korea">
-                        🇰🇷
-                    </span>
-                    Korea (韩国)
-                </div>
-            </Option>
+            {genreOptions}
         </Select>
     );
 };

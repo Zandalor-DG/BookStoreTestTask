@@ -5,7 +5,7 @@ import css from './BooksCard.module.css';
 import PaginationBookStore from './PaginationBookStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
-import { allBooks } from '../../../store/bookStore/thunkBookStore';
+import { allBooks, allFilteringOptions } from '../../../store/bookStore/thunkBookStore';
 import Preloader from '../../common/preloader/Preloader';
 import { baseURL } from '../../../api/axios';
 
@@ -19,6 +19,7 @@ const BooksCard: React.FunctionComponent = () => {
             return;
         }
         dispatch(allBooks({ page: 1, pageSize: 6 }));
+        dispatch(allFilteringOptions());
         return () => {
             dispatch(allBooks({ page: 1, pageSize: 6 }));
         };

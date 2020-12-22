@@ -6,7 +6,7 @@ import { StateReduxType } from '../../../store/reducers';
 import moment from 'moment';
 import css from './ProfilePage.module.css';
 
-const ProfileUser = () => {
+const ProfileUser: React.FC = () => {
     const user = useSelector((state: StateReduxType) => state.userState.user);
     const id = user?.id as number;
     const dispatch = useDispatch();

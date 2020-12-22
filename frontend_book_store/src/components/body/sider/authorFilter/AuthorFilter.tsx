@@ -3,20 +3,21 @@ import 'antd/dist/antd.css';
 import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../../store/reducers';
-import { BookStoreData } from '../../../../models/BookStore/bookStoreData';
+import { useHistory } from 'react-router-dom';
 
 const AuthorFilter: React.FC = () => {
     const { Option } = Select;
-    const author = useSelector((state: StateReduxType) => state.bookStoreState.books);
-    const authorOption = author?.map((a: BookStoreData) => {
+    const allAuthor = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions?.allAuthor);
+    const authorOption = allAuthor?.map((a, idx) => {
         return (
-            <Option key={a.id} value={a.Author.name}>
-                {a.Author.name}
+            <Option key={idx} value={a.name}>
+                {a.name}
             </Option>
         );
     });
-
+    const history = useHistory();
     function onChange(value: string) {
+        history.push('?asd');
         console.log(`selected ${value}`);
     }
 

@@ -1,11 +1,11 @@
 const models = require('../database/models');
 const bcrypt = require('bcryptjs');
 
-const checkValue = (valueCheck, method) => {
-  if (!valueCheck) {
-    throw new Error(`${method} is not presented`);
-  }
-};
+// const checkValue = (valueCheck, method) => {
+//   if (!valueCheck) {
+//     throw new Error(`${method} is not presented`);
+//   }
+// };
 
 exports.putUser = async (req, res) => {
   try {

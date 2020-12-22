@@ -54,6 +54,26 @@ exports.allBooks = async (req, res) => {
   }
 };
 
+exports.allFilteringOptions = async (req, res) => {
+  try {
+    const allAuthor = await models.Author.findAll({ raw: true });
+    const allPublish = await models.Publish.findAll({ raw: true });
+    const allGenre = await models.Genre.findAll({ raw: true });
+    const minPrice = await models.Book.min('price', {});
+    const maxPrice = await models.Book.max('price', {});
+    const allFilteringOptions = {
+      allAuthor,
+      allPublish,
+      allGenre,
+      minPrice,
+      maxPrice,
+    };
+    res.status(201).json(allFilteringOptions);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
 // exports.filterBook = async (req, res) => {
 //   try {
 //     const { offset, limit, author, genre, publishHouse } = req.body;

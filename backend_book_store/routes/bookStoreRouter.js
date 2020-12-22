@@ -10,4 +10,9 @@ bookStoreRouter.post(
   bookStoreController.allBooks
 );
 
+bookStoreRouter.get(
+  '/allfilteringoptions',
+  bookStoreController.allFilteringOptions
+);
+
 module.exports = bookStoreRouter;

@@ -38,7 +38,7 @@ export const getLoginByToken = async (): Promise<UserData> => {
     return data.userData;
 };
 
-export const putUploadAvatar = async (formData: FormData) => {
+export const putUploadAvatar = async (formData: FormData): Promise<string> => {
     const res = await axios.post('/user/uploadavatar', formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -48,7 +48,10 @@ export const putUploadAvatar = async (formData: FormData) => {
     return avatarUrl;
 };
 
-export const postChangePassword = async ({ oldPassword, newPassword }: onChangePassword, user: UserData | null) => {
+export const postChangePassword = async (
+    { oldPassword, newPassword }: onChangePassword,
+    user: UserData | null,
+): Promise<UserData> => {
     const res = await axios.put('/user/putuser', { oldPassword, newPassword, user });
     const data: UserData = res.data.userData;
     return data;

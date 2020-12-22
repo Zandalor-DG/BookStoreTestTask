@@ -3,15 +3,14 @@ import 'antd/dist/antd.css';
 import { Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../../store/reducers';
-import { BookStoreData } from '../../../../models/BookStore/bookStoreData';
 
 const PublishHouse: React.FC = () => {
     const { Option } = Select;
-    const publishHouse = useSelector((state: StateReduxType) => state.bookStoreState.books);
-    const publishHouseOption = publishHouse?.map((a: BookStoreData) => {
+    const allPublish = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions?.allPublish);
+    const publishHouseOption = allPublish?.map((a, idx) => {
         return (
-            <Option key={a.id} value={a.Publish.name}>
-                {a.Publish.name}
+            <Option key={idx} value={a.name}>
+                {a.name}
             </Option>
         );
     });
