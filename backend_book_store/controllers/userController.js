@@ -56,18 +56,10 @@ exports.uploadAvatar = async (req, res) => {
       res.status(400).json({ message: 'File upload error' });
     }
 
-    await models.File.create({
+    const avatar = await models.File.create({
       original_name: filename,
       path_name: path,
-    })
-      .then(function (avatar) {
-        // you can now access the newly created user
-        console.log('success', avatar.toJSON());
-      })
-      .catch(function (err) {
-        // print the error details
-        console.log(err, request.body.email);
-      });
+    });
 
     /*.then(function(user) {
     // you can now access the newly created user

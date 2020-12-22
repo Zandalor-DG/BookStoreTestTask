@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       //   /* options */
       // });
       Book.belongsTo(models.Author, {
-        foreignKey: 'id',
+        foreignKey: 'authorId',
       });
       Book.belongsTo(models.Publish, {
-        foreignKey: 'id',
+        foreignKey: 'publishId',
       });
-      Book.hasOne(models.File, {
-        foreignKey: 'id',
+      Book.belongsTo(models.File, {
+        foreignKey: 'coverId',
         //as: 'cover',
         onDelete: 'CASCADE',
       });
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         through: 'Genre_Book',
         as: 'Genre',
         //foreignKey: 'bookId',
-        foreignKey: 'genreId',
+        foreignKey: 'bookId',
       });
       // define association here
     }

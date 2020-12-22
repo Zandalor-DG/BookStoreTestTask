@@ -10,7 +10,7 @@ const UploadAvatar: React.FC = () => {
     const iconUrl = useSelector((state: StateReduxType) => state.userState.user?.avatar);
     const [userAvatar, setUserAvatar] = useState<string | Blob>('');
     const dispatch = useDispatch();
-    const urlImg = !iconUrl ? 'images.jpeg' : baseURL + iconUrl;
+    const urlImg = !iconUrl ? 'images.jpeg' : baseURL + '/' + iconUrl;
 
     const submitUserImg = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const formData = new FormData();

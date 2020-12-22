@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { allBooks } from '../../../store/bookStore/thunkBookStore';
 import Preloader from '../../common/preloader/Preloader';
+import { baseURL } from '../../../api/axios';
 
 const BooksCard: React.FunctionComponent = () => {
     const { Meta } = Card;
@@ -36,7 +37,7 @@ const BooksCard: React.FunctionComponent = () => {
                     cover={
                         <img
                             alt={a.name}
-                            src={a.File.path_name}
+                            src={baseURL + a.File.path_name}
                             style={{ width: '250px', height: '500px', objectFit: 'cover' }}
                         />
                     }
