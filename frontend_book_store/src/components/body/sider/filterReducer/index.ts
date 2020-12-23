@@ -10,7 +10,8 @@ export type Actions =
     | { type: 'set_author'; selectedAuthors: number }
     | { type: 'set_publish'; selectedPublish: number }
     | { type: 'set_genre'; selectedGenres: number[] }
-    | { type: 'set_price'; min: number; max: number };
+    | { type: 'set_price'; min: number; max: number }
+    | { type: 'set_reset'; reset: undefined };
 
 export const filterReducer = (state: FilterState, action: Actions): FilterState => {
     switch (action.type) {
@@ -34,6 +35,15 @@ export const filterReducer = (state: FilterState, action: Actions): FilterState 
             return {
                 ...state,
                 publish: action.selectedPublish,
+            };
+        case 'set_reset':
+            return {
+                ...state,
+                author: action.reset,
+                publish: action.reset,
+                genres: action.reset,
+                minPrice: action.reset,
+                maxPrice: action.reset,
             };
         default:
             return state;

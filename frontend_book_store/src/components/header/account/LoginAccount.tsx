@@ -28,7 +28,6 @@ export interface InputsLogin {
 }
 
 const LoginAccount: React.FC = () => {
-    const error = useSelector((state: StateReduxType) => state.userState.error);
     const dispatch: any = useDispatch();
     let textError;
     const onFinish = ({ email, password }: InputsLogin) => {
@@ -37,7 +36,7 @@ const LoginAccount: React.FC = () => {
             if (resp) {
                 dispatch(setIsOpenModal(false));
             } else {
-                textError = <span>Not authorized</span>;
+                textError = <span style={{ color: 'red' }}>Not authorized</span>;
             }
         });
     };
@@ -75,7 +74,7 @@ const LoginAccount: React.FC = () => {
             >
                 <Input.Password />
             </Form.Item>
-            {textError}
+            {true && textError}
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                     Submit
