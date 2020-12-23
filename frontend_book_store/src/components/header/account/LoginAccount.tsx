@@ -1,9 +1,10 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Button } from 'antd';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../store/userStore/thunkUser';
 import { setIsOpenModal } from '../../../store/userStore/actionCreatedUser';
+import { StateReduxType } from '../../../store/reducers';
 
 const layout = {
     labelCol: {
@@ -27,10 +28,17 @@ export interface InputsLogin {
 }
 
 const LoginAccount: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
+    let textError;
     const onFinish = ({ email, password }: InputsLogin) => {
-        dispatch(loginUser({ email, password }));
-        dispatch(setIsOpenModal(false));
+        dispatch(loginUser({ email, password })).then((resp: boolean) => {
+            console.log(resp);
+            if (resp) {
+                dispatch(setIsOpenModal(false));
+            } else {
+                textError = <span style={{ color: 'red' }}>Not authorized</span>;
+            }
+        });
     };
 
     return (
@@ -54,7 +62,6 @@ const LoginAccount: React.FC = () => {
             >
                 <Input />
             </Form.Item>
-
             <Form.Item
                 label="Password"
                 name="password"
@@ -67,7 +74,7 @@ const LoginAccount: React.FC = () => {
             >
                 <Input.Password />
             </Form.Item>
-
+            {true && textError}
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                     Submit

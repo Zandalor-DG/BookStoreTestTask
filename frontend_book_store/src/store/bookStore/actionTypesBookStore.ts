@@ -1,3 +1,4 @@
+import { AllFilteringOptions } from '../../models/BookStore/allFilteringOptions';
 import { BookStoreData } from '../../models/BookStore/bookStoreData';
 
 export enum ActionTypeBookStore {
@@ -5,6 +6,7 @@ export enum ActionTypeBookStore {
     SetError = 'SetError',
     SetPageSize = 'SetPageSize',
     SetBookStoreState = 'SetBookStoreState',
+    SetAllFilteringOptions = 'SetAllFilteringOptions',
 }
 
 export type ActionSetTotalPage = {
@@ -15,6 +17,11 @@ export type ActionSetTotalPage = {
 export type ActionSetPageSize = {
     type: ActionTypeBookStore.SetPageSize;
     pageSize: number;
+};
+
+export type ActionSetAllFilteringOptions = {
+    type: ActionTypeBookStore.SetAllFilteringOptions;
+    allFilteringOptions: AllFilteringOptions;
 };
 
 export type ActionSetBookStoreState = {
@@ -31,4 +38,5 @@ export type ActionBookStore =
     | ActionSetTotalPage
     | ActionSetPageSize
     | ActionSetBookStoreState
+    | ActionSetAllFilteringOptions
     | ActionSetErrorBookStore;

@@ -1,19 +1,55 @@
 import React from 'react';
 import AuthorFilter from './authorFilter/AuthorFilter';
+import { Button } from 'antd';
+import 'antd/dist/antd.css';
 import GenreFilter from './genreFilter/GenreFilter';
 import PriceFilter from './priceFilter/PriceFilter';
 import PublishHouse from './publichHouse/PublishHouse';
+import { Actions, FilterState } from './filterReducer';
 
-const SiderFilter: React.FC = () => {
+interface PropsSiderFilter {
+    filterDispatch: React.Dispatch<Actions>;
+    filterState: FilterState;
+}
+
+const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch, filterState }: PropsSiderFilter) => {
+    const handleChangeGenre = (value: number[]) => {
+        filterDispatch({ type: 'set_genre', selectedGenres: value });
+    };
+
+    const onChangePublish = (value: number) => {
+        filterDispatch({ type: 'set_publish', selectedPublish: value });
+    };
+
+    const onChangeAuthor = (value: number) => {
+        filterDispatch({ type: 'set_author', selectedAuthors: value });
+    };
+
+    const onAfterChangePrice = (value: [number, number]) => {
+        filterDispatch({ type: 'set_price', min: value[0], max: value[1] });
+    };
+
+    const onResetFilter = () => {
+        filterDispatch({ type: 'set_reset', reset: undefined });
+    };
+
     return (
         <div className="bookStore__sider">
-            <GenreFilter />
+            <GenreFilter handleChange={handleChangeGenre} defaultGenres={filterState.genres} />
 
-            <PublishHouse />
+            <PublishHouse onChange={onChangePublish} defaultPublish={filterState.publish} />
 
-            <AuthorFilter />
+            <AuthorFilter onChange={onChangeAuthor} defaultAuthor={filterState.author} />
 
-            <PriceFilter />
+            <PriceFilter
+                onAfterChange={onAfterChangePrice}
+                defaultMinPrice={filterState.minPrice}
+                defaultMaxPrice={filterState.maxPrice}
+            />
+
+            <Button style={{ margin: '10px', marginLeft: '45x' }} onClick={onResetFilter} danger>
+                Reset filter
+            </Button>
         </div>
     );
 };

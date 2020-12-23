@@ -7,6 +7,9 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
         case ActionTypeBookStore.SetBookStoreState: {
             return { ...state, books: [...action.books] };
         }
+        case ActionTypeBookStore.SetAllFilteringOptions: {
+            return { ...state, allFilteringOptions: { ...action.allFilteringOptions } };
+        }
         case ActionTypeBookStore.SetTotalPage: {
             return { ...state, totalPage: action.totalPage };
         }

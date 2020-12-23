@@ -29,18 +29,20 @@ export interface PropsUpdateUserData {
     roleId?: userRole;
 }
 
-export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: AppDispatch) => {
+export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: AppDispatch): Promise<boolean> => {
     try {
         const user = await postLoginUser({ email, password });
         dispatch(setAuthorizedUser(user));
+        return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));
+        return false;
     }
 };
 
 export const registerUser = ({ fullName, email, password, dob, roleId }: InputsRegister) => async (
     dispatch: AppDispatch,
-) => {
+): Promise<void> => {
     try {
         await postRegisterUser({ fullName, email, password, dob, roleId });
         const user = await getLoginByToken();
@@ -50,7 +52,9 @@ export const registerUser = ({ fullName, email, password, dob, roleId }: InputsR
     }
 };
 
-export const updateUserData = ({ fullName, email, dob, id }: PropsUpdateUserData) => async (dispatch: AppDispatch) => {
+export const updateUserData = ({ fullName, email, dob, id }: PropsUpdateUserData) => async (
+    dispatch: AppDispatch,
+): Promise<void> => {
     try {
         const user = await putProfilePage({ fullName, email, dob, id });
         dispatch(updateProfilePage(user));
@@ -59,7 +63,7 @@ export const updateUserData = ({ fullName, email, dob, id }: PropsUpdateUserData
     }
 };
 
-export const loginUserByToken = () => async (dispatch: AppDispatch) => {
+export const loginUserByToken = () => async (dispatch: AppDispatch): Promise<void> => {
     try {
         const user = await getLoginByToken();
         dispatch(setInitialUser(user));
@@ -70,7 +74,7 @@ export const loginUserByToken = () => async (dispatch: AppDispatch) => {
 
 export const changePassword = ({ oldPassword, newPassword }: onChangePassword, user: UserData | null) => async (
     dispatch: AppDispatch,
-) => {
+): Promise<void> => {
     try {
         const userData = await postChangePassword({ oldPassword, newPassword }, user);
         dispatch(updateProfilePage(userData));
@@ -79,7 +83,7 @@ export const changePassword = ({ oldPassword, newPassword }: onChangePassword, u
     }
 };
 
-export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch) => {
+export const uploadAvatar = (formData: FormData) => async (dispatch: AppDispatch): Promise<void> => {
     try {
         const avatarUrl = await putUploadAvatar(formData);
         dispatch(setUserAvatar(avatarUrl));

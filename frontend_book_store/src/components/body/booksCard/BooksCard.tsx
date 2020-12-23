@@ -1,29 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import { Card } from 'antd';
 import css from './BooksCard.module.css';
 import PaginationBookStore from './PaginationBookStore';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
-import { allBooks } from '../../../store/bookStore/thunkBookStore';
 import Preloader from '../../common/preloader/Preloader';
 import { baseURL } from '../../../api/axios';
+import { FilterState } from '../sider/filterReducer';
 
-const BooksCard: React.FunctionComponent = () => {
+interface PropsBooksCard {
+    filterState: FilterState;
+}
+
+const BooksCard: React.FC<PropsBooksCard> = ({ filterState }: PropsBooksCard) => {
     const { Meta } = Card;
-    const dispatch = useDispatch();
     const books = useSelector((state: StateReduxType) => state.bookStoreState.books);
-
-    useEffect(() => {
-        if (books) {
-            return;
-        }
-        dispatch(allBooks({ page: 1, pageSize: 6 }));
-        return () => {
-            dispatch(allBooks({ page: 1, pageSize: 6 }));
-        };
-    });
-
     const booksCart = !books ? (
         <Preloader />
     ) : (
@@ -55,7 +47,7 @@ const BooksCard: React.FunctionComponent = () => {
     return (
         <div className="body__booksCard">
             <div className={css.booksCard__wrapper}>{booksCart}</div>
-            <PaginationBookStore />
+            <PaginationBookStore filterState={filterState} />
         </div>
     );
 };

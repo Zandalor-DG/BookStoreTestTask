@@ -5,8 +5,13 @@ import css from './BooksCard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { allBooks } from '../../../store/bookStore/thunkBookStore';
+import { FilterState } from '../sider/filterReducer';
 
-const PaginationBookStore: React.FC = () => {
+interface PropsPaginationBookStore {
+    filterState: FilterState;
+}
+
+const PaginationBookStore: React.FC<PropsPaginationBookStore> = ({ filterState }: PropsPaginationBookStore) => {
     const pageSize = useSelector((state: StateReduxType) => state.bookStoreState.pageSize);
     const totalPage = useSelector((state: StateReduxType) => state.bookStoreState.totalPage);
 
@@ -15,7 +20,7 @@ const PaginationBookStore: React.FC = () => {
 
     const onChange = (page: number, pageSize: number | undefined) => {
         setCurrentPage(page);
-        dispatch(allBooks({ page, pageSize }));
+        dispatch(allBooks({ page, pageSize, filterState }));
     };
 
     return (

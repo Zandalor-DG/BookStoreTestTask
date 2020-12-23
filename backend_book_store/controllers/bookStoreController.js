@@ -1,12 +1,32 @@
 const models = require('../database/models');
+const { Op } = require('sequelize');
+
+const paginate = (page, pageSize) => {
+  const offset = (page - 1) * pageSize;
+  const limit = pageSize;
+
+  return {
+    offset,
+    limit,
+  };
+};
 
 exports.allBooks = async (req, res) => {
   try {
-    const { offset, limit } = req.body;
+    const {
+      page,
+      pageSize,
+      author,
+      genres,
+      publish,
+      minPrice,
+      maxPrice,
+    } = req.query;
 
-    if (!offset && !limit) {
-      throw new Error('Email already used');
+    if (!page && !pageSize) {
+      throw new Error('Not offset or limit data');
     }
+    const { offset, limit } = paginate(page, pageSize);
 
     const booksResponse = await models.Book.findAndCountAll({
       include: [
@@ -19,34 +39,36 @@ exports.allBooks = async (req, res) => {
           model: models.Author,
           as: 'Author',
           attributes: ['name'],
+          where: !author ? {} : { id: author },
         },
         {
           model: models.Publish,
           as: 'Publish',
           attributes: ['name'],
+          where: !publish ? {} : { id: publish },
         },
         {
           model: models.Genre,
           as: 'Genre',
           attributes: ['name'],
+          where: Object.assign(
+            {},
+            genres && { id: { [Op.in]: genres.split(',') } }
+          ),
         },
       ],
       limit,
       offset,
-      //where: {}, // conditions
+      where: Object.assign(
+        {},
+        minPrice &&
+          maxPrice && {
+            price: {
+              [Op.between]: [+minPrice, +maxPrice],
+            },
+          }
+      ), // conditions
     });
-
-    // const booksVM = books.rows.map((a) => {
-    //   return {
-    //     id: a.id,
-    //     name: a.name,
-    //     author: a.Author.name,
-    //     genre: a.Genre.name,
-    //     price: a.price,
-    //     publishHouse: a.Publish.name,
-    //     pathCover: a.File.path_name,
-    //   };
-    // });
 
     res.status(201).json({ booksResponse });
   } catch (err) {
@@ -54,26 +76,22 @@ exports.allBooks = async (req, res) => {
   }
 };
 
-// exports.filterBook = async (req, res) => {
-//   try {
-//     const { offset, limit, author, genre, publishHouse } = req.body;
-
-//     let filterBook;
-
-//     if (!offset && !limit) {
-//       throw new Error('Email already used');
-//     }
-
-//     switch (key) {
-//       case value:
-//         break;
-
-//       default:
-//         break;
-//     }
-
-//     res.status(201).json({ booksVM, left });
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// };
+exports.allFilteringOptions = async (req, res) => {
+  try {
+    const allAuthor = await models.Author.findAll({ raw: true });
+    const allPublish = await models.Publish.findAll({ raw: true });
+    const allGenre = await models.Genre.findAll({ raw: true });
+    const minPrice = await models.Book.min('price', {});
+    const maxPrice = await models.Book.max('price', {});
+    const allFilteringOptions = {
+      allAuthor,
+      allPublish,
+      allGenre,
+      minPrice,
+      maxPrice,
+    };
+    res.status(201).json(allFilteringOptions);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};

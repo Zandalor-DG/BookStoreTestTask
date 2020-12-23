@@ -42,7 +42,7 @@ const userReducer = (state = userInitialState, action: ActionUser): UserState =>
         }
         case ActionTypeUser.SetError:
             return {
-                ...userInitialState,
+                ...state,
                 error: action.error,
                 isInitialize: true,
             };
