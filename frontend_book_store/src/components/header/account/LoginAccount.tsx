@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '../../../store/userStore/thunkUser';
 import { setIsOpenModal } from '../../../store/userStore/actionCreatedUser';
-import { StateReduxType } from '../../../store/reducers';
 
 const layout = {
     labelCol: {
@@ -29,14 +28,14 @@ export interface InputsLogin {
 
 const LoginAccount: React.FC = () => {
     const dispatch: any = useDispatch();
-    let textError;
+    const textError = <span style={{ color: 'red', marginLeft: '33%' }}>error submit</span>;
+    const [errorSubmit, setErrorSubmit] = useState(false);
     const onFinish = ({ email, password }: InputsLogin) => {
         dispatch(loginUser({ email, password })).then((resp: boolean) => {
-            console.log(resp);
             if (resp) {
                 dispatch(setIsOpenModal(false));
             } else {
-                textError = <span style={{ color: 'red' }}>Not authorized</span>;
+                setErrorSubmit(true);
             }
         });
     };
@@ -55,8 +54,12 @@ const LoginAccount: React.FC = () => {
                 name="email"
                 rules={[
                     {
+                        type: 'email',
+                        message: 'The input is not valid E-mail!',
+                    },
+                    {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Please input your E-mail!',
                     },
                 ]}
             >
@@ -74,7 +77,7 @@ const LoginAccount: React.FC = () => {
             >
                 <Input.Password />
             </Form.Item>
-            {true && textError}
+            {errorSubmit && textError}
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                     Submit

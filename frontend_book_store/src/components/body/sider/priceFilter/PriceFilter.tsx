@@ -29,7 +29,7 @@ const PriceFilter: React.FC<PropsPriceFilter> = ({
             <p className={css.priceFilter__title}>Price</p>
             <Slider
                 range
-                step={10}
+                step={1}
                 min={minPrice}
                 max={maxPrice}
                 defaultValue={[min, max]}

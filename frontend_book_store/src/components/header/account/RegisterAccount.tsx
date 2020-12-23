@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, useState } from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Tooltip, Button, DatePicker } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -6,6 +6,7 @@ import { userRole } from '../../../models/User/userRoleEnum';
 import { registerUser } from '../../../store/userStore/thunkUser';
 import { useDispatch } from 'react-redux';
 import { setIsOpenModal } from '../../../store/userStore/actionCreatedUser';
+import { AppDispatch } from '../../../store/reducers';
 
 export interface InputsRegister {
     fullName: string;
@@ -49,11 +50,17 @@ const tailFormItemLayout = {
 
 const RegisterAccount: React.FC = () => {
     const [form] = Form.useForm();
-
-    const dispatch = useDispatch();
+    const textError = <span style={{ color: 'red', marginLeft: '33%' }}>error submit</span>;
+    const [errorSubmit, setErrorSubmit] = useState(false);
+    const dispatch: any = useDispatch();
     const onFinish = ({ fullName, email, password, dob }: InputsRegister) => {
-        dispatch(registerUser({ fullName, email, password, dob, roleId: userRole.user }));
-        dispatch(setIsOpenModal(false));
+        dispatch(registerUser({ fullName, email, password, dob, roleId: userRole.user })).then((resp: boolean) => {
+            if (resp) {
+                dispatch(setIsOpenModal(false));
+            } else {
+                setErrorSubmit(true);
+            }
+        });
     };
 
     return (
@@ -146,6 +153,8 @@ const RegisterAccount: React.FC = () => {
             >
                 <DatePicker />
             </Form.Item>
+
+            {errorSubmit && textError}
 
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">

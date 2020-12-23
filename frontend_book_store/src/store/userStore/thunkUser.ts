@@ -42,13 +42,15 @@ export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: 
 
 export const registerUser = ({ fullName, email, password, dob, roleId }: InputsRegister) => async (
     dispatch: AppDispatch,
-): Promise<void> => {
+): Promise<boolean> => {
     try {
         await postRegisterUser({ fullName, email, password, dob, roleId });
         const user = await getLoginByToken();
         dispatch(setAuthorizedUser(user));
+        return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));
+        return false;
     }
 };
 

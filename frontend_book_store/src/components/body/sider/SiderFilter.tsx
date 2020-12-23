@@ -47,7 +47,7 @@ const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch, filterState }
                 defaultMaxPrice={filterState.maxPrice}
             />
 
-            <Button style={{ margin: '10px', marginLeft: '45x' }} onClick={onResetFilter} danger>
+            <Button style={{ marginLeft: '25%', marginRight: '25%', marginTop: '20px' }} onClick={onResetFilter} danger>
                 Reset filter
             </Button>
         </div>
