@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 
-function useQuery() {
-    return queryString.parse(useLocation().search);
-}
+export const useQuery = (): queryString.ParsedQuery<string> => {
+    return queryString.parse(useLocation().search, { arrayFormat: 'comma' });
+};
 
 // const useQueryUpdate = () => {
 //     const query = useLocation().search;

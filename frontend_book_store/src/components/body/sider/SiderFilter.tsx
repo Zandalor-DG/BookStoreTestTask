@@ -3,13 +3,14 @@ import AuthorFilter from './authorFilter/AuthorFilter';
 import GenreFilter from './genreFilter/GenreFilter';
 import PriceFilter from './priceFilter/PriceFilter';
 import PublishHouse from './publichHouse/PublishHouse';
-import { Actions } from './filterReducer';
+import { Actions, FilterState } from './filterReducer';
 
 interface PropsSiderFilter {
     filterDispatch: React.Dispatch<Actions>;
+    filterState: FilterState;
 }
 
-const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch }: PropsSiderFilter) => {
+const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch, filterState }: PropsSiderFilter) => {
     const handleChangeGenre = (value: number[]) => {
         filterDispatch({ type: 'set_genre', selectedGenres: value });
     };
@@ -28,13 +29,17 @@ const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch }: PropsSiderF
 
     return (
         <div className="bookStore__sider">
-            <GenreFilter handleChange={handleChangeGenre} />
+            <GenreFilter handleChange={handleChangeGenre} defaultGenres={filterState.genres} />
 
-            <PublishHouse onChange={onChangePublish} />
+            <PublishHouse onChange={onChangePublish} defaultPublish={filterState.publish} />
 
-            <AuthorFilter onChange={onChangeAuthor} />
+            <AuthorFilter onChange={onChangeAuthor} defaultAuthor={filterState.author} />
 
-            <PriceFilter onAfterChange={onAfterChangePrice} />
+            <PriceFilter
+                onAfterChange={onAfterChangePrice}
+                defaultMinPrice={filterState.minPrice}
+                defaultMaxPrice={filterState.maxPrice}
+            />
         </div>
     );
 };

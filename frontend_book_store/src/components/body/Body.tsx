@@ -1,21 +1,22 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { memo, useEffect, useReducer } from 'react';
 import 'antd/dist/antd.css';
-import { useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { Layout } from 'antd';
 import BooksCard from './booksCard/BooksCard';
 import SiderFilter from './sider/SiderFilter';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { allBooks, allFilteringOptions } from '../../store/bookStore/thunkBookStore';
-import { StateReduxType } from '../../store/reducers';
 import { filterReducer, getInitialFilterState } from './sider/filterReducer';
 import { FilterState } from './sider/filterReducer';
+import { useQuery } from '../hooks/useQuery';
+import { getFilterUrl } from '../utils/stringifiedUtils';
 
 const Body: React.FunctionComponent = () => {
     const { Sider, Content } = Layout;
-    const location = useLocation();
-    console.log(location.search);
+    const history = useHistory();
+    const value = useQuery();
 
-    const [filterState, filterDispatch] = useReducer(filterReducer, {} as FilterState, getInitialFilterState);
+    const [filterState, filterDispatch] = useReducer(filterReducer, value as FilterState, getInitialFilterState);
 
     const dispatch = useDispatch();
 
@@ -24,6 +25,7 @@ const Body: React.FunctionComponent = () => {
     }, []);
 
     useEffect(() => {
+        history.push(getFilterUrl(filterState));
         dispatch(allBooks({ page: 1, pageSize: 6 }));
     }, [filterState]);
 
@@ -31,7 +33,7 @@ const Body: React.FunctionComponent = () => {
         <div>
             <Layout>
                 <Sider>
-                    <SiderFilter filterDispatch={filterDispatch} />
+                    <SiderFilter filterDispatch={filterDispatch} filterState={filterState} />
                 </Sider>
                 <Content>
                     <BooksCard />
@@ -41,4 +43,4 @@ const Body: React.FunctionComponent = () => {
     );
 };
 
-export default Body;
+export default memo(Body);

@@ -6,34 +6,37 @@ import { StateReduxType } from '../../../../store/reducers';
 
 interface PropsPublishHouse {
     onChange(value: number): void;
+    defaultPublish: number | undefined;
 }
 
-const PublishHouse: React.FC<PropsPublishHouse> = ({ onChange }: PropsPublishHouse) => {
-    const { Option } = Select;
+const PublishHouse: React.FC<PropsPublishHouse> = ({ onChange, defaultPublish }: PropsPublishHouse) => {
+    //const { Option } = Select;
     const allPublish = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions?.allPublish);
-    const publishHouseOption = allPublish?.map((a, idx) => {
-        return (
-            <Option key={idx} value={a.name}>
-                {a.name}
-            </Option>
-        );
+    const publishHouseOption = allPublish?.map((a) => {
+        return {
+            // <Option key={idx} value={a.id}>
+            //     {a.name}
+            // </Option>
+            value: a.id.toString(),
+            label: <span>{a.name}</span>,
+        };
     });
 
-    function onSearch(val: string) {
-        console.log('search:', val);
-    }
+    // function onSearch(val: string) {
+    //     console.log('search:', val);
+    // }
 
     return (
         <Select
+            defaultValue={defaultPublish}
             showSearch
             style={{ width: 199 }}
             placeholder="Select a publish house"
             optionFilterProp="children"
+            options={publishHouseOption}
             onChange={onChange}
-            onSearch={onSearch}
-        >
-            {publishHouseOption}
-        </Select>
+            //onSearch={onSearch}
+        />
     );
 };
 

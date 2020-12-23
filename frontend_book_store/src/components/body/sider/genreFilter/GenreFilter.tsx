@@ -6,30 +6,35 @@ import { StateReduxType } from '../../../../store/reducers';
 
 interface PropsGenreFilter {
     handleChange: (value: number[]) => void;
+    defaultGenres: number[] | undefined;
 }
 
-const GenreFilter: React.FC<PropsGenreFilter> = ({ handleChange }: PropsGenreFilter) => {
-    const { Option } = Select;
+const GenreFilter: React.FC<PropsGenreFilter> = ({ handleChange, defaultGenres }: PropsGenreFilter) => {
+    //const { Option } = Select;
 
     const allGenre = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.allGenre);
-    const genreOptions = allGenre.map((a, idx) => {
-        return (
-            <Option key={idx} value={a.id} label={a.name}>
-                <div className="demo-option-label-item">{a.name}</div>
-            </Option>
-        );
+    const genreOptions = allGenre.map((a) => {
+        // return (
+        //     <Option key={idx} value={a.id} label={a.name}>
+        //         <div className="demo-option-label-item">{a.name}</div>
+        //     </Option>
+        // );
+        return {
+            value: a.id.toString(),
+            label: <span>{a.name}</span>,
+        };
     });
 
     return (
         <Select
+            defaultValue={defaultGenres}
             mode="multiple"
             style={{ width: '100%' }}
             placeholder="select genre"
             onChange={handleChange}
             optionLabelProp="label"
-        >
-            {genreOptions}
-        </Select>
+            options={genreOptions}
+        />
     );
 };
 

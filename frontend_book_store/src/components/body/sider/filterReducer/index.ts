@@ -2,8 +2,8 @@ export type FilterState = {
     genres?: number[];
     author?: number;
     publish?: number;
-    maxPrice?: number;
     minPrice?: number;
+    maxPrice?: number;
 };
 
 export type Actions =

@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'antd/dist/antd.css';
 import { Card } from 'antd';
 import css from './BooksCard.module.css';
 import PaginationBookStore from './PaginationBookStore';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
-import { allBooks, allFilteringOptions } from '../../../store/bookStore/thunkBookStore';
 import Preloader from '../../common/preloader/Preloader';
 import { baseURL } from '../../../api/axios';
 

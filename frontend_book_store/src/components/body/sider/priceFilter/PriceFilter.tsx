@@ -7,11 +7,19 @@ import { StateReduxType } from '../../../../store/reducers';
 
 interface PropsPriceFilter {
     onAfterChange: (value: [number, number]) => void;
+    defaultMinPrice: number | undefined;
+    defaultMaxPrice: number | undefined;
 }
 
-const PriceFilter: React.FC<PropsPriceFilter> = ({ onAfterChange }: PropsPriceFilter) => {
+const PriceFilter: React.FC<PropsPriceFilter> = ({
+    onAfterChange,
+    defaultMinPrice,
+    defaultMaxPrice,
+}: PropsPriceFilter) => {
     const minPrice: number = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.minPrice);
     const maxPrice: number = useSelector((state: StateReduxType) => state.bookStoreState.allFilteringOptions.maxPrice);
+    const min = !defaultMinPrice ? minPrice : defaultMinPrice;
+    const max = !defaultMaxPrice ? maxPrice : defaultMaxPrice;
     // const onChange = (value: [number, number]) => {
     //     console.log('onChange: ', value);
     // };
@@ -24,7 +32,7 @@ const PriceFilter: React.FC<PropsPriceFilter> = ({ onAfterChange }: PropsPriceFi
                 step={10}
                 min={minPrice}
                 max={maxPrice}
-                defaultValue={[minPrice, maxPrice]}
+                defaultValue={[min, max]}
                 onAfterChange={onAfterChange}
             />
         </div>
