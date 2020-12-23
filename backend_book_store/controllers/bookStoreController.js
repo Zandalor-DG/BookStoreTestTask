@@ -51,23 +51,23 @@ exports.allBooks = async (req, res) => {
           model: models.Genre,
           as: 'Genre',
           attributes: ['name'],
-          where: Object.assign(
-            {},
-            genres && { id: { [Op.in]: genres.split(',') } }
-          ),
+          where: !genres
+            ? {}
+            : genres && { id: { [Op.in]: genres.split(',') } },
         },
       ],
       limit,
       offset,
-      where: Object.assign(
-        {},
-        minPrice &&
-          maxPrice && {
-            price: {
-              [Op.between]: [+minPrice, +maxPrice],
+      where:
+        !minPrice && !maxPrice
+          ? {}
+          : minPrice &&
+            maxPrice && {
+              price: {
+                [Op.between]: [+minPrice, +maxPrice],
+              },
             },
-          }
-      ), // conditions
+      // conditions
     });
 
     res.status(201).json({ booksResponse });
