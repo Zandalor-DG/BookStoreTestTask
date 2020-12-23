@@ -1,6 +1,7 @@
 import { AllFilteringOptions } from '../models/BookStore/allFilteringOptions';
 import { BookStoreData } from '../models/BookStore/bookStoreData';
 import { PaginationParams } from '../models/BookStore/paginationParams';
+import qs from 'query-string';
 import axios from './axios';
 
 export interface propsAllBooks {
@@ -10,8 +11,21 @@ export interface propsAllBooks {
     };
 }
 
-export const postAllBooks = async ({ pageSize, page }: PaginationParams): Promise<propsAllBooks> => {
-    const res = await axios.post('/book/allbooks', { pageSize, page });
+export const postAllBooks = async ({ pageSize, page, filterState }: PaginationParams): Promise<propsAllBooks> => {
+    const res = await axios.get('/book/allbooks', {
+        params: {
+            pageSize,
+            page,
+            author: filterState?.author,
+            publish: filterState?.publish,
+            genres: filterState?.genres,
+            minPrice: filterState?.minPrice,
+            maxPrice: filterState?.maxPrice,
+        },
+        paramsSerializer: (params) => {
+            return qs.stringify(params, { skipNull: true, arrayFormat: 'comma' });
+        },
+    });
     const data: propsAllBooks = res.data;
     return data;
 };

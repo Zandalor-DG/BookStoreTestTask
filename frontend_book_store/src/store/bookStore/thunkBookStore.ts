@@ -8,9 +8,11 @@ import {
     setTotalPage,
 } from './actionCreatedUser';
 
-export const allBooks = ({ page, pageSize }: PaginationParams) => async (dispatch: AppDispatch): Promise<void> => {
+export const allBooks = ({ page, pageSize, filterState }: PaginationParams) => async (
+    dispatch: AppDispatch,
+): Promise<void> => {
     try {
-        const data = await postAllBooks({ page, pageSize });
+        const data = await postAllBooks({ page, pageSize, filterState });
         dispatch(setBookStoreState(data.booksResponse.rows));
         dispatch(setTotalPage(data.booksResponse.count));
     } catch (err) {

@@ -7,8 +7,13 @@ import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import Preloader from '../../common/preloader/Preloader';
 import { baseURL } from '../../../api/axios';
+import { FilterState } from '../sider/filterReducer';
 
-const BooksCard: React.FunctionComponent = () => {
+interface PropsBooksCard {
+    filterState: FilterState;
+}
+
+const BooksCard: React.FC<PropsBooksCard> = ({ filterState }: PropsBooksCard) => {
     const { Meta } = Card;
     const books = useSelector((state: StateReduxType) => state.bookStoreState.books);
     const booksCart = !books ? (
@@ -42,7 +47,7 @@ const BooksCard: React.FunctionComponent = () => {
     return (
         <div className="body__booksCard">
             <div className={css.booksCard__wrapper}>{booksCart}</div>
-            <PaginationBookStore />
+            <PaginationBookStore filterState={filterState} />
         </div>
     );
 };

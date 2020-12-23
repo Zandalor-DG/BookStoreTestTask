@@ -26,7 +26,7 @@ const Body: React.FunctionComponent = () => {
 
     useEffect(() => {
         history.push(getFilterUrl(filterState));
-        dispatch(allBooks({ page: 1, pageSize: 6 }));
+        dispatch(allBooks({ page: 1, pageSize: 6, filterState }));
     }, [filterState]);
 
     return (
@@ -36,7 +36,7 @@ const Body: React.FunctionComponent = () => {
                     <SiderFilter filterDispatch={filterDispatch} filterState={filterState} />
                 </Sider>
                 <Content>
-                    <BooksCard />
+                    <BooksCard filterState={filterState} />
                 </Content>
             </Layout>
         </div>

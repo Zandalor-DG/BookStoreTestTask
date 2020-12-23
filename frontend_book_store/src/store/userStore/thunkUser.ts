@@ -29,12 +29,14 @@ export interface PropsUpdateUserData {
     roleId?: userRole;
 }
 
-export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: AppDispatch): Promise<void> => {
+export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: AppDispatch): Promise<boolean> => {
     try {
         const user = await postLoginUser({ email, password });
         dispatch(setAuthorizedUser(user));
+        return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));
+        return false;
     }
 };
 
