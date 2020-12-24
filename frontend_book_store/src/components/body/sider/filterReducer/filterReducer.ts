@@ -36,15 +36,6 @@ export const filterReducer = (state: FilterState, action: Actions): FilterState 
                 ...state,
                 publish: action.selectedPublish,
             };
-        case 'set_reset':
-            return {
-                ...state,
-                author: action.reset,
-                publish: action.reset,
-                genres: action.reset,
-                minPrice: action.reset,
-                maxPrice: action.reset,
-            };
         default:
             return state;
     }

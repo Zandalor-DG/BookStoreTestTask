@@ -6,5 +6,6 @@ export interface BookStoreState {
     pageSize: number;
     totalPage: number;
     allFilteringOptions: AllFilteringOptions;
+    book?: BookStoreData;
     error?: string;
 }

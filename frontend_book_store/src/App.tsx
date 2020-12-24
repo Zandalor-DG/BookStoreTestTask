@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginUserByToken } from './store/userStore/thunkUser';
 import PrivateRoute from './components/common/privateRoute/PrivateRoute';
 import { StateReduxType } from './store/reducers';
+import Book from './components/body/book/Book';
 
 const { Header, Footer } = Layout;
 
@@ -35,16 +36,18 @@ const App: React.FC = () => {
             <Header>
                 <HeaderContent />
             </Header>
-
-            <Switch>
-                <Route path="/" render={() => <Body />} exact />
-                <PrivateRoute path="/profile" exact>
-                    <ProfilePage />
-                </PrivateRoute>
-                <PrivateRoute path="/cart" exact>
-                    <ShoppingCart />
-                </PrivateRoute>
-            </Switch>
+            <section style={{ flexGrow: 1 }}>
+                <Switch>
+                    <Route path="/" render={() => <Body />} exact />
+                    <Route path="/book/:id" render={() => <Book />} />
+                    <PrivateRoute path="/profile" exact>
+                        <ProfilePage />
+                    </PrivateRoute>
+                    <PrivateRoute path="/cart" exact>
+                        <ShoppingCart />
+                    </PrivateRoute>
+                </Switch>
+            </section>
 
             <Footer>Footer</Footer>
         </Layout>

@@ -6,8 +6,8 @@ import BooksCard from './booksCard/BooksCard';
 import SiderFilter from './sider/SiderFilter';
 import { useDispatch } from 'react-redux';
 import { allBooks, allFilteringOptions } from '../../store/bookStore/thunkBookStore';
-import { filterReducer, getInitialFilterState } from './sider/filterReducer';
-import { FilterState } from './sider/filterReducer';
+import { filterReducer, getInitialFilterState } from './sider/filterReducer/filterReducer';
+import { FilterState } from './sider/filterReducer/filterReducer';
 import { useQuery } from '../hooks/useQuery';
 import { getFilterUrl } from '../utils/stringifiedUtils';
 
@@ -26,7 +26,7 @@ const Body: React.FunctionComponent = () => {
 
     useEffect(() => {
         history.push(getFilterUrl(filterState));
-        dispatch(allBooks({ page: 1, pageSize: 6, filterState }));
+        dispatch(allBooks({ page: 1, pageSize: 8, filterState }));
     }, [filterState]);
 
     return (

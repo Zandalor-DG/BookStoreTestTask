@@ -11,7 +11,7 @@ export interface propsAllBooks {
     };
 }
 
-export const postAllBooks = async ({ pageSize, page, filterState }: PaginationParams): Promise<propsAllBooks> => {
+export const getAllBooks = async ({ pageSize, page, filterState }: PaginationParams): Promise<propsAllBooks> => {
     const res = await axios.get('/book/allbooks', {
         params: {
             pageSize,
@@ -27,6 +27,14 @@ export const postAllBooks = async ({ pageSize, page, filterState }: PaginationPa
         },
     });
     const data: propsAllBooks = res.data;
+    return data;
+};
+
+export const getBook = async (id: number): Promise<BookStoreData> => {
+    const res = await axios.get('/book/one', {
+        params: { id },
+    });
+    const data: BookStoreData = res.data;
     return data;
 };
 

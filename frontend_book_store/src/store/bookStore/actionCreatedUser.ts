@@ -2,6 +2,7 @@ import { AllFilteringOptions } from '../../models/BookStore/allFilteringOptions'
 import { BookStoreData } from '../../models/BookStore/bookStoreData';
 import {
     ActionSetAllFilteringOptions,
+    ActionSetBookState,
     ActionSetBookStoreState,
     ActionSetErrorBookStore,
     ActionSetPageSize,
@@ -22,6 +23,11 @@ export const setAllFilteringOptions = (allFilteringOptions: AllFilteringOptions)
 export const setPageSize = (pageSize: number): ActionSetPageSize => ({
     type: ActionTypeBookStore.SetPageSize,
     pageSize,
+});
+
+export const setBookState = (book: BookStoreData): ActionSetBookState => ({
+    type: ActionTypeBookStore.SetBookState,
+    book,
 });
 
 export const SetBookStoreState = (books: BookStoreData[]): ActionSetBookStoreState => ({

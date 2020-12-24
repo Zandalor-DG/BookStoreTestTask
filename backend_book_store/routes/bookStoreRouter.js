@@ -10,4 +10,6 @@ bookStoreRouter.get(
   bookStoreController.allFilteringOptions
 );
 
+bookStoreRouter.get('/getbook', bookStoreController.getBook);
+
 module.exports = bookStoreRouter;
