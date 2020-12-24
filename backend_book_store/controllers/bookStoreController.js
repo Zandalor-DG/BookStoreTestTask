@@ -1,5 +1,5 @@
 const models = require('../database/models');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 
 const paginate = (page, pageSize) => {
   const offset = (page - 1) * pageSize;
@@ -87,6 +87,55 @@ exports.allFilteringOptions = async (req, res) => {
       maxPrice,
     };
     res.status(201).json(allFilteringOptions);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.getBook = async (req, res) => {
+  try {
+    const { id } = req.query;
+
+    const book = await models.Book.findOne({
+      include: [
+        {
+          model: models.File,
+          as: 'File',
+          attributes: ['path_name'],
+        },
+        {
+          model: models.Author,
+          as: 'Author',
+          attributes: ['name'],
+          //where: !author ? {} : { id: author },
+        },
+        {
+          model: models.Publish,
+          as: 'Publish',
+          attributes: ['name'],
+          //where: !publish ? {} : { id: publish },
+        },
+        {
+          model: models.Genre,
+          as: 'Genre',
+          attributes: ['name'],
+          //where: !genres ? {} : { id: { [Op.in]: genres.split(',') } },
+        },
+      ],
+      //limit,
+      //offset,
+      where: { id: id },
+      // where:
+      //   !minPrice && !maxPrice
+      //     ? {}
+      //     : {
+      //         price: {
+      //           [Op.between]: [+minPrice, +maxPrice],
+      //         },
+      //       }, // conditions
+    });
+
+    res.status(201).json(book);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

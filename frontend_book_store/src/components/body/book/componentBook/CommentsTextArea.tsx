@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar } from 'antd';
 import moment from 'moment';
 import Editor from './Editor';
+import CommentList from './CommentList';
 
 export interface IComments {
     author: string;
@@ -10,8 +11,6 @@ export interface IComments {
     content: JSX.Element;
     datetime: string;
 }
-
-//Interface;
 
 const CommentsTextArea: React.FC = () => {
     const [comments, setComments] = useState<IComments[]>([]);
@@ -39,8 +38,8 @@ const CommentsTextArea: React.FC = () => {
         }, 1000);
     };
 
-    const handleChange = (e) => {
-        setValue(e.target.value);
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setValue(event.target.value);
     };
 
     return (

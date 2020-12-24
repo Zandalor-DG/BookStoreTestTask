@@ -3,7 +3,7 @@ import AuthorFilter from './authorFilter/AuthorFilter';
 import 'antd/dist/antd.css';
 import GenreFilter from './genreFilter/GenreFilter';
 import PriceFilter from './priceFilter/PriceFilter';
-import PublishHouse from './publichHouse/PublishHouse';
+import PublishHouse from './publishHouse/PublishHouse';
 import { Actions, FilterState } from './filterReducer/filterReducer';
 
 interface PropsSiderFilter {

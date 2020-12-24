@@ -1,7 +1,12 @@
 import React from 'react';
 import { IComments } from './CommentsTextArea';
+import { Comment, List } from 'antd';
 
-const CommentList = (comments: IComments[]) => (
+interface PropsCommentLis {
+    comments: IComments[];
+}
+
+const CommentList: React.FC<PropsCommentLis> = ({ comments }: PropsCommentLis) => (
     <List
         dataSource={comments}
         header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
@@ -9,3 +14,5 @@ const CommentList = (comments: IComments[]) => (
         renderItem={(props) => <Comment {...props} />}
     />
 );
+
+export default CommentList;
