@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { baseURL } from '../../../api/axios';
+import { BookStoreData } from '../../../models/BookStore/bookStoreData';
 import { bookInfo } from '../../../store/bookStore/thunkBookStore';
 import { StateReduxType } from '../../../store/reducers';
 import Preloader from '../../common/preloader/Preloader';
@@ -17,7 +19,6 @@ const Book: React.FC = () => {
     useEffect(() => {
         dispatch(bookInfo(+params.id));
     }, []);
-
     const book = useSelector((state: StateReduxType) => state.bookStoreState.book);
 
     return (
@@ -26,7 +27,7 @@ const Book: React.FC = () => {
                 <Preloader />
             ) : ( */}
             <div>
-                <CoverBook cover={book?.File.path_name} />
+                <CoverBook cover={baseURL + book?.File.path_name} />
                 <RateBook />
                 <CommentsBook />
                 <CommentsTextArea />

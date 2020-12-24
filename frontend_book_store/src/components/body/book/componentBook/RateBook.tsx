@@ -7,7 +7,7 @@ const RateBook: React.FC = () => {
         console.log(value);
     };
 
-    return <Rate defaultValue={3} count={5} onChange={onChange} />;
+    return <Rate defaultValue={3} count={5} onChange={onChange} style={{}} />;
 };
 
 export default RateBook;

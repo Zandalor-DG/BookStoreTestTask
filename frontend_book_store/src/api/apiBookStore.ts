@@ -31,7 +31,7 @@ export const getAllBooks = async ({ pageSize, page, filterState }: PaginationPar
 };
 
 export const getBook = async (id: number): Promise<BookStoreData> => {
-    const res = await axios.get('/book/one', {
+    const res = await axios.get('/book/getbook', {
         params: { id },
     });
     const data: BookStoreData = res.data;

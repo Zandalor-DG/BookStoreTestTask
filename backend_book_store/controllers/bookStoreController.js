@@ -65,7 +65,6 @@ exports.allBooks = async (req, res) => {
                 [Op.between]: [+minPrice, +maxPrice],
               },
             },
-      // conditions
     });
 
     res.status(201).json({ booksResponse });
@@ -109,32 +108,20 @@ exports.getBook = async (req, res) => {
           model: models.Author,
           as: 'Author',
           attributes: ['name'],
-          //where: !author ? {} : { id: author },
         },
         {
           model: models.Publish,
           as: 'Publish',
           attributes: ['name'],
-          //where: !publish ? {} : { id: publish },
         },
         {
           model: models.Genre,
           as: 'Genre',
           attributes: ['name'],
-          //where: !genres ? {} : { id: { [Op.in]: genres.split(',') } },
         },
       ],
-      //limit,
-      //offset,
+
       where: { id: id },
-      // where:
-      //   !minPrice && !maxPrice
-      //     ? {}
-      //     : {
-      //         price: {
-      //           [Op.between]: [+minPrice, +maxPrice],
-      //         },
-      //       }, // conditions
     });
 
     res.status(201).json(book);
