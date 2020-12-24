@@ -33,6 +33,7 @@ const PublishHouse: React.FC<PropsPublishHouse> = ({ onChange, defaultPublish }:
             style={{ width: 199 }}
             placeholder="Select a publish house"
             optionFilterProp="children"
+            allowClear={true}
             options={publishHouseOption}
             onChange={onChange}
             //onSearch={onSearch}

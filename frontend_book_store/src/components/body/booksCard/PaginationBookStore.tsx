@@ -5,7 +5,7 @@ import css from './BooksCard.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { allBooks } from '../../../store/bookStore/thunkBookStore';
-import { FilterState } from '../sider/filterReducer';
+import { FilterState } from '../sider/filterReducer/filterReducer';
 
 interface PropsPaginationBookStore {
     filterState: FilterState;

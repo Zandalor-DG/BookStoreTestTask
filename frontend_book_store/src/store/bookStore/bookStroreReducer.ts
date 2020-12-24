@@ -7,6 +7,9 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
         case ActionTypeBookStore.SetBookStoreState: {
             return { ...state, books: [...action.books] };
         }
+        case ActionTypeBookStore.SetBookState: {
+            return { ...state, book: { ...action.book } };
+        }
         case ActionTypeBookStore.SetAllFilteringOptions: {
             return { ...state, allFilteringOptions: { ...action.allFilteringOptions } };
         }
@@ -18,7 +21,7 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
         }
         case ActionTypeBookStore.SetError:
             return {
-                ...bookStoreInitialState,
+                ...state,
                 error: action.error,
             };
         default:

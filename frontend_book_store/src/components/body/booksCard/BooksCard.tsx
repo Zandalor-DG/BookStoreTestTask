@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import Preloader from '../../common/preloader/Preloader';
 import { baseURL } from '../../../api/axios';
-import { FilterState } from '../sider/filterReducer';
+import { FilterState } from '../sider/filterReducer/filterReducer';
+import { NavLink } from 'react-router-dom';
 
 interface PropsBooksCard {
     filterState: FilterState;
@@ -16,6 +17,9 @@ interface PropsBooksCard {
 const BooksCard: React.FC<PropsBooksCard> = ({ filterState }: PropsBooksCard) => {
     const { Meta } = Card;
     const books = useSelector((state: StateReduxType) => state.bookStoreState.books);
+
+    //const openBook = (id) => {};
+
     const booksCart = !books ? (
         <Preloader />
     ) : (
@@ -25,17 +29,19 @@ const BooksCard: React.FC<PropsBooksCard> = ({ filterState }: PropsBooksCard) =>
                     key={a.id}
                     className={css.booksCard__cardBook}
                     hoverable
-                    style={{ width: '250px' }}
+                    style={{ width: '350px' }}
                     cover={
-                        <img
-                            alt={a.name}
-                            src={baseURL + a.File.path_name}
-                            style={{ width: '250px', height: '500px', objectFit: 'cover' }}
-                        />
+                        <NavLink to={`/book/${a.id}`} /*onClick={() => openBook(a.id)}*/>
+                            <img
+                                alt={a.name}
+                                src={baseURL + a.File.path_name}
+                                style={{ width: '350px', height: '500px', objectFit: 'cover' }}
+                            />
+                        </NavLink>
                     }
                 >
                     <Meta
-                        title={`${a.name} by ${a.Author}`}
+                        title={`${a.name} by ${a.Author.name}`}
                         description={`genre: ${a.Genre[0].name} 
                         publish house: ${a.Publish.name}`}
                     />

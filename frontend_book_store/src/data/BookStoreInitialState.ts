@@ -9,7 +9,7 @@ const bookStoreInitialState: BookStoreState = {
         minPrice: 0,
         maxPrice: 400,
     },
-    pageSize: 6,
+    pageSize: 8,
     totalPage: 10,
 };
 

@@ -1,11 +1,10 @@
 import React from 'react';
 import AuthorFilter from './authorFilter/AuthorFilter';
-import { Button } from 'antd';
 import 'antd/dist/antd.css';
 import GenreFilter from './genreFilter/GenreFilter';
 import PriceFilter from './priceFilter/PriceFilter';
 import PublishHouse from './publichHouse/PublishHouse';
-import { Actions, FilterState } from './filterReducer';
+import { Actions, FilterState } from './filterReducer/filterReducer';
 
 interface PropsSiderFilter {
     filterDispatch: React.Dispatch<Actions>;
@@ -29,10 +28,6 @@ const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch, filterState }
         filterDispatch({ type: 'set_price', min: value[0], max: value[1] });
     };
 
-    const onResetFilter = () => {
-        filterDispatch({ type: 'set_reset', reset: undefined });
-    };
-
     return (
         <div className="bookStore__sider">
             <GenreFilter handleChange={handleChangeGenre} defaultGenres={filterState.genres} />
@@ -46,10 +41,6 @@ const SiderFilter: React.FC<PropsSiderFilter> = ({ filterDispatch, filterState }
                 defaultMinPrice={filterState.minPrice}
                 defaultMaxPrice={filterState.maxPrice}
             />
-
-            <Button style={{ marginLeft: '25%', marginRight: '25%', marginTop: '20px' }} onClick={onResetFilter} danger>
-                Reset filter
-            </Button>
         </div>
     );
 };

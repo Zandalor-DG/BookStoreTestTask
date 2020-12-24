@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react';
+import React, { useState } from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Tooltip, Button, DatePicker } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -6,7 +6,6 @@ import { userRole } from '../../../models/User/userRoleEnum';
 import { registerUser } from '../../../store/userStore/thunkUser';
 import { useDispatch } from 'react-redux';
 import { setIsOpenModal } from '../../../store/userStore/actionCreatedUser';
-import { AppDispatch } from '../../../store/reducers';
 
 export interface InputsRegister {
     fullName: string;
