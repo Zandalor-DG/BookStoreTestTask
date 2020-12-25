@@ -17,11 +17,17 @@ const TabsComponent: React.FC<PropsTabsComponent> = ({ description, booksInfo }:
 
     return (
         <Tabs defaultActiveKey="1" onChange={callback}>
-            <TabPane tab="Tab 1" key="1">
-                Content of Tab Pane 1
+            <TabPane tab="Description" key="1">
+                {description}
             </TabPane>
-            <TabPane tab="Tab 2" key="2">
-                Content of Tab Pane 2
+            <TabPane tab="info" key="2">
+                language: {booksInfo?.language}
+                <br />
+                The year of publish: {booksInfo?.theYearOfPublish}
+                <br />
+                Number of page: {booksInfo?.numberOfPage}
+                <br />
+                <h3>Price: {booksInfo?.price}</h3>
             </TabPane>
         </Tabs>
     );
