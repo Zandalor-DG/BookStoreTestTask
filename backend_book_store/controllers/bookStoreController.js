@@ -1,5 +1,5 @@
 const models = require('../database/models');
-const { Op, where } = require('sequelize');
+const { Op, where, Sequelize } = require('sequelize');
 
 const paginate = (page, pageSize) => {
   const offset = (page - 1) * pageSize;
@@ -98,6 +98,7 @@ exports.getBook = async (req, res) => {
     const { id } = req.query;
 
     const book = await models.Book.findOne({
+      where: { id: id },
       include: [
         {
           model: models.File,
@@ -120,11 +121,41 @@ exports.getBook = async (req, res) => {
           attributes: ['name'],
         },
       ],
-
-      where: { id: id },
     });
 
-    res.status(201).json(book);
+    const commentsBook = await models.Comment.findAll({
+      where: { bookId: id },
+      include: [
+        {
+          model: models.User,
+          as: 'CommentUser',
+          attributes: ['email'],
+          include: [
+            {
+              model: models.File,
+              attributes: ['path_name'],
+            },
+          ],
+        },
+      ],
+      order: [['createdAt', 'DESC']],
+    });
+    console.log(Sequelize.col);
+    const rateBook = await models.Rate.findAll({
+      where: { bookId: id },
+      attributes: [
+        [Sequelize.fn('count', Sequelize.col('rate')), 'overall'],
+        [Sequelize.fn('sum', Sequelize.col('rate')), 'total'],
+      ],
+    });
+
+    const data = {
+      book,
+      commentsBook,
+      rateBook,
+    };
+
+    res.status(201).json(data);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

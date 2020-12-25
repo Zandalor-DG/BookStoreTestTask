@@ -30,7 +30,7 @@ export const getAllBooks = async ({ pageSize, page, filterState }: PaginationPar
     return data;
 };
 
-export const getBook = async (id: number): Promise<BookStoreData> => {
+export const getBook = async (id: string): Promise<BookStoreData> => {
     const res = await axios.get('/book/getbook', {
         params: { id },
     });

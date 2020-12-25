@@ -36,7 +36,7 @@ const App: React.FC = () => {
             <Header>
                 <HeaderContent />
             </Header>
-            <section style={{ flexGrow: 1 }}>
+            <section style={{ flexGrow: 1, backgroundColor: '#cae2e6bf' }}>
                 <Switch>
                     <Route path="/" render={() => <Body />} exact />
                     <Route path="/book/:id" render={() => <Book />} />

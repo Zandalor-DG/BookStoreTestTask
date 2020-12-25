@@ -21,7 +21,7 @@ export const allBooks = ({ page, pageSize, filterState }: PaginationParams) => a
     }
 };
 
-export const bookInfo = (id: number) => async (dispatch: AppDispatch): Promise<void> => {
+export const bookInfo = (id: string) => async (dispatch: AppDispatch): Promise<void> => {
     try {
         const data = await getBook(id);
         dispatch(setBookState(data));

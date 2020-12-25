@@ -8,12 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // models.File.hasOne(Book, {
-      //   foreignKey: 'coverId',
-      //   as: 'cover',
-      //   onDelete: 'CASCADE',
-      //   /* options */
-      // });
       Book.belongsTo(models.Author, {
         foreignKey: 'authorId',
       });
@@ -22,16 +16,23 @@ module.exports = (sequelize, DataTypes) => {
       });
       Book.belongsTo(models.File, {
         foreignKey: 'coverId',
-        //as: 'cover',
         onDelete: 'CASCADE',
+      });
+      Book.belongsToMany(models.User, {
+        through: 'Rate',
+        as: 'Rate_book',
+        foreignKey: 'bookId',
+      });
+      Book.belongsToMany(models.User, {
+        through: 'Comment',
+        as: 'Comments_user',
+        foreignKey: 'bookId',
       });
       Book.belongsToMany(models.Genre, {
         through: 'Genre_Book',
         as: 'Genre',
-        //foreignKey: 'bookId',
         foreignKey: 'bookId',
       });
-      // define association here
     }
   }
   Book.init(
@@ -41,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.INTEGER,
       publishId: DataTypes.INTEGER,
       coverId: DataTypes.INTEGER,
+      theYearOfPublishing: DataTypes.DATE,
+      language: DataTypes.STRING,
+      numberOfPages: DataTypes.INTEGER,
+      description: DataTypes.TEXT,
     },
     {
       sequelize,
