@@ -21,7 +21,7 @@ const Book: React.FC = () => {
     useEffect(() => {
         dispatch(bookInfo(params.id));
     }, []);
-    const book = useSelector((state: StateReduxType) => state.bookStoreState.book);
+    const data = useSelector((state: StateReduxType) => state.bookStoreState.book);
 
     return (
         <>
@@ -29,9 +29,9 @@ const Book: React.FC = () => {
                 <Preloader />
             ) : ( */}
             <div className={css.bookStore__book}>
-                <BookInfo book={book} />
-                <TabsComponent />
-                <CommentsBook />
+                <BookInfo data={data} />
+                <TabsComponent description={data?.book.description} booksInfo={data?.book} />
+                <CommentsBook comments={data?.commentsBook} />
                 <CommentsTextArea />
             </div>
             {/* )} */}

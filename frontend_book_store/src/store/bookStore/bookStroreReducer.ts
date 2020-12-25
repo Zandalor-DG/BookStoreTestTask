@@ -8,7 +8,14 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
             return { ...state, books: [...action.books] };
         }
         case ActionTypeBookStore.SetBookState: {
-            return { ...state, book: { ...action.book } };
+            return {
+                ...state,
+                book: {
+                    ...action.data,
+                    book: { ...action.data.book },
+                    commentsBook: [...action.data.commentsBook],
+                },
+            };
         }
         case ActionTypeBookStore.SetAllFilteringOptions: {
             return { ...state, allFilteringOptions: { ...action.allFilteringOptions } };

@@ -152,7 +152,7 @@ exports.getBook = async (req, res) => {
     const data = {
       book,
       commentsBook,
-      rateBook,
+      rateBook: rateBook[0].dataValues.total / rateBook[0].dataValues.overall,
     };
 
     res.status(201).json(data);

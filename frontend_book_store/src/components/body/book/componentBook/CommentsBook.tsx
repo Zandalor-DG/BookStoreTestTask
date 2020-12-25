@@ -3,7 +3,27 @@ import 'antd/dist/antd.css';
 import { Comment, Tooltip, List } from 'antd';
 import moment from 'moment';
 
-const CommentsBook: React.FC = () => {
+interface PropsCommentsBook {
+    comments:
+        | [
+              {
+                  bookId: number;
+                  userId: number;
+                  comment: string;
+                  createdAt: Date;
+                  updateAt: Date;
+                  CommentUser: {
+                      email: string;
+                      File: {
+                          path_name: string;
+                      };
+                  };
+              },
+          ]
+        | undefined;
+}
+
+const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBook) => {
     const userComments = [
         {
             actions: [<span key="comment-list-reply-to-0">Reply to</span>],

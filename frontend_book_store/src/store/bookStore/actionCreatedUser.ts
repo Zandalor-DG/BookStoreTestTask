@@ -1,3 +1,4 @@
+import { PropsGetBook } from '../../api/apiBookStore';
 import { AllFilteringOptions } from '../../models/BookStore/allFilteringOptions';
 import { BookStoreData } from '../../models/BookStore/bookStoreData';
 import {
@@ -25,9 +26,9 @@ export const setPageSize = (pageSize: number): ActionSetPageSize => ({
     pageSize,
 });
 
-export const setBookState = (book: BookStoreData): ActionSetBookState => ({
+export const setBookState = (data: PropsGetBook): ActionSetBookState => ({
     type: ActionTypeBookStore.SetBookState,
-    book,
+    data,
 });
 
 export const SetBookStoreState = (books: BookStoreData[]): ActionSetBookStoreState => ({

@@ -1,3 +1,4 @@
+import { PropsGetBook } from '../api/apiBookStore';
 import { AllFilteringOptions } from './BookStore/allFilteringOptions';
 import { BookStoreData } from './BookStore/bookStoreData';
 
@@ -6,6 +7,6 @@ export interface BookStoreState {
     pageSize: number;
     totalPage: number;
     allFilteringOptions: AllFilteringOptions;
-    book?: BookStoreData;
+    book?: PropsGetBook;
     error?: string;
 }

@@ -1,8 +1,14 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Tabs } from 'antd';
+import { BookStoreData } from '../../../../models/BookStore/bookStoreData';
 
-const TabsComponent: React.FC = () => {
+interface PropsTabsComponent {
+    description: string | undefined;
+    booksInfo: BookStoreData | undefined;
+}
+
+const TabsComponent: React.FC<PropsTabsComponent> = ({ description, booksInfo }: PropsTabsComponent) => {
     const { TabPane } = Tabs;
 
     function callback(key: string | number | null | undefined) {

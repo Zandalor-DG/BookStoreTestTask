@@ -1,3 +1,4 @@
+import { PropsGetBook } from '../../api/apiBookStore';
 import { AllFilteringOptions } from '../../models/BookStore/allFilteringOptions';
 import { BookStoreData } from '../../models/BookStore/bookStoreData';
 
@@ -27,7 +28,7 @@ export type ActionSetAllFilteringOptions = {
 
 export type ActionSetBookState = {
     type: ActionTypeBookStore.SetBookState;
-    book: BookStoreData;
+    data: PropsGetBook;
 };
 
 export type ActionSetBookStoreState = {

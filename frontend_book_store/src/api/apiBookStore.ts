@@ -11,6 +11,26 @@ export interface propsAllBooks {
     };
 }
 
+export interface PropsGetBook {
+    book: BookStoreData;
+    commentsBook: [
+        {
+            bookId: number;
+            userId: number;
+            comment: string;
+            createdAt: Date;
+            updateAt: Date;
+            CommentUser: {
+                email: string;
+                File: {
+                    path_name: string;
+                };
+            };
+        },
+    ];
+    rateBook: number;
+}
+
 export const getAllBooks = async ({ pageSize, page, filterState }: PaginationParams): Promise<propsAllBooks> => {
     const res = await axios.get('/book/allbooks', {
         params: {
@@ -30,11 +50,11 @@ export const getAllBooks = async ({ pageSize, page, filterState }: PaginationPar
     return data;
 };
 
-export const getBook = async (id: string): Promise<BookStoreData> => {
+export const getBook = async (id: string): Promise<PropsGetBook> => {
     const res = await axios.get('/book/getbook', {
         params: { id },
     });
-    const data: BookStoreData = res.data;
+    const data: PropsGetBook = res.data;
     return data;
 };
 
