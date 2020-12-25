@@ -11,5 +11,6 @@ bookStoreRouter.get(
 );
 bookStoreRouter.get('/getbook', bookStoreController.getBook);
 bookStoreRouter.post('/comment', tokenChecker, bookStoreController.commentBook);
+bookStoreRouter.post('/ratebook', tokenChecker, bookStoreController.rateBook);
 
 module.exports = bookStoreRouter;
