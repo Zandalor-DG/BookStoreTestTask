@@ -3,7 +3,7 @@ export interface BookStoreData {
     name: string;
     theYearOfPublish: Date;
     language: string;
-    numberOfPage: number;
+    numberOfPages: number;
     description: string;
     price: number;
     Author: { name: string };

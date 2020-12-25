@@ -21,11 +21,11 @@ const TabsComponent: React.FC<PropsTabsComponent> = ({ description, booksInfo }:
                 {description}
             </TabPane>
             <TabPane tab="info" key="2">
-                language: {booksInfo?.language}
+                <span>language: {booksInfo?.language}</span>
                 <br />
-                The year of publish: {booksInfo?.theYearOfPublish}
+                <span>The year of publish: {booksInfo?.theYearOfPublish}</span>
                 <br />
-                Number of page: {booksInfo?.numberOfPage}
+                <span>Number of page: {booksInfo?.numberOfPages}</span>
                 <br />
                 <h3>Price: {booksInfo?.price}</h3>
             </TabPane>

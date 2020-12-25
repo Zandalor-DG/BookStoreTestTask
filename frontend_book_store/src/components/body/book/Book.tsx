@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { baseURL } from '../../../api/axios';
 import { bookInfo } from '../../../store/bookStore/thunkBookStore';
 import { StateReduxType } from '../../../store/reducers';
 import Preloader from '../../common/preloader/Preloader';
@@ -10,6 +9,7 @@ import CommentsTextArea from './componentBook/CommentsTextArea';
 import BookInfo from './componentBook/BookInfo';
 import TabsComponent from './componentBook/TabsComponent';
 import css from './Book.module.css';
+import { PropsGetBook } from '../../../api/apiBookStore';
 
 const Book: React.FC = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,6 @@ const Book: React.FC = () => {
     const params: {
         id: string;
     } = useParams();
-
     useEffect(() => {
         dispatch(bookInfo(params.id));
     }, []);

@@ -160,3 +160,62 @@ exports.getBook = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+exports.commentBook = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+    const { comment, bookId } = req.body;
+    if (!comment && !bookId) {
+      throw new Error('Not comment or bookId');
+    }
+
+    await models.Comment.create({
+      userId,
+      comment,
+      bookId,
+    });
+
+    res.status(201).json({ message: 'Comment create' });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+exports.rateBook = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+    const { rateBook, bookId } = req.body;
+    if (!rateBook && !bookId) {
+      throw new Error('Not rateBook or bookId');
+    }
+
+    const [created] = await models.Rate.findOrCreate({
+      where: {
+        userId,
+        bookId,
+      },
+      defaults: {
+        rate: rateBook,
+      },
+    });
+
+    if (!created) {
+      await models.Rate.update(
+        {
+          rate: rateBook,
+        },
+        {
+          where: {
+            userId,
+            bookId,
+          },
+        }
+      );
+      res.status(202).json({ message: 'rate update' });
+    }
+
+    res.status(201).json({ message: 'rate created' });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
