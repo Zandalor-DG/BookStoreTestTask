@@ -21,7 +21,7 @@ const BookInfo: React.FC<propsCoverBook> = ({ data }: propsCoverBook) => {
                 />
             </div>
             <div className={css.coverAndRate__rate}>
-                <RateBook />
+                <RateBook rate={data?.rateBook} />
                 <h4>rate: {data?.rateBook}</h4>
                 <h2>{data?.book.name}</h2>
                 <h3>by {data?.book.Author.name}</h3>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { IComments } from './CommentsTextArea';
 import { Comment, List } from 'antd';
+import { IComments } from './CommentsBook';
 
 interface PropsCommentLis {
     comments: IComments[];

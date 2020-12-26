@@ -4,8 +4,8 @@ import { Tabs } from 'antd';
 import { BookStoreData } from '../../../../models/BookStore/bookStoreData';
 
 interface PropsTabsComponent {
-    description: string | undefined;
-    booksInfo: BookStoreData | undefined;
+    description?: string;
+    booksInfo?: BookStoreData;
 }
 
 const TabsComponent: React.FC<PropsTabsComponent> = ({ description, booksInfo }: PropsTabsComponent) => {
@@ -14,7 +14,12 @@ const TabsComponent: React.FC<PropsTabsComponent> = ({ description, booksInfo }:
     function callback(key: string | number | null | undefined) {
         console.log(key);
     }
-
+    const yearOfBook = React.useMemo(() => {
+        if (booksInfo?.theYearOfPublishing) {
+            return new Date(booksInfo?.theYearOfPublishing).getFullYear();
+        }
+        return '';
+    }, [booksInfo?.theYearOfPublishing]);
     return (
         <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Description" key="1">
@@ -23,7 +28,7 @@ const TabsComponent: React.FC<PropsTabsComponent> = ({ description, booksInfo }:
             <TabPane tab="info" key="2">
                 <span>language: {booksInfo?.language}</span>
                 <br />
-                <span>The year of publish: {booksInfo?.theYearOfPublish}</span>
+                <span>The year of publish: {yearOfBook}</span>
                 <br />
                 <span>Number of page: {booksInfo?.numberOfPages}</span>
                 <br />

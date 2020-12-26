@@ -5,11 +5,9 @@ import { bookInfo } from '../../../store/bookStore/thunkBookStore';
 import { StateReduxType } from '../../../store/reducers';
 import Preloader from '../../common/preloader/Preloader';
 import CommentsBook from './componentBook/CommentsBook';
-import CommentsTextArea from './componentBook/CommentsTextArea';
 import BookInfo from './componentBook/BookInfo';
 import TabsComponent from './componentBook/TabsComponent';
 import css from './Book.module.css';
-import { PropsGetBook } from '../../../api/apiBookStore';
 
 const Book: React.FC = () => {
     const dispatch = useDispatch();
@@ -24,16 +22,15 @@ const Book: React.FC = () => {
 
     return (
         <>
-            {/* {!book ? (
+            {!data ? (
                 <Preloader />
-            ) : ( */}
-            <div className={css.bookStore__book}>
-                <BookInfo data={data} />
-                <TabsComponent description={data?.book.description} booksInfo={data?.book} />
-                <CommentsBook comments={data?.commentsBook} />
-                <CommentsTextArea />
-            </div>
-            {/* )} */}
+            ) : (
+                <div className={css.bookStore__book}>
+                    <BookInfo data={data} />
+                    <TabsComponent description={data?.book.description} booksInfo={data?.book} />
+                    <CommentsBook comments={data?.commentsBook} />
+                </div>
+            )}
         </>
     );
 };

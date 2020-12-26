@@ -1,82 +1,100 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import 'antd/dist/antd.css';
-import { Comment, Tooltip, List } from 'antd';
+import { Comment, Tooltip, Avatar } from 'antd';
 import moment from 'moment';
+import { baseURL } from '../../../../api/axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { CommentState } from '../../../../models/BookStore/bookStoreData';
+import CommentList from './CommentList';
+import Editor from './Editor';
+import { addNewComment } from '../../../../store/bookStore/thunkBookStore';
+import { useParams } from 'react-router-dom';
+import { StateReduxType } from '../../../../store/reducers';
+import { TextAreaRef } from 'antd/lib/input/TextArea';
 
 interface PropsCommentsBook {
-    comments:
-        | [
-              {
-                  bookId: number;
-                  userId: number;
-                  comment: string;
-                  createdAt: Date;
-                  updateAt: Date;
-                  CommentUser: {
-                      email: string;
-                      File: {
-                          path_name: string;
-                      };
-                  };
-              },
-          ]
-        | undefined;
+    comments: CommentState[];
+}
+
+export interface IComments {
+    actions: JSX.Element[];
+    author: string;
+    avatar: string;
+    content: JSX.Element;
+    datetime: JSX.Element;
 }
 
 const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBook) => {
-    const userComments = [
-        {
-            actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-            email: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design resources
-                    (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
-                </p>
-            ),
+    const dispatch = useDispatch();
+    const params: {
+        id: string;
+    } = useParams();
+    const [submitting, setSubmitting] = useState(false);
+    const [value, setValue] = useState('');
+    const user = useSelector((state: StateReduxType) => state.userState.user);
+    const avatarUser = user
+        ? `${baseURL}/${user.avatar}`
+        : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+    const textAreaEditorRef = useRef<TextAreaRef>(null);
+
+    const onReply = () => {
+        if (!textAreaEditorRef.current) {
+            return;
+        }
+        textAreaEditorRef.current.focus();
+    };
+
+    const handleSubmit = () => {
+        if (!value) {
+            return;
+        }
+        setSubmitting(true);
+        dispatch(addNewComment({ comment: value, bookId: params.id }));
+        setSubmitting(false);
+        setValue('');
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setValue(event.target.value);
+    };
+
+    const userComments: IComments[] = comments?.map((a, ix) => {
+        const avatar = a.CommentUser.File?.path_name
+            ? `${baseURL}/${a.CommentUser.File.path_name}`
+            : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+        return {
+            actions: [
+                <span onClick={onReply} key={ix}>
+                    Reply to
+                </span>,
+            ],
+            author: a.CommentUser.email,
+            avatar,
+            content: <p>{a.comment}</p>,
             datetime: (
-                <Tooltip title={moment().subtract(1, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-                    <span>{moment().subtract(1, 'days').fromNow()}</span>
+                <Tooltip title={moment(a.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
+                    <span>{moment(a.createdAt).fromNow()}</span>
                 </Tooltip>
             ),
-        },
-        {
-            actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-            email: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: (
-                <p>
-                    We supply a series of design principles, practical patterns and high quality design resources
-                    (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.
-                </p>
-            ),
-            datetime: (
-                <Tooltip title={moment().subtract(2, 'days').format('YYYY-MM-DD HH:mm:ss')}>
-                    <span>{moment().subtract(2, 'days').fromNow()}</span>
-                </Tooltip>
-            ),
-        },
-    ];
+        };
+    });
 
     return (
-        <List
-            className="comment-list"
-            header={`${userComments.length} replies`}
-            itemLayout="horizontal"
-            dataSource={userComments}
-            renderItem={(a) => (
-                <li>
-                    <Comment
-                        actions={a.actions}
-                        author={a.email}
-                        avatar={a.avatar}
-                        content={a.content}
-                        datetime={a.datetime}
+        <>
+            {userComments.length > 0 && <CommentList comments={userComments} />}
+            <Comment
+                avatar={<Avatar src={avatarUser} alt="Han Solo" />}
+                content={
+                    <Editor
+                        ref={textAreaEditorRef}
+                        onChange={handleChange}
+                        onSubmit={handleSubmit}
+                        submitting={submitting}
+                        value={value}
                     />
-                </li>
-            )}
-        />
+                }
+            />
+        </>
     );
 };
 

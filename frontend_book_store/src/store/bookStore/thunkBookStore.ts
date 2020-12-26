@@ -1,7 +1,17 @@
-import { getAllBooks, getAllFilteringOptions, getBook } from '../../api/apiBookStore';
+import {
+    IPostAddComment,
+    getAllBooks,
+    getAllFilteringOptions,
+    getBook,
+    postAddComment,
+    IPostAddOrUpdateRate,
+    postAddOrUpdateRate,
+} from '../../api/apiBookStore';
 import { PaginationParams } from '../../models/BookStore/paginationParams';
 import { AppDispatch } from '../reducers';
 import {
+    addComment,
+    addOrUpdateRate,
     setAllFilteringOptions,
     setBookState,
     SetBookStoreState as setBookStoreState,
@@ -25,6 +35,26 @@ export const bookInfo = (id: string) => async (dispatch: AppDispatch): Promise<v
     try {
         const data = await getBook(id);
         dispatch(setBookState(data));
+    } catch (err) {
+        dispatch(setErrorBookStore(err.message));
+    }
+};
+
+export const addNewComment = ({ comment, bookId }: IPostAddComment) => async (dispatch: AppDispatch): Promise<void> => {
+    try {
+        const commentData = await postAddComment({ comment, bookId });
+        dispatch(addComment(commentData));
+    } catch (err) {
+        dispatch(setErrorBookStore(err.message));
+    }
+};
+
+export const addOrUpdateBookRate = ({ rateBook, bookId }: IPostAddOrUpdateRate) => async (
+    dispatch: AppDispatch,
+): Promise<void> => {
+    try {
+        const rate = await postAddOrUpdateRate({ rateBook, bookId });
+        dispatch(addOrUpdateRate(rate));
     } catch (err) {
         dispatch(setErrorBookStore(err.message));
     }

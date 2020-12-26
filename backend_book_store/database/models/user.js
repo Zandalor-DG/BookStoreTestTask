@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Comments_user',
         foreignKey: 'userId',
       });
-      User.hasOne(models.File, {
-        foreignKey: 'id',
+      User.belongsTo(models.File, {
+        foreignKey: 'avatarId',
         onDelete: 'CASCADE',
       });
       User.hasMany(models.Comment, {

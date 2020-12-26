@@ -1,6 +1,6 @@
 import { PropsGetBook } from '../../api/apiBookStore';
 import { AllFilteringOptions } from '../../models/BookStore/allFilteringOptions';
-import { BookStoreData } from '../../models/BookStore/bookStoreData';
+import { BookStoreData, CommentState } from '../../models/BookStore/bookStoreData';
 
 export enum ActionTypeBookStore {
     SetTotalPage = 'SetTotalPage',
@@ -9,6 +9,8 @@ export enum ActionTypeBookStore {
     SetBookStoreState = 'SetBookStoreState',
     SetAllFilteringOptions = 'SetAllFilteringOptions',
     SetBookState = 'SetBookState',
+    AddComment = 'AddComment',
+    AddOrUpdateRate = 'AddOrUpdateRate',
 }
 
 export type ActionSetTotalPage = {
@@ -31,6 +33,16 @@ export type ActionSetBookState = {
     data: PropsGetBook;
 };
 
+export type ActionAddComment = {
+    type: ActionTypeBookStore.AddComment;
+    comment: CommentState[];
+};
+
+export type ActionAddOrUpdateRate = {
+    type: ActionTypeBookStore.AddOrUpdateRate;
+    rate: number;
+};
+
 export type ActionSetBookStoreState = {
     type: ActionTypeBookStore.SetBookStoreState;
     books: BookStoreData[];
@@ -47,4 +59,6 @@ export type ActionBookStore =
     | ActionSetBookStoreState
     | ActionSetAllFilteringOptions
     | ActionSetErrorBookStore
-    | ActionSetBookState;
+    | ActionSetBookState
+    | ActionAddComment
+    | ActionAddOrUpdateRate;

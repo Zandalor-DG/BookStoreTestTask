@@ -138,7 +138,7 @@ exports.getBook = async (req, res) => {
           ],
         },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt', 'ASC']],
     });
     console.log(Sequelize.col);
     const rateBook = await models.Rate.findAll({
@@ -175,7 +175,25 @@ exports.commentBook = async (req, res) => {
       bookId,
     });
 
-    res.status(201).json({ message: 'Comment create' });
+    const newComment = await models.Comment.findAll({
+      where: { bookId: bookId },
+      include: [
+        {
+          model: models.User,
+          as: 'CommentUser',
+          attributes: ['email'],
+          include: [
+            {
+              model: models.File,
+              attributes: ['path_name'],
+            },
+          ],
+        },
+      ],
+      order: [['createdAt', 'ASC']],
+    });
+
+    res.status(201).json({ message: 'Comment create', comment: newComment });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -211,10 +229,21 @@ exports.rateBook = async (req, res) => {
           },
         }
       );
-      res.status(202).json({ message: 'rate update' });
     }
 
-    res.status(201).json({ message: 'rate created' });
+    const rateBookUpdated = await models.Rate.findAll({
+      where: { bookId: id },
+      attributes: [
+        [Sequelize.fn('count', Sequelize.col('rate')), 'overall'],
+        [Sequelize.fn('sum', Sequelize.col('rate')), 'total'],
+      ],
+    });
+
+    const rate =
+      rateBookUpdated[0].dataValues.total /
+      rateBookUpdated[0].dataValues.overall;
+
+    res.status(201).json({ message: 'rate created', rate });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

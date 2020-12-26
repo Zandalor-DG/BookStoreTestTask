@@ -1,5 +1,5 @@
 import { AllFilteringOptions } from '../models/BookStore/allFilteringOptions';
-import { BookStoreData } from '../models/BookStore/bookStoreData';
+import { BookStoreData, CommentState } from '../models/BookStore/bookStoreData';
 import { PaginationParams } from '../models/BookStore/paginationParams';
 import qs from 'query-string';
 import axios from './axios';
@@ -13,22 +13,18 @@ export interface propsAllBooks {
 
 export interface PropsGetBook {
     book: BookStoreData;
-    commentsBook: [
-        {
-            bookId: number;
-            userId: number;
-            comment: string;
-            createdAt: Date;
-            updateAt: Date;
-            CommentUser: {
-                email: string;
-                File: {
-                    path_name: string;
-                };
-            };
-        },
-    ];
+    commentsBook: CommentState[];
     rateBook: number;
+}
+
+export interface IPostAddComment {
+    comment: string;
+    bookId: string;
+}
+
+export interface IPostAddOrUpdateRate {
+    rateBook: number;
+    bookId: string;
 }
 
 export const getAllBooks = async ({ pageSize, page, filterState }: PaginationParams): Promise<propsAllBooks> => {
@@ -55,6 +51,18 @@ export const getBook = async (id: string): Promise<PropsGetBook> => {
         params: { id },
     });
     const data: PropsGetBook = res.data;
+    return data;
+};
+
+export const postAddComment = async ({ comment, bookId }: IPostAddComment): Promise<CommentState[]> => {
+    const res = await axios.post('/book/comment', { comment, bookId });
+    const data: CommentState[] = res.data.comment;
+    return data;
+};
+
+export const postAddOrUpdateRate = async ({ rateBook, bookId }: IPostAddOrUpdateRate): Promise<number> => {
+    const res = await axios.post('/book/ratebook', { rateBook, bookId });
+    const data: number = res.data;
     return data;
 };
 

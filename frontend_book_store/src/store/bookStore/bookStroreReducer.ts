@@ -17,6 +17,32 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
                 },
             };
         }
+        case ActionTypeBookStore.AddComment: {
+            if (!state.book) {
+                return state;
+            }
+            return {
+                ...state,
+                book: {
+                    book: { ...state.book?.book },
+                    commentsBook: action.comment,
+                    rateBook: state.book?.rateBook,
+                },
+            };
+        }
+        case ActionTypeBookStore.AddOrUpdateRate: {
+            if (!state.book) {
+                return state;
+            }
+            return {
+                ...state,
+                book: {
+                    book: { ...state.book?.book },
+                    commentsBook: [...state.book?.commentsBook],
+                    rateBook: action.rate,
+                },
+            };
+        }
         case ActionTypeBookStore.SetAllFilteringOptions: {
             return { ...state, allFilteringOptions: { ...action.allFilteringOptions } };
         }

@@ -40,11 +40,7 @@ const BooksCard: React.FC<PropsBooksCard> = ({ filterState }: PropsBooksCard) =>
                         </NavLink>
                     }
                 >
-                    <Meta
-                        title={`${a.name} by ${a.Author.name}`}
-                        description={`genre: ${a.Genre[0].name} 
-                        publish house: ${a.Publish.name}`}
-                    />
+                    <Meta title={`${a.name} by ${a.Author.name}`} description={` Price: ${a.price}`} />
                 </Card>
             );
         })
