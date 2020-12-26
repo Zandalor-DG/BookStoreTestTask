@@ -62,7 +62,7 @@ export const postAddComment = async ({ comment, bookId }: IPostAddComment): Prom
 
 export const postAddOrUpdateRate = async ({ rateBook, bookId }: IPostAddOrUpdateRate): Promise<number> => {
     const res = await axios.post('/book/ratebook', { rateBook, bookId });
-    const data: number = res.data;
+    const data: number = res.data.rate;
     return data;
 };
 

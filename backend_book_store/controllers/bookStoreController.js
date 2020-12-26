@@ -207,7 +207,7 @@ exports.rateBook = async (req, res) => {
       throw new Error('Not rateBook or bookId');
     }
 
-    const [created] = await models.Rate.findOrCreate({
+    const [rateCreated, created] = await models.Rate.findOrCreate({
       where: {
         userId,
         bookId,
@@ -219,9 +219,7 @@ exports.rateBook = async (req, res) => {
 
     if (!created) {
       await models.Rate.update(
-        {
-          rate: rateBook,
-        },
+        { rate: rateBook },
         {
           where: {
             userId,
@@ -232,7 +230,7 @@ exports.rateBook = async (req, res) => {
     }
 
     const rateBookUpdated = await models.Rate.findAll({
-      where: { bookId: id },
+      where: { bookId: bookId },
       attributes: [
         [Sequelize.fn('count', Sequelize.col('rate')), 'overall'],
         [Sequelize.fn('sum', Sequelize.col('rate')), 'total'],

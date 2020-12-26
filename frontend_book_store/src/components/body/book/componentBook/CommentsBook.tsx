@@ -24,6 +24,11 @@ export interface IComments {
     datetime: JSX.Element;
 }
 
+export interface IReplyUser {
+    id: number;
+    name: string;
+}
+
 const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBook) => {
     const dispatch = useDispatch();
     const params: {
@@ -36,11 +41,13 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         ? `${baseURL}/${user.avatar}`
         : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
     const textAreaEditorRef = useRef<TextAreaRef>(null);
+    const [nameReply, setNameReply] = useState<IReplyUser | undefined>();
 
-    const onReply = () => {
+    const onReply = (name: string, id: number) => {
         if (!textAreaEditorRef.current) {
             return;
         }
+        setNameReply({ name, id });
         textAreaEditorRef.current.focus();
     };
 
@@ -64,7 +71,7 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
             : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
         return {
             actions: [
-                <span onClick={onReply} key={ix}>
+                <span onClick={() => onReply(a.CommentUser.email, a.userId)} key={ix}>
                     Reply to
                 </span>,
             ],
@@ -86,6 +93,7 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
                 avatar={<Avatar src={avatarUser} alt="Han Solo" />}
                 content={
                     <Editor
+                        nameReply={nameReply}
                         ref={textAreaEditorRef}
                         onChange={handleChange}
                         onSubmit={handleSubmit}
