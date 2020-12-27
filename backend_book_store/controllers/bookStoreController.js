@@ -164,7 +164,7 @@ exports.getBook = async (req, res) => {
 exports.commentBook = async (req, res) => {
   try {
     const { userId } = req.decoded;
-    const { comment, bookId } = req.body;
+    const { comment, bookId, reply } = req.body;
     if (!comment && !bookId) {
       throw new Error('Not comment or bookId');
     }
@@ -172,6 +172,7 @@ exports.commentBook = async (req, res) => {
     await models.Comment.create({
       userId,
       comment,
+      reply: !reply ? null : reply,
       bookId,
     });
 
@@ -181,7 +182,7 @@ exports.commentBook = async (req, res) => {
         {
           model: models.User,
           as: 'CommentUser',
-          attributes: ['email'],
+          attributes: ['email', 'id'],
           include: [
             {
               model: models.File,

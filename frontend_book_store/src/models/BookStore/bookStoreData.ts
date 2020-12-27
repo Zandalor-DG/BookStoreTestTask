@@ -16,6 +16,7 @@ export interface CommentState {
     bookId: number;
     userId: number;
     comment: string;
+    reply?: string;
     createdAt: Date;
     updateAt: Date;
     CommentUser: {

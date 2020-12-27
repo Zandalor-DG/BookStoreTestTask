@@ -24,11 +24,6 @@ export interface IComments {
     datetime: JSX.Element;
 }
 
-export interface IReplyUser {
-    id: number;
-    name: string;
-}
-
 const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBook) => {
     const dispatch = useDispatch();
     const params: {
@@ -41,13 +36,13 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         ? `${baseURL}/${user.avatar}`
         : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
     const textAreaEditorRef = useRef<TextAreaRef>(null);
-    const [nameReply, setNameReply] = useState<IReplyUser | undefined>();
+    const [nameReply, setNameReply] = useState<string>('');
 
-    const onReply = (name: string, id: number) => {
+    const onReply = (name: string) => {
         if (!textAreaEditorRef.current) {
             return;
         }
-        setNameReply({ name, id });
+        setNameReply(name);
         textAreaEditorRef.current.focus();
     };
 
@@ -56,7 +51,7 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
             return;
         }
         setSubmitting(true);
-        dispatch(addNewComment({ comment: value, bookId: params.id }));
+        dispatch(addNewComment({ comment: value, reply: nameReply, bookId: params.id }));
         setSubmitting(false);
         setValue('');
     };
@@ -69,15 +64,25 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         const avatar = a.CommentUser.File?.path_name
             ? `${baseURL}/${a.CommentUser.File.path_name}`
             : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
+        const reply = !a.reply ?? (
+            <span>
+                <br /> {a.reply}
+            </span>
+        );
         return {
             actions: [
-                <span onClick={() => onReply(a.CommentUser.email, a.userId)} key={ix}>
+                <span onClick={() => onReply(a.CommentUser.email)} key={ix}>
                     Reply to
                 </span>,
             ],
             author: a.CommentUser.email,
             avatar,
-            content: <p>{a.comment}</p>,
+            content: (
+                <p>
+                    {a.comment}
+                    {reply}
+                </p>
+            ),
             datetime: (
                 <Tooltip title={moment(a.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
                     <span>{moment(a.createdAt).fromNow()}</span>

@@ -19,6 +19,7 @@ export interface PropsGetBook {
 
 export interface IPostAddComment {
     comment: string;
+    reply?: string;
     bookId: string;
 }
 
@@ -54,8 +55,8 @@ export const getBook = async (id: string): Promise<PropsGetBook> => {
     return data;
 };
 
-export const postAddComment = async ({ comment, bookId }: IPostAddComment): Promise<CommentState[]> => {
-    const res = await axios.post('/book/comment', { comment, bookId });
+export const postAddComment = async ({ comment, bookId, reply }: IPostAddComment): Promise<CommentState[]> => {
+    const res = await axios.post('/book/comment', { comment, bookId, reply });
     const data: CommentState[] = res.data.comment;
     return data;
 };

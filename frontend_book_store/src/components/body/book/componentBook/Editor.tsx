@@ -3,20 +3,19 @@ import { Input, Form, Button } from 'antd';
 import { useSelector } from 'react-redux';
 import { StateReduxType } from '../../../../store/reducers';
 import { TextAreaRef } from 'antd/lib/input/TextArea';
-import { IReplyUser } from './CommentsBook';
 
 type EditorPropTypes = {
     onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onSubmit?: () => void;
     submitting?: boolean;
     value: string;
-    nameReply?: IReplyUser;
+    nameReply?: string;
 };
 
 const Editor = React.forwardRef<TextAreaRef, EditorPropTypes>(function editorRef(props: EditorPropTypes, ref) {
     const user = useSelector((state: StateReduxType) => state.userState.user);
     const notAuthorize = !user && <span style={{ color: 'tomato' }}> Log in to comment </span>;
-    const nameReply = !props.nameReply?.name ? 'Add coment' : `Reply to: ${props.nameReply.name}`;
+    const nameReply = !props.nameReply ? 'Add coment' : `Reply to: ${props.nameReply}`;
 
     return (
         <>
