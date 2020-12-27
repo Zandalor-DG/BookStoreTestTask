@@ -7,20 +7,22 @@ import { addOrUpdateBookRate } from '../../../../store/bookStore/thunkBookStore'
 import { StateReduxType } from '../../../../store/reducers';
 
 interface IRateBook {
-    rate: number | undefined;
+    rate?: number;
+    userRate?: number | 'notRate';
 }
 
-const RateBook: React.FC<IRateBook> = ({ rate }: IRateBook) => {
+const RateBook: React.FC<IRateBook> = ({ rate, userRate }: IRateBook) => {
     const params: {
         id: string;
     } = useParams();
     const dispatch = useDispatch();
     const user = useSelector((state: StateReduxType) => state.userState.user);
+    const rating = !!userRate ? rate : 0;
     const onChange = (value: number) => {
         dispatch(addOrUpdateBookRate({ bookId: params.id, rateBook: value }));
     };
 
-    return <Rate disabled={!user} allowHalf defaultValue={rate} count={5} onChange={onChange} />;
+    return <Rate disabled={!user} allowHalf defaultValue={rating} count={5} onChange={onChange} />;
 };
 
 export default RateBook;

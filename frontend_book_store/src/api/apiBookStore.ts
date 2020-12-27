@@ -15,6 +15,7 @@ export interface PropsGetBook {
     book: BookStoreData;
     commentsBook: CommentState[];
     rateBook: number;
+    userRate: number | 'notRate';
 }
 
 export interface IPostAddComment {

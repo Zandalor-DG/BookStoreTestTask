@@ -64,9 +64,10 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         const avatar = a.CommentUser.File?.path_name
             ? `${baseURL}/${a.CommentUser.File.path_name}`
             : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-        const reply = !a.reply ?? (
+        const reply = a.reply && (
             <span>
-                <br /> {a.reply}
+                <br />
+                Reply to: {a.reply}
             </span>
         );
         return {

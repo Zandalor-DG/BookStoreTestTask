@@ -96,6 +96,7 @@ exports.allFilteringOptions = async (req, res) => {
 exports.getBook = async (req, res) => {
   try {
     const { id } = req.query;
+    const { userId } = req.userId;
 
     const book = await models.Book.findOne({
       where: { id: id },
@@ -148,11 +149,18 @@ exports.getBook = async (req, res) => {
         [Sequelize.fn('sum', Sequelize.col('rate')), 'total'],
       ],
     });
+    let userRate;
+    if (!!userId) {
+      userRate = await models.Rate.findAll({
+        where: { bookId: id, userId },
+      });
+    }
 
     const data = {
       book,
       commentsBook,
       rateBook: rateBook[0].dataValues.total / rateBook[0].dataValues.overall,
+      userRate: userRate[0].rate || 'notRate',
     };
 
     res.status(201).json(data);
