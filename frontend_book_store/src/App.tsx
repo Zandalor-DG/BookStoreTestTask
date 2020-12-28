@@ -6,7 +6,7 @@ import Body from './components/body/Body';
 import { Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import ProfilePage from './components/header/profilePage/ProfilePage';
-import ShoppingCart from './components/header/shoppingCart/ShoppengCart';
+import ShoppingCart from './components/header/shoppingCart/ShoppingCart';
 import Preloader from './components/common/preloader/Preloader';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUserByToken } from './store/userStore/thunkUser';
