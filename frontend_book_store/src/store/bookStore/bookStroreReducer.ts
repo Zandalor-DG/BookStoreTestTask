@@ -27,6 +27,7 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
                     book: { ...state.book?.book },
                     commentsBook: action.comment,
                     rateBook: state.book?.rateBook,
+                    userRate: state.book.userRate,
                 },
             };
         }
@@ -40,6 +41,7 @@ const bookStoreReducer = (state = bookStoreInitialState, action: ActionBookStore
                     book: { ...state.book?.book },
                     commentsBook: [...state.book?.commentsBook],
                     rateBook: action.rate,
+                    userRate: state.book.userRate,
                 },
             };
         }

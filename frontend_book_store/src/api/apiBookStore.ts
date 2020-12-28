@@ -15,12 +15,14 @@ export interface PropsGetBook {
     book: BookStoreData;
     commentsBook: CommentState[];
     rateBook: number;
+    userRate: number | 'notRate';
 }
 
 export interface IPostAddComment {
     comment: string;
     reply?: string;
     bookId: string;
+    replyId?: number;
 }
 
 export interface IPostAddOrUpdateRate {
@@ -55,8 +57,8 @@ export const getBook = async (id: string): Promise<PropsGetBook> => {
     return data;
 };
 
-export const postAddComment = async ({ comment, bookId, reply }: IPostAddComment): Promise<CommentState[]> => {
-    const res = await axios.post('/book/comment', { comment, bookId, reply });
+export const postAddComment = async ({ comment, bookId, reply, replyId }: IPostAddComment): Promise<CommentState[]> => {
+    const res = await axios.post('/book/comment', { comment, bookId, reply, replyId });
     const data: CommentState[] = res.data.comment;
     return data;
 };

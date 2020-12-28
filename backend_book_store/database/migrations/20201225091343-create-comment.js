@@ -17,6 +17,9 @@ module.exports = {
       comment: {
         type: Sequelize.STRING,
       },
+      replyId: {
+        type: Sequelize.INTEGER,
+      },
       reply: {
         type: Sequelize.STRING,
       },
