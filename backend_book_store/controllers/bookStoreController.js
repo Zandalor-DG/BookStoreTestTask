@@ -96,7 +96,18 @@ exports.allFilteringOptions = async (req, res) => {
 exports.getBook = async (req, res) => {
   try {
     const { id } = req.query;
-    const { userId } = req.userId;
+    const userId = req.userId;
+
+    if (!id) {
+      throw new Error('Not bookId');
+    }
+
+    let userRate;
+    if (!!userId) {
+      userRate = await models.Rate.findAll({
+        where: { bookId: id, userId: userId.userId },
+      });
+    }
 
     const book = await models.Book.findOne({
       where: { id: id },
@@ -141,7 +152,7 @@ exports.getBook = async (req, res) => {
       ],
       order: [['createdAt', 'ASC']],
     });
-    console.log(Sequelize.col);
+
     const rateBook = await models.Rate.findAll({
       where: { bookId: id },
       attributes: [
@@ -149,18 +160,12 @@ exports.getBook = async (req, res) => {
         [Sequelize.fn('sum', Sequelize.col('rate')), 'total'],
       ],
     });
-    let userRate;
-    if (!!userId) {
-      userRate = await models.Rate.findAll({
-        where: { bookId: id, userId },
-      });
-    }
-
+    test = JSON.stringify(commentsBook);
     const data = {
       book,
       commentsBook,
       rateBook: rateBook[0].dataValues.total / rateBook[0].dataValues.overall,
-      userRate: userRate[0].rate || 'notRate',
+      userRate: !userRate ? 'notRate' : userRate[0]?.rate,
     };
 
     res.status(201).json(data);
@@ -172,7 +177,7 @@ exports.getBook = async (req, res) => {
 exports.commentBook = async (req, res) => {
   try {
     const { userId } = req.decoded;
-    const { comment, bookId, reply } = req.body;
+    const { comment, bookId, reply, replyId } = req.body;
     if (!comment && !bookId) {
       throw new Error('Not comment or bookId');
     }
@@ -180,6 +185,7 @@ exports.commentBook = async (req, res) => {
     await models.Comment.create({
       userId,
       comment,
+      replyId: !replyId ? null : replyId,
       reply: !reply ? null : reply,
       bookId,
     });

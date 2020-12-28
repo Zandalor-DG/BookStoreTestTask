@@ -7,11 +7,11 @@ const checkerUser = (req, res, next) => {
   const token = req.headers['x-access-token'];
 
   if (!token) {
-    next();
+    return next();
   }
   jwt.verify(token, jwtSecret, function (err, decoded) {
     if (err) {
-      next();
+      return next();
     }
     req.userId = decoded;
     next();

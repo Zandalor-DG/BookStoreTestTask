@@ -12,17 +12,17 @@ interface IRateBook {
 }
 
 const RateBook: React.FC<IRateBook> = ({ rate, userRate }: IRateBook) => {
+    const user = useSelector((state: StateReduxType) => state.userState.user);
+    const rating = userRate === 'notRate' || !userRate ? 0 : userRate;
     const params: {
         id: string;
     } = useParams();
     const dispatch = useDispatch();
-    const user = useSelector((state: StateReduxType) => state.userState.user);
-    const rating = !!userRate ? rate : 0;
     const onChange = (value: number) => {
         dispatch(addOrUpdateBookRate({ bookId: params.id, rateBook: value }));
     };
 
-    return <Rate disabled={!user} allowHalf defaultValue={rating} count={5} onChange={onChange} />;
+    return <Rate disabled={!user} defaultValue={rating} count={5} onChange={onChange} />;
 };
 
 export default RateBook;

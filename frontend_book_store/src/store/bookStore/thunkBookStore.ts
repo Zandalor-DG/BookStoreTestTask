@@ -40,11 +40,11 @@ export const bookInfo = (id: string) => async (dispatch: AppDispatch): Promise<v
     }
 };
 
-export const addNewComment = ({ comment, bookId, reply }: IPostAddComment) => async (
+export const addNewComment = ({ comment, bookId, reply, replyId }: IPostAddComment) => async (
     dispatch: AppDispatch,
 ): Promise<void> => {
     try {
-        const commentData = await postAddComment({ comment, bookId, reply });
+        const commentData = await postAddComment({ comment, bookId, reply, replyId });
         dispatch(addComment(commentData));
     } catch (err) {
         dispatch(setErrorBookStore(err.message));

@@ -13,9 +13,11 @@ export interface BookStoreData {
 }
 
 export interface CommentState {
+    id: number;
     bookId: number;
     userId: number;
     comment: string;
+    replyId: number | null;
     reply?: string;
     createdAt: Date;
     updateAt: Date;

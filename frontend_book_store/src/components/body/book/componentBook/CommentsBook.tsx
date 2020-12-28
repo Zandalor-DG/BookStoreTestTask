@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import 'antd/dist/antd.css';
+import { Button } from 'antd';
 import { Comment, Tooltip, Avatar } from 'antd';
 import moment from 'moment';
 import { baseURL } from '../../../../api/axios';
@@ -11,6 +12,7 @@ import { addNewComment } from '../../../../store/bookStore/thunkBookStore';
 import { useParams } from 'react-router-dom';
 import { StateReduxType } from '../../../../store/reducers';
 import { TextAreaRef } from 'antd/lib/input/TextArea';
+import CommentWrapper from './CommentWrapper';
 
 interface PropsCommentsBook {
     comments: CommentState[];
@@ -18,31 +20,43 @@ interface PropsCommentsBook {
 
 export interface IComments {
     actions: JSX.Element[];
-    author: string;
+    author: JSX.Element;
     avatar: string;
     content: JSX.Element;
     datetime: JSX.Element;
 }
 
+export interface IReply {
+    replyId?: number;
+    reply?: string;
+}
+
 const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBook) => {
+    const user = useSelector((state: StateReduxType) => state.userState.user);
     const dispatch = useDispatch();
     const params: {
         id: string;
     } = useParams();
+
     const [submitting, setSubmitting] = useState(false);
     const [value, setValue] = useState('');
-    const user = useSelector((state: StateReduxType) => state.userState.user);
-    const avatarUser = user
-        ? `${baseURL}/${user.avatar}`
-        : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-    const textAreaEditorRef = useRef<TextAreaRef>(null);
-    const [nameReply, setNameReply] = useState<string>('');
+    const [replyForm, setReply] = useState<IReply | undefined>({});
+    const [replyId, setReplyId] = useState<number | null>(null);
 
-    const onReply = (name: string) => {
+    const avatarUser = !user?.avatar
+        ? 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'
+        : `${baseURL}/${user.avatar}`;
+    const textAreaEditorRef = useRef<TextAreaRef>(null);
+
+    const setIdToReply = (id: number | null) => {
+        setReplyId(id);
+    };
+
+    const onReply = (name: string, id: number) => {
         if (!textAreaEditorRef.current) {
             return;
         }
-        setNameReply(name);
+        setReply({ reply: name, replyId: id });
         textAreaEditorRef.current.focus();
     };
 
@@ -51,9 +65,12 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
             return;
         }
         setSubmitting(true);
-        dispatch(addNewComment({ comment: value, reply: nameReply, bookId: params.id }));
+        dispatch(
+            addNewComment({ comment: value, reply: replyForm?.reply, bookId: params.id, replyId: replyForm?.replyId }),
+        );
         setSubmitting(false);
         setValue('');
+        setReply(undefined);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -64,25 +81,29 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         const avatar = a.CommentUser.File?.path_name
             ? `${baseURL}/${a.CommentUser.File.path_name}`
             : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png';
-        const reply = a.reply && (
+        const author = <span id={`${a.id}`}>{a.CommentUser.email}</span>;
+        const contentReply = a.reply && (
             <span>
                 <br />
-                Reply to: {a.reply}
+                Reply to:
+                <Button onClick={() => setReplyId(a.replyId)} type="link" size={'small'}>
+                    {a.reply}
+                </Button>
             </span>
         );
         return {
             actions: [
-                <span onClick={() => onReply(a.CommentUser.email)} key={ix}>
+                <span onClick={() => onReply(a.CommentUser.email, a.id)} key={ix}>
                     Reply to
                 </span>,
             ],
-            author: a.CommentUser.email,
+            author,
             avatar,
             content: (
-                <p>
+                <CommentWrapper replyId={replyId} setIdToReply={setIdToReply} id={a.id}>
                     {a.comment}
-                    {reply}
-                </p>
+                    {contentReply}
+                </CommentWrapper>
             ),
             datetime: (
                 <Tooltip title={moment(a.createdAt).format('YYYY-MM-DD HH:mm:ss')}>
@@ -96,10 +117,10 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         <>
             {userComments.length > 0 && <CommentList comments={userComments} />}
             <Comment
-                avatar={<Avatar src={avatarUser} alt="Han Solo" />}
+                avatar={<Avatar src={avatarUser} alt={user?.email} />}
                 content={
                     <Editor
-                        nameReply={nameReply}
+                        replyForm={replyForm}
                         ref={textAreaEditorRef}
                         onChange={handleChange}
                         onSubmit={handleSubmit}
