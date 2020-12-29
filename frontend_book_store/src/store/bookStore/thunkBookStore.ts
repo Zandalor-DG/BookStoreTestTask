@@ -17,7 +17,7 @@ import {
     SetBookStoreState as setBookStoreState,
     setErrorBookStore,
     setTotalPage,
-} from './actionCreatedUser';
+} from './actionCreatedBookStore';
 
 export const allBooks = ({ page, pageSize, filterState }: PaginationParams) => async (
     dispatch: AppDispatch,

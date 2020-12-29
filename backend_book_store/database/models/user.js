@@ -14,12 +14,22 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
       });
       User.belongsToMany(models.Book, {
+        through: 'Card',
+        as: 'Card_user',
+        foreignKey: 'userId',
+      });
+      User.belongsToMany(models.Book, {
         through: 'Comment',
         as: 'Comments_user',
         foreignKey: 'userId',
       });
       User.belongsTo(models.File, {
         foreignKey: 'avatarId',
+        onDelete: 'CASCADE',
+      });
+      User.hasMany(models.Transaction, {
+        foreignKey: 'userId',
+        as: 'Transaction_user',
         onDelete: 'CASCADE',
       });
       User.hasMany(models.Comment, {
