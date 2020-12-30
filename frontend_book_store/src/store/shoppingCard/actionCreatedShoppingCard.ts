@@ -10,7 +10,7 @@ import {
     ActionTypeShoppingCard,
 } from './actionTypesShoppingCard';
 
-export const setAddToCard = (product: ProductModelInCard): ActionAddToCard => ({
+export const setAddToCart = (product: ProductModelInCard[]): ActionAddToCard => ({
     type: ActionTypeShoppingCard.AddToCard,
     product,
 });
@@ -25,12 +25,12 @@ export const setRemoveItemCounter = (id: number): ActionRemoveItemCounter => ({
     id,
 });
 
-export const setDeleteToCard = (id: number): ActionDeleteToCard => ({
+export const setDeleteToCart = (id: number): ActionDeleteToCard => ({
     type: ActionTypeShoppingCard.DeleteToCard,
     id,
 });
 
-export const setDeleteAllItemsCard = (): ActionDeleteAllItemsCard => ({
+export const setDeleteAllItemsCart = (): ActionDeleteAllItemsCard => ({
     type: ActionTypeShoppingCard.DeleteAllItemsCard,
 });
 
@@ -38,7 +38,7 @@ export const setBuyItems = (): ActionBuyItems => ({
     type: ActionTypeShoppingCard.BuyItems,
 });
 
-export const setErrorShoppingCard = (error: string): ActionSetErrorShoppingCard => ({
+export const setErrorShoppingCart = (error: string): ActionSetErrorShoppingCard => ({
     type: ActionTypeShoppingCard.SetError,
     error,
 });

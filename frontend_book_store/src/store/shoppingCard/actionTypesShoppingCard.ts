@@ -12,7 +12,7 @@ export enum ActionTypeShoppingCard {
 
 export type ActionAddToCard = {
     type: ActionTypeShoppingCard.AddToCard;
-    product: ProductModelInCard;
+    product: ProductModelInCard[];
 };
 
 export type ActionAddItemCounter = {

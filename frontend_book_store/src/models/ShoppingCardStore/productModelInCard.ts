@@ -1,8 +1,14 @@
 export interface ProductModelInCard {
     id: number;
-    name: string;
-    author: string;
     count: number;
-    price: number;
-    resultPrice: number;
+    Book: {
+        name: string;
+        price: number;
+        Author: {
+            name: string;
+        };
+        File: {
+            path_name: string;
+        };
+    };
 }

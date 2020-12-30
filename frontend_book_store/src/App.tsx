@@ -43,9 +43,10 @@ const App: React.FC = () => {
                     <PrivateRoute path="/profile" exact>
                         <ProfilePage />
                     </PrivateRoute>
-                    {/* <PrivateRoute path="/cart" exact> */}
-                    <Route path="/cart" render={() => <ShoppingCart />} />
-                    {/* </PrivateRoute> */}
+                    <PrivateRoute path="/cart" exact>
+                        <ShoppingCart />
+                    </PrivateRoute>
+                    {/* <Route path="/book/:id" render={() => <ShoppingCart />} /> */}
                 </Switch>
             </section>
 

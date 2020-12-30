@@ -1,5 +1,5 @@
-import { ShoppingCardState } from '../models/shoppingCardState';
+import { ShoppingCartState } from '../models/shoppingCartState';
 
-export const shoppingCardInitialState: ShoppingCardState = {
+export const shoppingCardInitialState: ShoppingCartState = {
     totalPrice: 0,
 };

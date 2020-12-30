@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const accountRouter = require('./routes/accountRouter');
 const userRouter = require('./routes/userRouter');
+const bookStoreRouter = require('./routes/bookStoreRouter');
+const shoppingCartRouter = require('./routes/shoppingCartRouter');
 const cors = require('cors');
 const multer = require('multer');
 const multerUpload = require('./middleware/multerUpload');
@@ -9,7 +11,6 @@ const multerUpload = require('./middleware/multerUpload');
 const app = express();
 
 //const http = require('http');
-const bookStoreRouter = require('./routes/bookStoreRouter');
 //const server = http.createServer(app);
 
 app.use(cors());
@@ -26,5 +27,6 @@ app.use(
 app.use('/account', accountRouter);
 app.use('/user', userRouter);
 app.use('/book', bookStoreRouter);
+app.use('/shoppingcart', shoppingCartRouter);
 
 app.listen(4000, () => console.log('server started'));

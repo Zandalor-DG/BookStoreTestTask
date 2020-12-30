@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'bookId',
       });
       Book.belongsToMany(models.User, {
-        through: 'Card',
-        as: 'Card_user',
+        through: 'Cart',
+        as: 'Cart_user',
         foreignKey: 'bookId',
       });
       Book.belongsToMany(models.User, {

@@ -26,7 +26,7 @@ const Book: React.FC = () => {
                 <Preloader />
             ) : (
                 <div className={css.bookStore__book}>
-                    <BookInfo data={data} />
+                    <BookInfo data={data} id={+params.id} />
                     <TabsComponent description={data?.book.description} booksInfo={data?.book} />
                     <CommentsBook comments={data?.commentsBook} />
                 </div>
