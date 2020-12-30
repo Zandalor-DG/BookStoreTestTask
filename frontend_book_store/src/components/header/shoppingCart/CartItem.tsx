@@ -5,16 +5,18 @@ import { DeleteTwoTone } from '@ant-design/icons';
 import { baseURL } from '../../../api/axios';
 
 export interface ICartItem {
-    onChange: (value: string | number | undefined) => void;
+    itemId: number;
     path_name: string;
     name: string;
     author: string;
     price: number;
     count: number;
+    onChange: (value: string | number | undefined, itemId: number, count: number) => void;
     onDeletePosition: (id?: number | undefined) => void;
 }
 
 const CartItem: React.FC<ICartItem> = ({
+    itemId,
     author,
     name,
     onChange,
@@ -23,6 +25,10 @@ const CartItem: React.FC<ICartItem> = ({
     price,
     count,
 }: ICartItem) => {
+    const onChangeValue = (value: number | string | undefined) => {
+        return onChange(value, itemId, count);
+    };
+
     return (
         <div className={css.shoppingCart__row}>
             <div>
@@ -37,7 +43,7 @@ const CartItem: React.FC<ICartItem> = ({
                 <h4>price: {price} $</h4>
             </div>
             <div>
-                <InputNumber min={0} max={50} defaultValue={count} onChange={onChange} />
+                <InputNumber min={0} max={50} defaultValue={count} onChange={onChangeValue} />
             </div>
             <div>{price * count}</div>
             <div>

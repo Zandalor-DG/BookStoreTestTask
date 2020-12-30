@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import css from './ShoppingCart.module.css';
-import { InputNumber } from 'antd';
 import 'antd/dist/antd.css';
-import { DeleteTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import CartItem from './CartItem';
-import { allItemsCart } from '../../../store/shoppingCard/thunkShoppingCard';
+import {
+    addItemCart,
+    allItemsCart,
+    deleteItemCart,
+    removeItemCart,
+} from '../../../store/shoppingCard/thunkShoppingCard';
 
 const ShoppingCart: React.FC = () => {
     const dispatch = useDispatch();
@@ -14,9 +17,25 @@ const ShoppingCart: React.FC = () => {
 
     useEffect(() => {
         dispatch(allItemsCart());
-    }, [data]);
+        console.log('useEffect');
+    }, []);
 
-    const onChange = (value: string | number | undefined) => {
+    console.log('body');
+
+    const onChange = (value: string | number | undefined, itemId: number, count: number) => {
+        switch (value) {
+            case 0:
+                dispatch(deleteItemCart(itemId));
+                break;
+            case count + 1:
+                dispatch(addItemCart(itemId));
+                break;
+            case count - 1:
+                dispatch(removeItemCart(itemId));
+                break;
+            default:
+                return;
+        }
         console.log('changed', value);
     };
 
@@ -28,6 +47,7 @@ const ShoppingCart: React.FC = () => {
         return (
             <CartItem
                 key={a.id}
+                itemId={a.bookId}
                 name={a.Book.name}
                 author={a.Book.Author.name}
                 onChange={onChange}
@@ -39,24 +59,7 @@ const ShoppingCart: React.FC = () => {
         );
     });
 
-    return (
-        <div className={css.shoppingCart__column}>
-            <div className={css.shoppingCart__row}>
-                <div>
-                    <img className={css.shoppingCart__img} src={'http://localhost:3000/download.png'} />
-                </div>
-                <div className={css.shoppingCart__text}>name</div>
-                <div>
-                    <InputNumber min={0} max={10} defaultValue={3} onChange={onChange} />
-                </div>
-                <div>total price</div>
-                <div>
-                    <DeleteTwoTone onClick={() => onDeletePosition()} style={{ fontSize: '25px' }} />
-                </div>
-            </div>
-            {shoppingCart}
-        </div>
-    );
+    return <div className={css.shoppingCart__column}>{shoppingCart}</div>;
 };
 
-export default ShoppingCart;
+export default React.memo(ShoppingCart);

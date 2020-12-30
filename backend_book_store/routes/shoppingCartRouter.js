@@ -14,5 +14,20 @@ shoppingCartRouter.post(
   tokenChecker,
   shoppingCartController.postAddItemCart
 );
+shoppingCartRouter.post(
+  '/removeitem',
+  tokenChecker,
+  shoppingCartController.postRemoveItemCart
+);
+shoppingCartRouter.delete(
+  '/deleteallitems',
+  tokenChecker,
+  shoppingCartController.deleteDeleteAllItems
+);
+shoppingCartRouter.delete(
+  '/deleteitem',
+  tokenChecker,
+  shoppingCartController.deleteDeleteItem
+);
 
 module.exports = shoppingCartRouter;

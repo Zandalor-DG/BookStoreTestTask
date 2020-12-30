@@ -1,6 +1,7 @@
 export interface ProductModelInCard {
     id: number;
     count: number;
+    bookId: number;
     Book: {
         name: string;
         price: number;

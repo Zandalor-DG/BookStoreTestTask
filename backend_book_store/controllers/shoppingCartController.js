@@ -26,9 +26,11 @@ exports.getAllItemsCart = async (req, res) => {
       order: [['createdAt', 'ASC']],
     });
 
-    res.status(200).json({ message: 'access', productModelInCard });
+    res
+      .status(200)
+      .json({ error: false, message: 'access', productModelInCard });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
 
@@ -69,11 +71,102 @@ exports.postAddItemCart = async (req, res) => {
   }
 };
 
-exports.postRemoveItemCart;
+exports.postRemoveItemCart = async (req, res) => {
+  try {
+    const { itemId } = req.body;
+    const { userId } = req.decoded;
 
-exports.deleteDeleteAllItems;
+    if (!itemId) {
+      throw new Error('no id to delete item');
+    }
 
-exports.deleteDeleteItem;
+    //const book = models.Book.findOne({ where: { id: bookId } });
+
+    const item = await models.Cart.findOne({
+      where: {
+        bookId: itemId,
+        userId: userId,
+      },
+    });
+
+    if (item.count === 1) {
+      await models.Cart.destroy({
+        where: {
+          bookId: itemId,
+          userId,
+        },
+      });
+
+      res
+        .status(200)
+        .json({ error: false, message: 'Item delete to cart', id: item.id });
+    }
+
+    await models.Cart.update(
+      { count: -1 },
+      {
+        where: {
+          id: item.id,
+          bookId: itemId,
+          userId,
+        },
+      }
+    );
+
+    res
+      .status(200)
+      .json({ error: false, message: 'Item remove to cart', id: item.id });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};
+
+exports.deleteDeleteItem = async (req, res) => {
+  try {
+    const { itemId } = req.body;
+    const { userId } = req.decoded;
+
+    if (!itemId) {
+      throw new Error('no id to delete item');
+    }
+
+    const item = await models.Cart.findOne({
+      where: {
+        bookId: itemId,
+        userId: userId,
+      },
+    });
+
+    await models.Cart.destroy({
+      where: {
+        bookId: itemId,
+        userId,
+      },
+    });
+
+    res
+      .status(200)
+      .json({ error: false, message: 'Item delete to cart', id: item.id });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};
+
+exports.deleteDeleteAllItems = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+
+    await models.Cart.destroy({
+      where: {
+        userId,
+      },
+    });
+
+    res.status(200).json({ error: false, message: 'All item delete to cart' });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};
 
 // const models = require('../database/models');
 

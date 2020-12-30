@@ -1,4 +1,3 @@
-import { ShoppingCartState } from '../models/shoppingCartState';
 import { ProductModelInCard } from '../models/ShoppingCardStore/productModelInCard';
 import axios from './axios';
 
@@ -14,18 +13,18 @@ export const postAddItemCart = async (itemId: number): Promise<number> => {
     return id;
 };
 
-export const postRemoveItemCart = async (itemId: number): Promise<ProductModelInCard> => {
+export const postRemoveItemCart = async (itemId: number): Promise<number> => {
     const res = await axios.post('shoppingcart/removeitem', { itemId });
-    const data: ProductModelInCard = res.data;
-    return data;
+    const id: number = res.data;
+    return id;
+};
+
+export const deleteDeleteItem = async (itemId: number): Promise<number> => {
+    const res = await axios.delete('shoppingcart/deleteitem', { params: { itemId } });
+    const id: number = res.data;
+    return id;
 };
 
 export const deleteDeleteAllItems = async (): Promise<void> => {
-    await axios.delete('shoppingcart/removeallitems');
-};
-
-export const deleteDeleteItem = async (stackId: number): Promise<ShoppingCartState> => {
-    const res = await axios.delete('shoppingcart/removeitem', { params: { stackId } });
-    const data: ShoppingCartState = res.data;
-    return data;
+    await axios.delete('shoppingcart/deleteallitems');
 };
