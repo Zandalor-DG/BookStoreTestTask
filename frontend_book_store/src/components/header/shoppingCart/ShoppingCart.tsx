@@ -4,17 +4,17 @@ import { InputNumber } from 'antd';
 import 'antd/dist/antd.css';
 import { DeleteTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllItemsCart } from '../../../api/apiShoppingCard';
 import { StateReduxType } from '../../../store/reducers';
 import CartItem from './CartItem';
+import { allItemsCart } from '../../../store/shoppingCard/thunkShoppingCard';
 
 const ShoppingCart: React.FC = () => {
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getAllItemsCart());
-    }, []);
-
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
+
+    useEffect(() => {
+        dispatch(allItemsCart());
+    }, [data]);
 
     const onChange = (value: string | number | undefined) => {
         console.log('changed', value);
@@ -54,6 +54,7 @@ const ShoppingCart: React.FC = () => {
                     <DeleteTwoTone onClick={() => onDeletePosition()} style={{ fontSize: '25px' }} />
                 </div>
             </div>
+            {shoppingCart}
         </div>
     );
 };

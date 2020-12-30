@@ -4,7 +4,7 @@ exports.getAllItemsCart = async (req, res) => {
   try {
     const { userId } = req.decoded;
 
-    const data = await models.Cart.findAll({
+    const productModelInCard = await models.Cart.findAll({
       where: { userId: userId },
       include: [
         {
@@ -26,7 +26,7 @@ exports.getAllItemsCart = async (req, res) => {
       order: [['createdAt', 'ASC']],
     });
 
-    res.status(200).json({ message: '', data });
+    res.status(200).json({ message: 'access', productModelInCard });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -62,7 +62,7 @@ exports.postAddItemCart = async (req, res) => {
         }
       );
     }
-    const id = !item.id ? cartId.id : itemCart.id;
+    const id = !itemCart.id ? cartId.id : itemCart.id;
     res.status(200).json({ error: false, message: 'Item added to cart', id });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

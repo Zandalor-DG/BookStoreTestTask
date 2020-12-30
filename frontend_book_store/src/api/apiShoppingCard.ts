@@ -4,7 +4,7 @@ import axios from './axios';
 
 export const getAllItemsCart = async (): Promise<ProductModelInCard[]> => {
     const res = await axios.get('/shoppingcart/all');
-    const data: ProductModelInCard[] = res.data;
+    const data: ProductModelInCard[] = res.data.productModelInCard;
     return data;
 };
 

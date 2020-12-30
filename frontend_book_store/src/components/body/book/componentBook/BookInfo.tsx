@@ -15,8 +15,9 @@ interface propsCoverBook {
 }
 
 const BookInfo: React.FC<propsCoverBook> = ({ data, id }: propsCoverBook) => {
+    const dispatch = useDispatch();
     const onCart = () => {
-        postAddItemCart(id);
+        dispatch(addItemCart(id));
     };
 
     return (
