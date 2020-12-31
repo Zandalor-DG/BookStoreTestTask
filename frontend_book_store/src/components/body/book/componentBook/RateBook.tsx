@@ -1,8 +1,8 @@
-import React from 'react';
-import 'antd/dist/antd.css';
 import { Rate } from 'antd';
-import { useParams } from 'react-router-dom';
+import 'antd/dist/antd.css';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { addOrUpdateBookRate } from '../../../../store/bookStore/thunkBookStore';
 import { StateReduxType } from '../../../../store/reducers';
 

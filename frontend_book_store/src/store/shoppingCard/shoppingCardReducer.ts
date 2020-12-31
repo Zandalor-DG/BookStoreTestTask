@@ -1,6 +1,6 @@
-import { ActionShoppingCard, ActionTypeShoppingCard } from './actionTypesShoppingCard';
-import { ShoppingCartState } from '../../models/shoppingCartState';
 import { shoppingCardInitialState } from '../../data/ShoppingCardInitialState';
+import { ShoppingCartState } from '../../models/shoppingCartState';
+import { ActionShoppingCard, ActionTypeShoppingCard } from './actionTypesShoppingCard';
 
 const ShoppingCardReducer = (state = shoppingCardInitialState, action: ActionShoppingCard): ShoppingCartState => {
     switch (action.type) {

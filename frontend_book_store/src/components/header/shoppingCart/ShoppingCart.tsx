@@ -1,19 +1,23 @@
 import 'antd/dist/antd.css';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import {
     addItemCart,
     allItemsCart,
+    deleteAllItems,
     deleteItemCart,
     removeItemCart,
 } from '../../../store/shoppingCard/thunkShoppingCard';
+import BuyAllItemComponent from './BuyAllItemComponent';
 import CartItem from './CartItem';
+import DeleteAllItem from './DeleteAllItemComponent';
 import css from './ShoppingCart.module.css';
 
 const ShoppingCart: React.FC = () => {
     const dispatch = useDispatch();
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
+    const [priceAllItems, setPriceAllItems] = useState(0);
 
     useEffect(() => {
         dispatch(allItemsCart());
@@ -44,23 +48,49 @@ const ShoppingCart: React.FC = () => {
         console.log(id);
     };
 
+    const onDeleteAllItem = () => {
+        dispatch(deleteAllItems());
+    };
+
+    const onBuyAllItem = () => {
+        console.log('buyAll');
+    };
+
     const shoppingCart = data?.map((a) => {
+        //setPriceAllItems(priceAllItems + a.Book.price);
         return (
-            <CartItem
-                key={a.id}
-                itemId={a.bookId}
-                name={a.Book.name}
-                author={a.Book.Author.name}
-                onChange={onChange}
-                onDeletePosition={onDeletePosition}
-                path_name={a.Book.File.path_name}
-                price={a.Book.price}
-                count={a.count}
-            />
+            <>
+                <CartItem
+                    key={a.id}
+                    itemId={a.bookId}
+                    name={a.Book.name}
+                    author={a.Book.Author.name}
+                    onChange={onChange}
+                    onDeletePosition={onDeletePosition}
+                    path_name={a.Book.File.path_name}
+                    price={a.Book.price}
+                    count={a.count}
+                />
+            </>
         );
     });
 
-    return <div className={css.shoppingCart__column}>{shoppingCart}</div>;
+    const shoppingButton =
+        data?.length === 0 ? (
+            <div>your cart is empty</div>
+        ) : (
+            <div className={css.shoppingCart__button}>
+                <DeleteAllItem onDeleteAllItem={onDeleteAllItem} />
+                <BuyAllItemComponent onBuyAllItem={onBuyAllItem} />
+            </div>
+        );
+
+    return (
+        <div className={css.shoppingCart__column}>
+            {shoppingCart}
+            {shoppingButton}
+        </div>
+    );
 };
 
 export default React.memo(ShoppingCart);
