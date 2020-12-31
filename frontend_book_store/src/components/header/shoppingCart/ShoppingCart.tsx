@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import css from './ShoppingCart.module.css';
 import 'antd/dist/antd.css';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
-import CartItem from './CartItem';
 import {
     addItemCart,
     allItemsCart,
     deleteItemCart,
     removeItemCart,
 } from '../../../store/shoppingCard/thunkShoppingCard';
+import CartItem from './CartItem';
+import css from './ShoppingCart.module.css';
 
 const ShoppingCart: React.FC = () => {
     const dispatch = useDispatch();
@@ -28,10 +28,10 @@ const ShoppingCart: React.FC = () => {
                 dispatch(deleteItemCart(itemId));
                 break;
             case count + 1:
-                dispatch(addItemCart(itemId));
+                dispatch(addItemCart(itemId, value));
                 break;
             case count - 1:
-                dispatch(removeItemCart(itemId));
+                dispatch(removeItemCart(itemId, value));
                 break;
             default:
                 return;

@@ -36,12 +36,13 @@ exports.getAllItemsCart = async (req, res) => {
 
 exports.postAddItemCart = async (req, res) => {
   try {
-    const { itemId } = req.body;
+    const { itemId, value } = req.body;
     const { userId } = req.decoded;
 
     if (!itemId) {
       throw new Error('no id to create a model');
     }
+
     let cartId;
     const [itemCart, created] = await models.Cart.findOrCreate({
       where: {
@@ -53,9 +54,21 @@ exports.postAddItemCart = async (req, res) => {
       },
     });
 
-    if (!created) {
+    if (!created && !value) {
       cartId = await models.Cart.update(
         { count: itemCart.count + 1 },
+        {
+          where: {
+            userId,
+            bookId: itemId,
+          },
+        }
+      );
+    }
+
+    if (value) {
+      cartId = await models.Cart.update(
+        { count: itemCart.count + value },
         {
           where: {
             userId,

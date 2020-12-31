@@ -1,8 +1,8 @@
-import React from 'react';
-import css from './ShoppingCart.module.css';
-import { InputNumber } from 'antd';
 import { DeleteTwoTone } from '@ant-design/icons';
+import { InputNumber } from 'antd';
+import React from 'react';
 import { baseURL } from '../../../api/axios';
+import css from './ShoppingCart.module.css';
 
 export interface ICartItem {
     itemId: number;

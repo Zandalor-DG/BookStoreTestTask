@@ -7,14 +7,14 @@ export const getAllItemsCart = async (): Promise<ProductModelInCard[]> => {
     return data;
 };
 
-export const postAddItemCart = async (itemId: number): Promise<number> => {
-    const res = await axios.post('shoppingcart/additem', { itemId });
+export const postAddItemCart = async (itemId: number, value?: number): Promise<number> => {
+    const res = await axios.post('shoppingcart/additem', { itemId, value });
     const id: number = res.data;
     return id;
 };
 
-export const postRemoveItemCart = async (itemId: number): Promise<number> => {
-    const res = await axios.post('shoppingcart/removeitem', { itemId });
+export const postRemoveItemCart = async (itemId: number, value?: number): Promise<number> => {
+    const res = await axios.post('shoppingcart/removeitem', { itemId, value });
     const id: number = res.data;
     return id;
 };
