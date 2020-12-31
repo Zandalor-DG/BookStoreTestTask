@@ -68,7 +68,7 @@ exports.postAddItemCart = async (req, res) => {
 
     if (value) {
       cartId = await models.Cart.update(
-        { count: itemCart.count + value },
+        { count: value },
         {
           where: {
             userId,
@@ -86,14 +86,12 @@ exports.postAddItemCart = async (req, res) => {
 
 exports.postRemoveItemCart = async (req, res) => {
   try {
-    const { itemId } = req.body;
+    const { itemId, value } = req.body;
     const { userId } = req.decoded;
 
     if (!itemId) {
       throw new Error('no id to delete item');
     }
-
-    //const book = models.Book.findOne({ where: { id: bookId } });
 
     const item = await models.Cart.findOne({
       where: {
@@ -116,7 +114,7 @@ exports.postRemoveItemCart = async (req, res) => {
     }
 
     await models.Cart.update(
-      { count: -1 },
+      { count: value },
       {
         where: {
           id: item.id,
@@ -136,7 +134,7 @@ exports.postRemoveItemCart = async (req, res) => {
 
 exports.deleteDeleteItem = async (req, res) => {
   try {
-    const { itemId } = req.body;
+    const { itemId } = req.query;
     const { userId } = req.decoded;
 
     if (!itemId) {

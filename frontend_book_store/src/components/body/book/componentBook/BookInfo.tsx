@@ -1,13 +1,13 @@
-import React from 'react';
+import { Button, Image } from 'antd';
 import 'antd/dist/antd.css';
-import { Image, Button } from 'antd';
-import RateBook from './RateBook';
-import css from '../Book.module.css';
-import { baseURL } from '../../../../api/axios';
-import { PropsGetBook } from '../../../../api/apiBookStore';
+import React from 'react';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { PropsGetBook } from '../../../../api/apiBookStore';
+import { baseURL } from '../../../../api/axios';
 import { addItemCart } from '../../../../store/shoppingCard/thunkShoppingCard';
-import { postAddItemCart } from '../../../../api/apiShoppingCard';
+import css from '../Book.module.css';
+import RateBook from './RateBook';
 
 interface propsCoverBook {
     data: PropsGetBook | undefined;
@@ -35,7 +35,7 @@ const BookInfo: React.FC<propsCoverBook> = ({ data, id }: propsCoverBook) => {
                 <h2>{data?.book.name}</h2>
                 <h3>by {data?.book.Author.name}</h3>
                 <Button onClick={onCart} type="primary">
-                    {data?.book.price} $
+                    <NavLink to="/cart">{data?.book.price} $</NavLink>
                 </Button>
             </div>
         </div>

@@ -12,7 +12,7 @@ export interface ICartItem {
     price: number;
     count: number;
     onChange: (value: string | number | undefined, itemId: number, count: number) => void;
-    onDeletePosition: (id?: number | undefined) => void;
+    onDeletePosition: (id: number) => void;
 }
 
 const CartItem: React.FC<ICartItem> = ({
@@ -47,7 +47,7 @@ const CartItem: React.FC<ICartItem> = ({
             </div>
             <div>{price * count}</div>
             <div>
-                <DeleteTwoTone onClick={() => onDeletePosition()} style={{ fontSize: '25px' }} />
+                <DeleteTwoTone onClick={() => onDeletePosition(itemId)} style={{ fontSize: '25px' }} />
             </div>
         </div>
     );

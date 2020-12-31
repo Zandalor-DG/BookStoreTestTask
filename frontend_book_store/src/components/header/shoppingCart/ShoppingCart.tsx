@@ -39,7 +39,8 @@ const ShoppingCart: React.FC = () => {
         console.log('changed', value);
     };
 
-    const onDeletePosition = (id?: number) => {
+    const onDeletePosition = (id: number) => {
+        dispatch(deleteItemCart(id));
         console.log(id);
     };
 
