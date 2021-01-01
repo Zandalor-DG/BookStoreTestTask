@@ -1,12 +1,13 @@
-import React from 'react';
-import css from './NavBar.module.css';
-import Sandbox from '../account/modal/Sandbox';
-import AccountPage from '../account/AccountPage';
-import { useDispatch, useSelector } from 'react-redux';
-import { StateReduxType } from '../../../store/reducers';
-import { NavLink } from 'react-router-dom';
 import { ShoppingOutlined, UserDeleteOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { StateReduxType } from '../../../store/reducers';
 import { logOut } from '../../../store/userStore/actionCreatedUser';
+import AccountPage from '../account/AccountPage';
+import Sandbox from '../account/modal/Sandbox';
+import TransactionButton from '../transactionPage/TransactionButton';
+import css from './NavBar.module.css';
 
 const NavBar: React.FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,10 @@ const NavBar: React.FunctionComponent = () => {
         <>
             <NavLink className={css.navLink} to="/profile">
                 <UserOutlined style={{ fontSize: '30px' }} />
+            </NavLink>
+
+            <NavLink className={css.navLink} to="/transaction">
+                <TransactionButton />
             </NavLink>
 
             <UserDeleteOutlined

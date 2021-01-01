@@ -17,7 +17,9 @@ exports.allTransactionItem = async (req, res) => {
       order: [['createdAt', 'ASC']],
     });
 
-    res.status(200).json({ error: false, message: 'get all transaction item' });
+    res
+      .status(200)
+      .json({ error: false, message: 'get all transaction item', allItem });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

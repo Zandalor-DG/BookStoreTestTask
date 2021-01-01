@@ -8,7 +8,7 @@ interface IDeleteAllItemComponent {
     onDeleteAllItem: () => void;
 }
 
-export const DeleteAllItem: React.FC<IDeleteAllItemComponent> = ({ onDeleteAllItem }: IDeleteAllItemComponent) => {
+const DeleteAllItem: React.FC<IDeleteAllItemComponent> = ({ onDeleteAllItem }: IDeleteAllItemComponent) => {
     return (
         <>
             <Button

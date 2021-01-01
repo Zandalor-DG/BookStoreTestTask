@@ -13,7 +13,7 @@ transactionRouter.get(
 transactionRouter.post(
   '/setTransaction',
   tokenChecker,
-  transactionRouter.postSetTransaction
+  transactionController.postSetTransaction
 );
 
 module.exports = transactionRouter;

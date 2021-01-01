@@ -8,7 +8,7 @@ interface IBuyAllItemComponent {
     onBuyAllItem: () => void;
 }
 
-export const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem }: IBuyAllItemComponent) => {
+const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem }: IBuyAllItemComponent) => {
     return (
         <>
             <Button

@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react';
-import './App.css';
-import 'antd/dist/antd.css';
-import HeaderContent from './components/header/HeaderContent';
-import Body from './components/body/Body';
-import { Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
+import 'antd/dist/antd.css';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import './App.css';
+import Body from './components/body/Body';
+import Book from './components/body/book/Book';
+import Preloader from './components/common/preloader/Preloader';
+import PrivateRoute from './components/common/privateRoute/PrivateRoute';
+import HeaderContent from './components/header/HeaderContent';
 import ProfilePage from './components/header/profilePage/ProfilePage';
 import ShoppingCart from './components/header/shoppingCart/ShoppingCart';
-import Preloader from './components/common/preloader/Preloader';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUserByToken } from './store/userStore/thunkUser';
-import PrivateRoute from './components/common/privateRoute/PrivateRoute';
+import TransactionPage from './components/header/transactionPage/TransactionPage';
 import { StateReduxType } from './store/reducers';
-import Book from './components/body/book/Book';
+import { loginUserByToken } from './store/userStore/thunkUser';
 
 const { Header, Footer } = Layout;
 
@@ -45,6 +46,9 @@ const App: React.FC = () => {
                     </PrivateRoute>
                     <PrivateRoute path="/cart" exact>
                         <ShoppingCart />
+                    </PrivateRoute>
+                    <PrivateRoute path="/transaction">
+                        <TransactionPage />
                     </PrivateRoute>
                     {/* <Route path="/book/:id" render={() => <ShoppingCart />} /> */}
                 </Switch>
