@@ -7,6 +7,7 @@ const shoppingCartRouter = require('./routes/shoppingCartRouter');
 const cors = require('cors');
 const multer = require('multer');
 const multerUpload = require('./middleware/multerUpload');
+const transactionRouter = require('./routes/transactionRouter');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use('/account', accountRouter);
 app.use('/user', userRouter);
 app.use('/book', bookStoreRouter);
 app.use('/shoppingcart', shoppingCartRouter);
+app.use('/transaction', transactionRouter);
 
 app.listen(4000, () => console.log('server started'));

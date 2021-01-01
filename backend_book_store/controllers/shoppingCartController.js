@@ -4,7 +4,7 @@ exports.getAllItemsCart = async (req, res) => {
   try {
     const { userId } = req.decoded;
 
-    const productModelInCard = await models.Cart.findAll({
+    const productModelInCart = await models.Cart.findAll({
       where: { userId: userId },
       include: [
         {
@@ -28,7 +28,11 @@ exports.getAllItemsCart = async (req, res) => {
 
     res
       .status(200)
-      .json({ error: false, message: 'access', productModelInCard });
+      .json({
+        error: false,
+        message: 'access',
+        productModelInCard: productModelInCart,
+      });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }
@@ -178,33 +182,3 @@ exports.deleteDeleteAllItems = async (req, res) => {
     res.status(400).json({ error: true, message: err.message });
   }
 };
-
-// const models = require('../database/models');
-
-// try {
-
-//   const result = await sequelize.transaction(async (t) => {
-
-//     const user = await User.create({
-//       firstName: 'Abraham',
-//       lastName: 'Lincoln'
-//     }, { transaction: t });
-
-//     await user.setShooter({
-//       firstName: 'John',
-//       lastName: 'Boothe'
-//     }, { transaction: t });
-
-//     return user;
-
-//   });
-
-//   // If the execution reaches this line, the transaction has been committed successfully
-//   // `result` is whatever was returned from the transaction callback (the `user`, in this case)
-
-// } catch (error) {
-
-//   // If the execution reaches this line, an error occurred.
-//   // The transaction has already been rolled back automatically by Sequelize!
-
-// }
