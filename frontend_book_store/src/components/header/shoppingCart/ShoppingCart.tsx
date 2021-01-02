@@ -8,7 +8,7 @@ import {
     deleteAllItems,
     deleteItemCart,
     removeItemCart,
-} from '../../../store/shoppingCard/thunkShoppingCard';
+} from '../../../store/shoppingCardStore/thunkShoppingCard';
 import BuyAllItemComponent from './BuyAllItemComponent';
 import CartItem from './CartItem';
 import DeleteAllItem from './DeleteAllItemComponent';

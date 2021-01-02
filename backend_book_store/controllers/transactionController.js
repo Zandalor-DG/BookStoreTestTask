@@ -12,6 +12,18 @@ exports.allTransactionItem = async (req, res) => {
           model: models.SubTransaction,
           as: 'SubTransaction',
           attributes: ['transaction_name', 'count', 'original_price'],
+          include: [
+            {
+              model: models.Book,
+              attributes: ['name'],
+              include: [
+                {
+                  model: models.Author,
+                  attributes: ['name'],
+                },
+              ],
+            },
+          ],
         },
       ],
       order: [['createdAt', 'ASC']],

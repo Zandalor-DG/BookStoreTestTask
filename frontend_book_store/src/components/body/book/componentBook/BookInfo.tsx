@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { PropsGetBook } from '../../../../api/apiBookStore';
 import { baseURL } from '../../../../api/axios';
-import { addItemCart } from '../../../../store/shoppingCard/thunkShoppingCard';
+import { addItemCart } from '../../../../store/shoppingCardStore/thunkShoppingCard';
 import css from '../Book.module.css';
 import RateBook from './RateBook';
 

@@ -1,15 +1,14 @@
-import React, { memo, useEffect, useReducer } from 'react';
-import 'antd/dist/antd.css';
-import { useHistory } from 'react-router';
 import { Layout } from 'antd';
-import BooksCard from './booksCard/BooksCard';
-import SiderFilter from './sider/SiderFilter';
+import 'antd/dist/antd.css';
+import React, { memo, useEffect, useReducer } from 'react';
 import { useDispatch } from 'react-redux';
-import { allBooks, allFilteringOptions } from '../../store/bookStore/thunkBookStore';
-import { filterReducer, getInitialFilterState } from './sider/filterReducer/filterReducer';
-import { FilterState } from './sider/filterReducer/filterReducer';
+import { useHistory } from 'react-router';
+import { allBooks, allFilteringOptions } from '../../store/bookStoreStore/thunkBookStore';
 import { useQuery } from '../hooks/useQuery';
 import { getFilterUrl } from '../utils/stringifiedUtils';
+import BooksCard from './booksCard/BooksCard';
+import { filterReducer, FilterState, getInitialFilterState } from './sider/filterReducer/filterReducer';
+import SiderFilter from './sider/SiderFilter';
 
 const Body: React.FunctionComponent = () => {
     const { Sider, Content } = Layout;

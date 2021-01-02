@@ -1,8 +1,9 @@
+import { Transaction } from '../models/TransactionStore/transaction';
 import axios from './axios';
 
-export const allTransactionItem = async (): Promise<number> => {
+export const getAllTransactionItem = async (): Promise<Transaction[]> => {
     const res = await axios.get('transaction/all');
-    const data: number = res.data;
+    const data: Transaction[] = res.data;
     return data;
 };
 

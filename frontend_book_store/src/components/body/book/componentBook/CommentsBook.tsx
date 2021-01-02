@@ -1,18 +1,17 @@
-import React, { useRef, useState } from 'react';
+import { Avatar, Button, Comment, Tooltip } from 'antd';
 import 'antd/dist/antd.css';
-import { Button } from 'antd';
-import { Comment, Tooltip, Avatar } from 'antd';
-import moment from 'moment';
-import { baseURL } from '../../../../api/axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { CommentState } from '../../../../models/BookStore/bookStoreData';
-import CommentList from './CommentList';
-import Editor from './Editor';
-import { addNewComment } from '../../../../store/bookStore/thunkBookStore';
-import { useParams } from 'react-router-dom';
-import { StateReduxType } from '../../../../store/reducers';
 import { TextAreaRef } from 'antd/lib/input/TextArea';
+import moment from 'moment';
+import React, { useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { baseURL } from '../../../../api/axios';
+import { CommentState } from '../../../../models/BookStore/bookStoreData';
+import { addNewComment } from '../../../../store/bookStoreStore/thunkBookStore';
+import { StateReduxType } from '../../../../store/reducers';
+import CommentList from './CommentList';
 import CommentWrapper from './CommentWrapper';
+import Editor from './Editor';
 
 interface PropsCommentsBook {
     comments: CommentState[];

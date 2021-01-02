@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import 'antd/dist/antd.css';
 import { Pagination } from 'antd';
-import css from './BooksCard.module.css';
+import 'antd/dist/antd.css';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { allBooks } from '../../../store/bookStoreStore/thunkBookStore';
 import { StateReduxType } from '../../../store/reducers';
-import { allBooks } from '../../../store/bookStore/thunkBookStore';
 import { FilterState } from '../sider/filterReducer/filterReducer';
+import css from './BooksCard.module.css';
 
 interface PropsPaginationBookStore {
     filterState: FilterState;

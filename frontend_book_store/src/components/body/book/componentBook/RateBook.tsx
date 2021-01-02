@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { addOrUpdateBookRate } from '../../../../store/bookStore/thunkBookStore';
+import { addOrUpdateBookRate } from '../../../../store/bookStoreStore/thunkBookStore';
 import { StateReduxType } from '../../../../store/reducers';
 
 interface IRateBook {

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { bookInfo } from '../../../store/bookStore/thunkBookStore';
+import { bookInfo } from '../../../store/bookStoreStore/thunkBookStore';
 import { StateReduxType } from '../../../store/reducers';
 import Preloader from '../../common/preloader/Preloader';
-import CommentsBook from './componentBook/CommentsBook';
-import BookInfo from './componentBook/BookInfo';
-import TabsComponent from './componentBook/TabsComponent';
 import css from './Book.module.css';
+import BookInfo from './componentBook/BookInfo';
+import CommentsBook from './componentBook/CommentsBook';
+import TabsComponent from './componentBook/TabsComponent';
 
 const Book: React.FC = () => {
     const dispatch = useDispatch();
