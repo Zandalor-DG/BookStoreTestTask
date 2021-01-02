@@ -6,9 +6,10 @@ import css from './ShoppingCart.module.css';
 
 interface IBuyAllItemComponent {
     onBuyAllItem: () => void;
+    totalPrice: number;
 }
 
-const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem }: IBuyAllItemComponent) => {
+const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem, totalPrice }: IBuyAllItemComponent) => {
     return (
         <>
             <Button
@@ -19,7 +20,8 @@ const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem }: I
                 icon={<CreditCardOutlined />}
                 size={'large'}
             >
-                Buy all
+                {' '}
+                {totalPrice}$
             </Button>
         </>
     );

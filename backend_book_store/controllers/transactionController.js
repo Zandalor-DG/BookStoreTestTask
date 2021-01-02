@@ -1,4 +1,5 @@
 const models = require('../database/models');
+const { Sequelize } = require('sequelize');
 // const { sequelize } = require('sequelize');
 
 exports.allTransactionItem = async (req, res) => {
@@ -11,7 +12,12 @@ exports.allTransactionItem = async (req, res) => {
         {
           model: models.SubTransaction,
           as: 'SubTransaction',
-          attributes: ['transaction_name', 'count', 'original_price'],
+          attributes: [
+            'transaction_name',
+            'count',
+            'original_price',
+            [Sequelize.literal('(count*original_price)'), 'totalPrice'],
+          ],
           include: [
             {
               model: models.Book,
@@ -25,6 +31,12 @@ exports.allTransactionItem = async (req, res) => {
             },
           ],
         },
+      ],
+      group: [
+        'Transaction.id',
+        'SubTransaction.id',
+        'SubTransaction.Book.id',
+        'SubTransaction.Book.Author.id',
       ],
       order: [['createdAt', 'ASC']],
     });
@@ -40,6 +52,8 @@ exports.allTransactionItem = async (req, res) => {
 exports.postSetTransaction = async (req, res) => {
   try {
     const { userId } = req.decoded;
+    const { transactionName } = req.body;
+    let totalPrice = 0;
 
     const productModelInCart = await models.Cart.findAll({
       where: { userId },
@@ -47,17 +61,23 @@ exports.postSetTransaction = async (req, res) => {
         {
           model: models.Book,
           as: 'Book',
-          attributes: ['name', 'price'],
+          attributes: [
+            'price',
+            [Sequelize.literal('(count*price)'), 'totalPrice'],
+          ],
         },
       ],
+      group: ['Cart.id', 'Book.id'],
       order: [['createdAt', 'ASC']],
     });
 
     const result = await models.sequelize.transaction(async (t) => {
       const subTransaction = productModelInCart.map(async (a) => {
+        totalAllPrice += a.Book.totalPrice;
+
         await models.subTransaction.create(
           {
-            transaction_name: a.Book.name,
+            transaction_name: `order #${transactionName}`,
             bookId: a.bookId,
             count: a.count,
             original_price: a.Book.price,
@@ -66,20 +86,20 @@ exports.postSetTransaction = async (req, res) => {
         );
       });
 
-      const transaction = subTransaction.map(async (a) => {
-        await models.Transaction.create(
-          {
-            userId: userId,
-            transaction_name: a.transaction_name,
-          },
-          { transaction: t }
-        );
-      });
+      const transaction = await models.Transaction.create(
+        {
+          userId: userId,
+          transaction_name: `order #${transactionName}`,
+        },
+        { transaction: t }
+      );
 
       return transaction;
     });
 
-    res.status(200).json({ error: false, message: 'All item buy', result });
+    res
+      .status(200)
+      .json({ error: false, message: 'All item buy', result, totalPrice });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

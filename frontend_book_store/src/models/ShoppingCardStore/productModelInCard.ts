@@ -5,6 +5,7 @@ export interface ProductModelInCard {
     Book: {
         name: string;
         price: number;
+        totalPrice: number;
         Author: {
             name: string;
         };

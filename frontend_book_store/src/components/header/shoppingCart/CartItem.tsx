@@ -10,6 +10,7 @@ export interface ICartItem {
     name: string;
     author: string;
     price: number;
+    totalPrice: number;
     count: number;
     onChange: (value: string | number | undefined, itemId: number, count: number) => void;
     onDeletePosition: (id: number) => void;
@@ -23,6 +24,7 @@ const CartItem: React.FC<ICartItem> = ({
     onDeletePosition,
     path_name,
     price,
+    totalPrice,
     count,
 }: ICartItem) => {
     const onChangeValue = (value: number | string | undefined) => {
@@ -45,7 +47,7 @@ const CartItem: React.FC<ICartItem> = ({
             <div>
                 <InputNumber min={0} max={50} defaultValue={count} onChange={onChangeValue} />
             </div>
-            <div>{price * count}</div>
+            <div>{totalPrice}$</div>
             <div>
                 <DeleteTwoTone onClick={() => onDeletePosition(itemId)} style={{ fontSize: '25px' }} />
             </div>

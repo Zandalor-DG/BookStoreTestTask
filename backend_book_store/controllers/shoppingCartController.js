@@ -1,4 +1,6 @@
 const models = require('../database/models');
+const { Sequelize } = require('sequelize');
+const { stringify } = require('uuid');
 
 exports.getAllItemsCart = async (req, res) => {
   try {
@@ -10,7 +12,12 @@ exports.getAllItemsCart = async (req, res) => {
         {
           model: models.Book,
           as: 'Book',
-          attributes: ['name', 'price'],
+          attributes: [
+            'name',
+            'price',
+            [Sequelize.literal('(count*price)'), 'totalPrice'],
+            //[Sequelize.fn('sum', Sequelize.col('price')), 'totalPrice'],
+          ],
           include: [
             {
               model: models.Author,
@@ -23,16 +30,33 @@ exports.getAllItemsCart = async (req, res) => {
           ],
         },
       ],
+      //attributes: [[Sequelize.literal('(count*price)'), 'Cost']],
+      group: ['Cart.id', 'Book.id', 'Book.Author.id', 'Book.File.id'],
       order: [['createdAt', 'ASC']],
     });
+    // const totalPrice = await models.Cart.findAll({
+    //   where: { userId: userId },
+    //   include: [
+    //     {
+    //       model: models.Book,
+    //       as: 'Book',
+    //       attributes: [
+    //         [Sequelize.fn('sum', Sequelize.col('price')), 'totalPrice'],
+    //       ],
+    //       //group: ['Book.id'],
+    //     },
+    //   ],
+    //   group: ['Cart.id', 'Book.id'],
+    //   order: [['createdAt', 'ASC']],
+    // });
 
-    res
-      .status(200)
-      .json({
-        error: false,
-        message: 'access',
-        productModelInCard: productModelInCart,
-      });
+    // const test = JSON.stringify(totalPrice);
+
+    res.status(200).json({
+      error: false,
+      message: 'access',
+      productModelInCard: productModelInCart,
+    });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

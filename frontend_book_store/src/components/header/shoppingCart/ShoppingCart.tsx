@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import {
@@ -17,7 +17,7 @@ import css from './ShoppingCart.module.css';
 const ShoppingCart: React.FC = () => {
     const dispatch = useDispatch();
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
-    const [priceAllItems, setPriceAllItems] = useState(0);
+    let totalPrice = 0;
 
     useEffect(() => {
         dispatch(allItemsCart());
@@ -57,6 +57,7 @@ const ShoppingCart: React.FC = () => {
     };
 
     const shoppingCart = data?.map((a) => {
+        totalPrice += a.Book.totalPrice;
         //setPriceAllItems(priceAllItems + a.Book.price);
         return (
             <>
@@ -69,6 +70,7 @@ const ShoppingCart: React.FC = () => {
                     onDeletePosition={onDeletePosition}
                     path_name={a.Book.File.path_name}
                     price={a.Book.price}
+                    totalPrice={a.Book.totalPrice}
                     count={a.count}
                 />
             </>
@@ -81,7 +83,7 @@ const ShoppingCart: React.FC = () => {
         ) : (
             <div className={css.shoppingCart__button}>
                 <DeleteAllItem onDeleteAllItem={onDeleteAllItem} />
-                <BuyAllItemComponent onBuyAllItem={onBuyAllItem} />
+                <BuyAllItemComponent totalPrice={totalPrice} onBuyAllItem={onBuyAllItem} />
             </div>
         );
 

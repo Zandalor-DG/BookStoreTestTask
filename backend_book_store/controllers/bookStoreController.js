@@ -1,5 +1,5 @@
 const models = require('../database/models');
-const { Op, where, Sequelize } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 
 const paginate = (page, pageSize) => {
   const offset = (page - 1) * pageSize;
