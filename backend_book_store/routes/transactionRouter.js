@@ -11,7 +11,7 @@ transactionRouter.get(
 );
 
 transactionRouter.post(
-  '/setTransaction',
+  '/settransaction',
   tokenChecker,
   transactionController.postSetTransaction
 );

@@ -9,9 +9,8 @@ import Book from './components/body/book/Book';
 import Preloader from './components/common/preloader/Preloader';
 import PrivateRoute from './components/common/privateRoute/PrivateRoute';
 import HeaderContent from './components/header/HeaderContent';
+import NavBarShoppingCart from './components/header/navBarShoppingCart/NavBarShoppingCart';
 import ProfilePage from './components/header/profilePage/ProfilePage';
-import ShoppingCart from './components/header/shoppingCart/ShoppingCart';
-import TransactionPage from './components/header/transactionPage/TransactionPage';
 import { StateReduxType } from './store/reducers';
 import { loginUserByToken } from './store/userStore/thunkUser';
 
@@ -45,10 +44,7 @@ const App: React.FC = () => {
                         <ProfilePage />
                     </PrivateRoute>
                     <PrivateRoute path="/cart" exact>
-                        <ShoppingCart />
-                    </PrivateRoute>
-                    <PrivateRoute path="/transaction">
-                        <TransactionPage />
+                        <NavBarShoppingCart />
                     </PrivateRoute>
                     {/* <Route path="/book/:id" render={() => <ShoppingCart />} /> */}
                 </Switch>

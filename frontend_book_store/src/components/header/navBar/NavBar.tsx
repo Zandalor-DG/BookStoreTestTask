@@ -6,7 +6,6 @@ import { StateReduxType } from '../../../store/reducers';
 import { logOut } from '../../../store/userStore/actionCreatedUser';
 import AccountPage from '../account/AccountPage';
 import Sandbox from '../account/modal/Sandbox';
-import TransactionButton from '../transactionPage/TransactionButton';
 import css from './NavBar.module.css';
 
 const NavBar: React.FunctionComponent = () => {
@@ -29,25 +28,18 @@ const NavBar: React.FunctionComponent = () => {
                 <UserOutlined style={{ fontSize: '30px' }} />
             </NavLink>
 
-            <NavLink className={css.navLink} to="/transaction">
-                <TransactionButton />
-            </NavLink>
-
             <UserDeleteOutlined
                 className={css.navLink}
                 onClick={onLogOut}
                 style={{ fontSize: '30px', marginLeft: '40px' }}
             />
-        </>
-    );
-    return (
-        <div className={css.bookstore__navBar}>
-            {signOrProfilePage}
+
             <NavLink className={css.navLink} to="/cart">
                 <ShoppingOutlined style={{ fontSize: '30px' }} />
             </NavLink>
-        </div>
+        </>
     );
+    return <div className={css.bookstore__navBar}>{signOrProfilePage}</div>;
 };
 
 export default NavBar;
