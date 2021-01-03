@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Book.belongsTo(models.Publish, {
         foreignKey: 'publishId',
       });
+      Book.belongsTo(models.SubTransaction, {
+        foreignKey: 'id',
+      });
       Book.belongsTo(models.File, {
         foreignKey: 'coverId',
         onDelete: 'CASCADE',

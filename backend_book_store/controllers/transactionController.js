@@ -97,40 +97,40 @@ exports.postSetTransaction = async (req, res, next) => {
         { transaction: t }
       );
 
-      const transaction = await models.Transaction.findOne({
-        where: { transaction_name: `order #${transactionName}` },
-        include: [
-          {
-            model: models.SubTransaction,
-            as: 'SubTransaction',
-            attributes: [
-              'count',
-              'original_price',
-              //[Sequelize.literal('(count*original_price)'), 'totalPrice'],
-            ],
-            include: [
-              {
-                model: models.Book,
-                attributes: ['name'],
-                include: [
-                  {
-                    model: models.Author,
-                    attributes: ['name'],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        group: [
-          'Transaction.id',
-          'SubTransaction.id',
-          'SubTransaction.Book.id',
-          'SubTransaction.Book.Author.id',
-        ],
-      });
+      return createTransaction;
+    });
 
-      return transaction;
+    const transaction = await models.Transaction.findOne({
+      where: { transaction_name: `order #${transactionName}` },
+      include: [
+        {
+          model: models.SubTransaction,
+          as: 'SubTransaction',
+          attributes: [
+            'count',
+            'original_price',
+            [Sequelize.literal('(count*original_price)'), 'totalPrice'],
+          ],
+          include: [
+            {
+              model: models.Book,
+              attributes: ['name'],
+              include: [
+                {
+                  model: models.Author,
+                  attributes: ['name'],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      group: [
+        'Transaction.id',
+        'SubTransaction.id',
+        'SubTransaction.Book.id',
+        'SubTransaction.Book.Author.id',
+      ],
     });
 
     req.transaction = result;

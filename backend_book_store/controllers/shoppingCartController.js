@@ -16,7 +16,6 @@ exports.getAllItemsCart = async (req, res) => {
             'name',
             'price',
             [Sequelize.literal('(count*price)'), 'totalPrice'],
-            //[Sequelize.fn('sum', Sequelize.col('price')), 'totalPrice'],
           ],
           include: [
             {
@@ -30,27 +29,9 @@ exports.getAllItemsCart = async (req, res) => {
           ],
         },
       ],
-      //attributes: [[Sequelize.literal('(count*price)'), 'Cost']],
       group: ['Cart.id', 'Book.id', 'Book.Author.id', 'Book.File.id'],
       order: [['createdAt', 'ASC']],
     });
-    // const totalPrice = await models.Cart.findAll({
-    //   where: { userId: userId },
-    //   include: [
-    //     {
-    //       model: models.Book,
-    //       as: 'Book',
-    //       attributes: [
-    //         [Sequelize.fn('sum', Sequelize.col('price')), 'totalPrice'],
-    //       ],
-    //       //group: ['Book.id'],
-    //     },
-    //   ],
-    //   group: ['Cart.id', 'Book.id'],
-    //   order: [['createdAt', 'ASC']],
-    // });
-
-    // const test = JSON.stringify(totalPrice);
 
     res.status(200).json({
       error: false,

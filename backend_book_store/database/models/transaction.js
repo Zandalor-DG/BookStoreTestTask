@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Transaction.hasMany(models.SubTransaction, {
         foreignKey: 'transaction_name',
+        as: 'TransactionItem',
         onDelete: 'CASCADE',
       });
       // define association here
