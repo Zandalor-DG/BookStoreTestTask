@@ -9,13 +9,14 @@ import {
     deleteItemCart,
     removeItemCart,
 } from '../../../store/shoppingCardStore/thunkShoppingCard';
+import { sendTransactionItem } from '../../../store/transactionStore/thunkTransaction';
 import BuyAllItemComponent from './BuyAllItemComponent';
 import CartItem from './CartItem';
 import DeleteAllItem from './DeleteAllItemComponent';
 import css from './ShoppingCart.module.css';
 
 const ShoppingCart: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
     let totalPrice = 0;
 
@@ -53,6 +54,14 @@ const ShoppingCart: React.FC = () => {
     };
 
     const onBuyAllItem = () => {
+        const transactionName = new Date();
+        dispatch(sendTransactionItem(transactionName)).then((resp: boolean) => {
+            if (resp) {
+                dispatch(deleteAllItems());
+            } else {
+                console.log('error');
+            }
+        });
         console.log('buyAll');
     };
 

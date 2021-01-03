@@ -7,8 +7,8 @@ export const getAllTransactionItem = async (): Promise<Transaction[]> => {
     return data;
 };
 
-export const postSetTransaction = async (): Promise<string> => {
-    const res = await axios.post('transaction/settransaction');
-    const data: string = res.data;
+export const postSendTransaction = async (transactionName: Date): Promise<Transaction> => {
+    const res = await axios.post('transaction/settransaction', { transactionName });
+    const data: Transaction = res.data;
     return data;
 };

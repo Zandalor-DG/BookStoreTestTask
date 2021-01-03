@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
-import { allTransactionItem } from '../../../store/transactionStore/thunkTransaction';
+import { allTransactionItems } from '../../../store/transactionStore/thunkTransaction';
 
 const TransactionPage: React.FC = () => {
     const { Panel } = Collapse;
@@ -12,7 +12,7 @@ const TransactionPage: React.FC = () => {
     const transaction = useSelector((state: StateReduxType) => state.transactionState.transactions);
 
     useEffect(() => {
-        dispatch(allTransactionItem());
+        dispatch(allTransactionItems());
     }, []);
 
     const panel = transaction?.map((a) => {
