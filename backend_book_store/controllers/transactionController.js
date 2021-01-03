@@ -53,7 +53,10 @@ exports.postSetTransaction = async (req, res, next) => {
   try {
     const { userId } = req.decoded;
     const { transactionName } = req.body;
-    let totalPrice = 0;
+    let totalAllPrice = 0;
+    if (!transactionName) {
+      throw Error('no transaction name');
+    }
 
     const productModelInCart = await models.Cart.findAll({
       where: { userId },
@@ -75,7 +78,7 @@ exports.postSetTransaction = async (req, res, next) => {
       const subTransaction = productModelInCart.map(async (a) => {
         totalAllPrice += a.Book.totalPrice;
 
-        await models.subTransaction.create(
+        await models.SubTransaction.create(
           {
             transaction_name: `order #${transactionName}`,
             bookId: a.bookId,
@@ -86,47 +89,51 @@ exports.postSetTransaction = async (req, res, next) => {
         );
       });
 
-      const transaction = await models.Transaction.create(
+      const createTransaction = await models.Transaction.create(
         {
           userId: userId,
           transaction_name: `order #${transactionName}`,
-          include: [
-            {
-              model: models.SubTransaction,
-              as: 'SubTransaction',
-              attributes: [
-                'count',
-                'original_price',
-                [Sequelize.literal('(count*original_price)'), 'totalPrice'],
-              ],
-              include: [
-                {
-                  model: models.Book,
-                  attributes: ['name'],
-                  include: [
-                    {
-                      model: models.Author,
-                      attributes: ['name'],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-          group: [
-            'Transaction.id',
-            'SubTransaction.id',
-            'SubTransaction.Book.id',
-            'SubTransaction.Book.Author.id',
-          ],
         },
         { transaction: t }
       );
 
+      const transaction = await models.Transaction.findOne({
+        where: { transaction_name: `order #${transactionName}` },
+        include: [
+          {
+            model: models.SubTransaction,
+            as: 'SubTransaction',
+            attributes: [
+              'count',
+              'original_price',
+              //[Sequelize.literal('(count*original_price)'), 'totalPrice'],
+            ],
+            include: [
+              {
+                model: models.Book,
+                attributes: ['name'],
+                include: [
+                  {
+                    model: models.Author,
+                    attributes: ['name'],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        group: [
+          'Transaction.id',
+          'SubTransaction.id',
+          'SubTransaction.Book.id',
+          'SubTransaction.Book.Author.id',
+        ],
+      });
+
       return transaction;
     });
 
-    req.transaction = result();
+    req.transaction = result;
     next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

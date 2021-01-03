@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       SubTransaction.hasMany(models.Book, {
         foreignKey: 'id',
-        as: 'CommentUser',
         onDelete: 'CASCADE',
       });
       // define association here

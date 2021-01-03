@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Transaction.hasMany(models.SubTransaction, {
         foreignKey: 'transaction_name',
-        as: 'SubTransaction',
         onDelete: 'CASCADE',
       });
       // define association here
@@ -26,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: DataTypes.INTEGER,
       transaction_name: DataTypes.STRING,
-      totalPrice: DataTypes.INTEGER,
+      //totalPrice: DataTypes.INTEGER,
     },
     {
       sequelize,

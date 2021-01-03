@@ -5,8 +5,9 @@ const mailerSMTP = async (req, res) => {
   try {
     const transaction = req.transaction;
     const { userId } = req.decoded;
+    const text = `your purchase ${transaction.dataValues}`;
 
-    const user = await models.User.findPk(userId);
+    const user = await models.User.findOne({ where: { id: userId } });
 
     // Generate SMTP service account from ethereal.email
     nodemailer.createTestAccount((err) => {
@@ -15,7 +16,7 @@ const mailerSMTP = async (req, res) => {
         return process.exit(1);
       }
       let accountSMTP = {
-        email: 'Chamar007',
+        email: 'Chamar007@yandex.ru',
         password: 'Zandalor123654789',
       };
 

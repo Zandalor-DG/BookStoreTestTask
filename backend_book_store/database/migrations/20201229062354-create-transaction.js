@@ -14,9 +14,9 @@ module.exports = {
       transaction_name: {
         type: Sequelize.STRING,
       },
-      totalPrice: {
-        type: Sequelize.STRING,
-      },
+      // totalPrice: {
+      //   type: Sequelize.STRING,
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
