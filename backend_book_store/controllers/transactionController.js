@@ -49,7 +49,7 @@ exports.allTransactionItem = async (req, res) => {
   }
 };
 
-exports.postSetTransaction = async (req, res) => {
+exports.postSetTransaction = async (req, res, next) => {
   try {
     const { userId } = req.decoded;
     const { transactionName } = req.body;
@@ -90,6 +90,35 @@ exports.postSetTransaction = async (req, res) => {
         {
           userId: userId,
           transaction_name: `order #${transactionName}`,
+          include: [
+            {
+              model: models.SubTransaction,
+              as: 'SubTransaction',
+              attributes: [
+                'count',
+                'original_price',
+                [Sequelize.literal('(count*original_price)'), 'totalPrice'],
+              ],
+              include: [
+                {
+                  model: models.Book,
+                  attributes: ['name'],
+                  include: [
+                    {
+                      model: models.Author,
+                      attributes: ['name'],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+          group: [
+            'Transaction.id',
+            'SubTransaction.id',
+            'SubTransaction.Book.id',
+            'SubTransaction.Book.Author.id',
+          ],
         },
         { transaction: t }
       );
@@ -97,9 +126,8 @@ exports.postSetTransaction = async (req, res) => {
       return transaction;
     });
 
-    res
-      .status(200)
-      .json({ error: false, message: 'All item buy', result, totalPrice });
+    req.transaction = result();
+    next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

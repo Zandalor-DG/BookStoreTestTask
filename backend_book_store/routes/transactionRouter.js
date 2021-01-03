@@ -1,6 +1,7 @@
 const express = require('express');
 const transactionController = require('../controllers/transactionController');
 const tokenChecker = require('../middleware/tokenChecker');
+const mailerSMTP = require('../middleware/nodemailer');
 
 const transactionRouter = express.Router();
 
@@ -13,7 +14,8 @@ transactionRouter.get(
 transactionRouter.post(
   '/settransaction',
   tokenChecker,
-  transactionController.postSetTransaction
+  transactionController.postSetTransaction,
+  mailerSMTP
 );
 
 module.exports = transactionRouter;
