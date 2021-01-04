@@ -31,12 +31,6 @@ exports.allTransactionItem = async (req, res) => {
           ],
         },
       ],
-      // group: [
-      //   'Transaction.id',
-      //   'SubTransaction.id',
-      //   'SubTransaction.Book.id',
-      //   'SubTransaction.Book.Author.id',
-      // ],
     });
 
     res
@@ -102,16 +96,6 @@ exports.postSetTransaction = async (req, res, next) => {
     } catch (err) {
       await t.rollback();
     }
-    //return createTransaction;
-    // });
-    // const allTrans = await models.Transaction.findAll({
-    //   include: [
-    //     {
-    //       model: models.SubTransaction,
-    //       as: 'TransactionItem',
-    //     },
-    //   ],
-    // });
 
     const transaction = await models.Transaction.findOne({
       where: { id: transactionItem.id },
@@ -138,15 +122,9 @@ exports.postSetTransaction = async (req, res, next) => {
           ],
         },
       ],
-      // group: [
-      //   'Transaction.id',
-      //   'SubTransaction.id',
-      //   'SubTransaction.Book.id',
-      //   'SubTransaction.Book.Author.id',
-      // ],
     });
 
-    req.transaction = transaction;
+    req.transaction = { transaction, totalAllPrice };
     next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

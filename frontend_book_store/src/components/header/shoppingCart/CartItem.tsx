@@ -55,7 +55,7 @@ const CartItem: React.FC<ICartItem> = ({
             >
                 -
             </div>
-            <div>{totalPrice}$</div>
+            <div>{price * count}$</div>
             <div>
                 <DeleteTwoTone onClick={() => onDeletePosition(itemId)} style={{ fontSize: '25px' }} />
             </div>

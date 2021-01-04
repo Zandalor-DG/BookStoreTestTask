@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 
 const mailerSMTP = async (req, res) => {
   try {
-    const transaction = req.transaction;
+    const { transaction, totalAllPrice } = req.transaction;
     const { userId } = req.decoded;
     const text = `your purchase ${transaction.dataValues}`;
 
