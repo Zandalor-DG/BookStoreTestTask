@@ -3,7 +3,7 @@ import axios from './axios';
 
 export const getAllTransactionItem = async (): Promise<Transaction[]> => {
     const res = await axios.get('transaction/all');
-    const data: Transaction[] = res.data;
+    const data: Transaction[] = res.data.allItem;
     return data;
 };
 

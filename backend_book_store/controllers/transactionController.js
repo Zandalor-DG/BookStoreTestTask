@@ -13,7 +13,6 @@ exports.allTransactionItem = async (req, res) => {
           model: models.SubTransaction,
           as: 'TransactionItem',
           attributes: [
-            'transaction_name',
             'count',
             'original_price',
             [Sequelize.literal('(count*original_price)'), 'totalPrice'],
@@ -32,13 +31,12 @@ exports.allTransactionItem = async (req, res) => {
           ],
         },
       ],
-      group: [
-        'Transaction.id',
-        'SubTransaction.id',
-        'SubTransaction.Book.id',
-        'SubTransaction.Book.Author.id',
-      ],
-      order: [['createdAt', 'ASC']],
+      // group: [
+      //   'Transaction.id',
+      //   'SubTransaction.id',
+      //   'SubTransaction.Book.id',
+      //   'SubTransaction.Book.Author.id',
+      // ],
     });
 
     res
@@ -148,7 +146,7 @@ exports.postSetTransaction = async (req, res, next) => {
       // ],
     });
 
-    req.transaction = result;
+    req.transaction = transaction;
     next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

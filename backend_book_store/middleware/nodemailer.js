@@ -23,13 +23,22 @@ const mailerSMTP = async (req, res) => {
       console.log('Credentials obtained, sending message...');
 
       // Create a SMTP transporter object
-      let transporter = nodemailer.createTransport({
-        host: 'smtp.yandex.ru',
-        port: 465,
-        secure: true, // true for 465, false for other ports
+      // let transporter = nodemailer.createTransport({
+      //   host: 'smtp.yandex.ru',
+      //   port: 465,
+      //   secure: true, // true for 465, false for other ports
+      //   auth: {
+      //     user: accountSMTP.email, // generated ethereal user
+      //     pass: accountSMTP.password, // generated ethereal password
+      //   },
+      // });
+
+      var transporter = nodemailer.createTransport({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
         auth: {
-          user: accountSMTP.email, // generated ethereal user
-          pass: accountSMTP.password, // generated ethereal password
+          user: '57fd8edd566941',
+          pass: 'cdfb2f0ab0d635',
         },
       });
 
@@ -38,7 +47,7 @@ const mailerSMTP = async (req, res) => {
         from: 'chamar007@yandex.ru', //'Sender Name <sender@example.com>',
         to: 'Chamar000009@gmail.com', //'Recipient <user.email>',
         subject: 'Nodemailer is unicode friendly ✔',
-        text: transaction, //'Hello to myself!',
+        text: text, //'Hello to myself!',
         //html: '<p><b>Hello</b> to myself!</p>',
       };
 

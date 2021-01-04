@@ -7,7 +7,7 @@ import { allTransactionItems } from '../../../store/transactionStore/thunkTransa
 
 const TransactionPage: React.FC = () => {
     const { Panel } = Collapse;
-    let totalPrice = 0;
+    const totalPrice = 0;
     const dispatch = useDispatch();
     const transaction = useSelector((state: StateReduxType) => state.transactionState.transactions);
 
@@ -15,15 +15,15 @@ const TransactionPage: React.FC = () => {
         dispatch(allTransactionItems());
     }, []);
 
-    const panel = transaction?.map((a) => {
-        totalPrice += a.SubTransaction.original_price;
+    const panel = transaction?.map((a, i) => {
+        //totalPrice = a.TransactionItem.map((elem) => elem.total_price + totalPrice);
         return (
-            <Panel header={a.transaction_name} key={a.SubTransaction.id}>
+            <Panel header={a.transaction_name} key={a.id}>
                 <div>
-                    <h3>{a.SubTransaction.Book.name}</h3>
-                    <h4>by {a.SubTransaction.Book.Author.name}</h4>
-                    <p>price: {a.SubTransaction.original_price}</p>
-                    <p>how much: {a.SubTransaction.count}</p>
+                    <h3>{a.TransactionItem.map((elem) => elem.Book.map((item) => item.name))}</h3>
+                    <h4>by {a.TransactionItem.map((elem) => elem.Book.map((item) => item.Author.name))}</h4>
+                    <p>price: {a.TransactionItem.map((elem) => elem.original_price)}</p>
+                    <p>how much: {a.TransactionItem.map((elem) => elem.count)}</p>
                 </div>
             </Panel>
         );
