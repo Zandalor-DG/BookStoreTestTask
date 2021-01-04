@@ -12,7 +12,7 @@ const DeleteAllItem: React.FC<IDeleteAllItemComponent> = ({ onDeleteAllItem }: I
     return (
         <>
             <Button
-                className={css.button}
+                className={css.allItems__button}
                 type="primary"
                 shape="round"
                 onClick={onDeleteAllItem}

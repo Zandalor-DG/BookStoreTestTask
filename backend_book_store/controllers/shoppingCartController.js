@@ -7,7 +7,7 @@ exports.getAllItemsCart = async (req, res) => {
     const { userId } = req.decoded;
 
     const productModelInCart = await models.Cart.findAll({
-      where: { userId: userId },
+      where: { userId },
       include: [
         {
           model: models.Book,
@@ -33,11 +33,59 @@ exports.getAllItemsCart = async (req, res) => {
       order: [['createdAt', 'ASC']],
     });
 
-    res.status(200).json({
-      error: false,
-      message: 'access',
-      productModelInCard: productModelInCart,
+    res
+      .status(200)
+      .json({ error: false, message: 'access', productModelInCart });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};
+
+exports.postAddOneItemCart = async (req, res) => {
+  try {
+    const { bookId } = req.body;
+    const { userId } = req.decoded;
+
+    if (!bookId) {
+      throw new Error('not bookId');
+    }
+
+    await models.Cart.create({
+      userId,
+      bookId,
+      count: 1,
     });
+
+    const productModelInCart = await models.Cart.findOne({
+      where: { userId, bookId },
+      include: [
+        {
+          model: models.Book,
+          as: 'Book',
+          attributes: [
+            'name',
+            'price',
+            [Sequelize.literal('(count*price)'), 'totalPrice'],
+          ],
+          include: [
+            {
+              model: models.Author,
+              attributes: ['name'],
+            },
+            {
+              model: models.File,
+              attributes: ['path_name'],
+            },
+          ],
+        },
+      ],
+      group: ['Cart.id', 'Book.id', 'Book.Author.id', 'Book.File.id'],
+      order: [['createdAt', 'ASC']],
+    });
+
+    res
+      .status(200)
+      .json({ error: false, message: 'access', productModelInCart });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

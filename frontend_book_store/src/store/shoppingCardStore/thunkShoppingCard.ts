@@ -2,8 +2,9 @@ import {
     deleteDeleteAllItems,
     deleteDeleteItem,
     getAllItemsCart,
-    postAddItemCart,
-    postRemoveItemCart,
+    postAddItemCount,
+    postAddOneItemCart,
+    postRemoveItemCount,
 } from '../../api/apiShoppingCard';
 import { AppDispatch } from '../reducers';
 import {
@@ -12,6 +13,7 @@ import {
     setDeleteAllItemsCart,
     setDeleteToCart,
     setErrorShoppingCart,
+    setItemCart,
     setRemoveItemCounter,
 } from './actionCreatedShoppingCard';
 
@@ -24,9 +26,18 @@ export const allItemsCart = () => async (dispatch: AppDispatch): Promise<void> =
     }
 };
 
+export const addOneItemCart = (bookId: number) => async (dispatch: AppDispatch): Promise<void> => {
+    try {
+        const data = await postAddOneItemCart(bookId);
+        dispatch(setItemCart(data));
+    } catch (err) {
+        dispatch(setErrorShoppingCart(err.message));
+    }
+};
+
 export const addItemCart = (itemId: number, value?: number) => async (dispatch: AppDispatch): Promise<void> => {
     try {
-        const id = await postAddItemCart(itemId, value);
+        const id = await postAddItemCount(itemId, value);
         dispatch(setAddItemCounter(id));
     } catch (err) {
         dispatch(setErrorShoppingCart(err.message));
@@ -35,7 +46,7 @@ export const addItemCart = (itemId: number, value?: number) => async (dispatch: 
 
 export const removeItemCart = (itemId: number, value?: number) => async (dispatch: AppDispatch): Promise<void> => {
     try {
-        const id = await postRemoveItemCart(itemId, value);
+        const id = await postRemoveItemCount(itemId, value);
         dispatch(setRemoveItemCounter(id));
     } catch (err) {
         dispatch(setErrorShoppingCart(err.message));

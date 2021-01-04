@@ -27,7 +27,7 @@ const ShoppingCart: React.FC = () => {
 
     console.log('body');
 
-    const onChange = (value: string | number | undefined, itemId: number, count: number) => {
+    const onClickCounter = (value: string | number | undefined, itemId: number, count: number) => {
         switch (value) {
             case 0:
                 dispatch(deleteItemCart(itemId));
@@ -69,31 +69,30 @@ const ShoppingCart: React.FC = () => {
         totalPrice += a.Book.totalPrice;
         //setPriceAllItems(priceAllItems + a.Book.price);
         return (
-            <>
+            <React.Fragment key={a.id}>
                 <CartItem
-                    key={a.id}
                     itemId={a.bookId}
                     name={a.Book.name}
                     author={a.Book.Author.name}
-                    onChange={onChange}
+                    onClickCounter={onClickCounter}
                     onDeletePosition={onDeletePosition}
                     path_name={a.Book.File.path_name}
                     price={a.Book.price}
                     totalPrice={a.Book.totalPrice}
                     count={a.count}
                 />
-            </>
+            </React.Fragment>
         );
     });
 
     const shoppingButton =
-        data?.length === 0 ? (
-            <div>your cart is empty</div>
-        ) : (
+        data && data?.length > 0 ? (
             <div className={css.shoppingCart__button}>
                 <DeleteAllItem onDeleteAllItem={onDeleteAllItem} />
                 <BuyAllItemComponent totalPrice={totalPrice} onBuyAllItem={onBuyAllItem} />
             </div>
+        ) : (
+            <div>your cart is empty</div>
         );
 
     return (

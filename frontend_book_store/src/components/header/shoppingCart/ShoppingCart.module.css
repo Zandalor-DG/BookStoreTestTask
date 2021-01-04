@@ -10,8 +10,8 @@
 
 .shoppingCart__row {
     display: grid;
-    grid-template-columns: 100px 1fr[name] 100px 40px 40px;
-    justify-items: start;
+    grid-template-columns: 100px 1fr[name] 20px 40px 20px 40px 40px;
+    justify-items: center;
     align-items: center;
 }
 
@@ -27,6 +27,27 @@
     justify-content: flex-end;
 }
 
-.button {
+.allItems__button {
     margin-right: 20px;
+}
+
+.shoppingCart__incrementOrDecrement {
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+
+.shoppingCart__text {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.shoppingCart__numbers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

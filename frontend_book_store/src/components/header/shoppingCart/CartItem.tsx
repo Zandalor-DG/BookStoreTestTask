@@ -1,5 +1,4 @@
 import { DeleteTwoTone } from '@ant-design/icons';
-import { InputNumber } from 'antd';
 import React from 'react';
 import { baseURL } from '../../../api/axios';
 import css from './ShoppingCart.module.css';
@@ -12,7 +11,7 @@ export interface ICartItem {
     price: number;
     totalPrice: number;
     count: number;
-    onChange: (value: string | number | undefined, itemId: number, count: number) => void;
+    onClickCounter: (value: string | number | undefined, itemId: number, count: number) => void;
     onDeletePosition: (id: number) => void;
 }
 
@@ -20,16 +19,15 @@ const CartItem: React.FC<ICartItem> = ({
     itemId,
     author,
     name,
-    onChange,
+    onClickCounter,
     onDeletePosition,
     path_name,
     price,
     totalPrice,
     count,
 }: ICartItem) => {
-    const onChangeValue = (value: number | string | undefined) => {
-        return onChange(value, itemId, count);
-    };
+    const increment = count + 1;
+    const decrement = count - 1;
 
     return (
         <div className={css.shoppingCart__row}>
@@ -44,8 +42,18 @@ const CartItem: React.FC<ICartItem> = ({
                 <h3>by {author}</h3>
                 <h4>price: {price} $</h4>
             </div>
-            <div>
-                <InputNumber min={0} max={50} defaultValue={count} onChange={onChangeValue} />
+            <div
+                className={css.shoppingCart__incrementOrDecrement}
+                onClick={() => onClickCounter(increment, itemId, count)}
+            >
+                +
+            </div>
+            <div className={css.shoppingCart__numbers}>{count}</div>
+            <div
+                className={css.shoppingCart__incrementOrDecrement}
+                onClick={() => onClickCounter(decrement, itemId, count)}
+            >
+                -
             </div>
             <div>{totalPrice}$</div>
             <div>

@@ -1,10 +1,11 @@
+import { getAllItemsCart } from '../../api/apiShoppingCard';
 import {
     getLoginByToken,
     postChangePassword,
     postLoginUser,
     postRegisterUser,
-    putUploadAvatar,
     putProfilePage,
+    putUploadAvatar,
 } from '../../api/apiUser';
 import { InputsLogin } from '../../components/header/account/LoginAccount';
 import { InputsRegister } from '../../components/header/account/RegisterAccount';
@@ -12,13 +13,14 @@ import { onChangePassword } from '../../components/header/profilePage/ChangePass
 import { UserData } from '../../models/User/userData';
 import { userRole } from '../../models/User/userRoleEnum';
 import { AppDispatch } from '../reducers';
+import { setAddToCart } from '../shoppingCardStore/actionCreatedShoppingCard';
 import {
-    setErrorUser,
     setAuthorizedUser,
-    updateProfilePage,
+    setErrorUser,
     setInitialUser,
-    setUserInitError,
     setUserAvatar,
+    setUserInitError,
+    updateProfilePage,
 } from '../userStore/actionCreatedUser';
 
 export interface PropsUpdateUserData {
@@ -33,6 +35,8 @@ export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: 
     try {
         const user = await postLoginUser({ email, password });
         dispatch(setAuthorizedUser(user));
+        const data = await getAllItemsCart();
+        dispatch(setAddToCart(data));
         return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));
@@ -69,6 +73,8 @@ export const loginUserByToken = () => async (dispatch: AppDispatch): Promise<voi
     try {
         const user = await getLoginByToken();
         dispatch(setInitialUser(user));
+        const data = await getAllItemsCart();
+        dispatch(setAddToCart(data));
     } catch (err) {
         dispatch(setUserInitError(err.message));
     }

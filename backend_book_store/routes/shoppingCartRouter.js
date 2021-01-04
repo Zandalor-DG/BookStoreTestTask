@@ -10,6 +10,11 @@ shoppingCartRouter.get(
   shoppingCartController.getAllItemsCart
 );
 shoppingCartRouter.post(
+  '/addoneitem',
+  tokenChecker,
+  shoppingCartController.postAddOneItemCart
+);
+shoppingCartRouter.post(
   '/additem',
   tokenChecker,
   shoppingCartController.postAddItemCart

@@ -4,18 +4,22 @@ import { ActionShoppingCard, ActionTypeShoppingCard } from './actionTypesShoppin
 
 const ShoppingCardReducer = (state = shoppingCardInitialState, action: ActionShoppingCard): ShoppingCartState => {
     switch (action.type) {
-        case ActionTypeShoppingCard.AddToCard: {
-            return { ...state, productInCart: [...action.product] };
+        case ActionTypeShoppingCard.AddToCart: {
+            return { ...state, productInCart: [...action.products] };
+        }
+        case ActionTypeShoppingCard.SetItemCart: {
+            const addItem = state.productInCart ? state.productInCart : [];
+            return { ...state, productInCart: [...addItem, action.product] };
         }
         case ActionTypeShoppingCard.AddItemCounter: {
-            const addItemCounter = state.productInCart ? [...state.productInCart] : [];
+            const addItemCounter = state.productInCart ? state.productInCart : [];
             return {
                 ...state,
-                productInCart: [...addItemCounter.map((a) => (a.id !== action.id ? a : { ...a, count: a.count + 1 }))],
+                productInCart: addItemCounter.map((a) => (a.id !== action.id ? a : { ...a, count: a.count + 1 })),
             };
         }
         case ActionTypeShoppingCard.RemoveItemCounter: {
-            const removeItemCounter = state.productInCart ? [...state.productInCart] : [];
+            const removeItemCounter = state.productInCart ? state.productInCart : [];
             return {
                 ...state,
                 productInCart: [
@@ -24,10 +28,10 @@ const ShoppingCardReducer = (state = shoppingCardInitialState, action: ActionSho
             };
         }
         case ActionTypeShoppingCard.DeleteToCard: {
-            const deleteToCard = state.productInCart ? [...state.productInCart] : [];
+            const deleteToCard = state.productInCart ? state.productInCart : [];
             return {
                 ...state,
-                productInCart: [...deleteToCard.filter((a) => a.id !== action.id)],
+                productInCart: deleteToCard.filter((a) => a.id !== action.id),
             };
         }
         case ActionTypeShoppingCard.DeleteAllItemsCard:

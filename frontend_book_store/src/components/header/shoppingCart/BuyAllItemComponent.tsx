@@ -13,7 +13,7 @@ const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem, tot
     return (
         <>
             <Button
-                className={css.button}
+                className={css.allItems__button}
                 type="primary"
                 shape="round"
                 onClick={onBuyAllItem}

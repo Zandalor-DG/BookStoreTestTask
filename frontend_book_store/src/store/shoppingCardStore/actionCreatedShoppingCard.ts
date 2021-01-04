@@ -7,11 +7,17 @@ import {
     ActionDeleteToCard,
     ActionRemoveItemCounter,
     ActionSetErrorShoppingCard,
+    ActionSetItemCart,
     ActionTypeShoppingCard,
 } from './actionTypesShoppingCard';
 
-export const setAddToCart = (product: ProductModelInCard[]): ActionAddToCard => ({
-    type: ActionTypeShoppingCard.AddToCard,
+export const setAddToCart = (products: ProductModelInCard[]): ActionAddToCard => ({
+    type: ActionTypeShoppingCard.AddToCart,
+    products,
+});
+
+export const setItemCart = (product: ProductModelInCard): ActionSetItemCart => ({
+    type: ActionTypeShoppingCard.SetItemCart,
     product,
 });
 

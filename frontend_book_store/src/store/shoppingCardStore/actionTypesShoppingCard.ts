@@ -1,7 +1,8 @@
 import { ProductModelInCard as ProductModelInCard } from '../../models/ShoppingCardStore/productModelInCard';
 
 export enum ActionTypeShoppingCard {
-    AddToCard = 'AddToCard',
+    AddToCart = 'AddToCart',
+    SetItemCart = 'SetItemCart',
     AddItemCounter = 'AddItemCounter',
     RemoveItemCounter = 'RemoveItemCounter',
     DeleteToCard = 'DeleteToCard',
@@ -11,8 +12,13 @@ export enum ActionTypeShoppingCard {
 }
 
 export type ActionAddToCard = {
-    type: ActionTypeShoppingCard.AddToCard;
-    product: ProductModelInCard[];
+    type: ActionTypeShoppingCard.AddToCart;
+    products: ProductModelInCard[];
+};
+
+export type ActionSetItemCart = {
+    type: ActionTypeShoppingCard.SetItemCart;
+    product: ProductModelInCard;
 };
 
 export type ActionAddItemCounter = {
@@ -50,4 +56,5 @@ export type ActionShoppingCard =
     | ActionDeleteToCard
     | ActionBuyItems
     | ActionDeleteAllItemsCard
-    | ActionSetErrorShoppingCard;
+    | ActionSetErrorShoppingCard
+    | ActionSetItemCart;
