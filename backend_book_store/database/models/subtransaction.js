@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       SubTransaction.belongsTo(models.Transaction, {
-        foreignKey: 'transaction_name',
+        foreignKey: 'transactionId',
       });
       SubTransaction.hasMany(models.Book, {
         foreignKey: 'id',
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   SubTransaction.init(
     {
-      transaction_name: DataTypes.STRING,
+      transactionId: DataTypes.INTEGER,
       bookId: DataTypes.INTEGER,
       count: DataTypes.INTEGER,
       original_price: DataTypes.INTEGER,

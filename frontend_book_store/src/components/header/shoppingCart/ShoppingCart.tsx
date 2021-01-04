@@ -1,10 +1,9 @@
 import 'antd/dist/antd.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import {
     addItemCart,
-    allItemsCart,
     deleteAllItems,
     deleteItemCart,
     removeItemCart,
@@ -20,10 +19,10 @@ const ShoppingCart: React.FC = () => {
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
     let totalPrice = 0;
 
-    useEffect(() => {
-        dispatch(allItemsCart());
-        console.log('useEffect');
-    }, []);
+    // useEffect(() => {
+    //     dispatch(allItemsCart());
+    //     console.log('useEffect');
+    // }, []);
 
     console.log('body');
 

@@ -11,7 +11,7 @@ exports.allTransactionItem = async (req, res) => {
       include: [
         {
           model: models.SubTransaction,
-          as: 'SubTransaction',
+          as: 'TransactionItem',
           attributes: [
             'transaction_name',
             'count',
@@ -53,7 +53,10 @@ exports.postSetTransaction = async (req, res, next) => {
   try {
     const { userId } = req.decoded;
     const { transactionName } = req.body;
+    const t = await models.sequelize.transaction();
     let totalAllPrice = 0;
+    let transactionItem;
+
     if (!transactionName) {
       throw Error('no transaction name');
     }
@@ -74,22 +77,9 @@ exports.postSetTransaction = async (req, res, next) => {
       order: [['createdAt', 'ASC']],
     });
 
-    const result = await models.sequelize.transaction(async (t) => {
-      const subTransaction = productModelInCart.map(async (a) => {
-        totalAllPrice += a.Book.totalPrice;
-
-        await models.SubTransaction.create(
-          {
-            transaction_name: `order #${transactionName}`,
-            bookId: a.bookId,
-            count: a.count,
-            original_price: a.Book.price,
-          },
-          { transaction: t }
-        );
-      });
-
-      const createTransaction = await models.Transaction.create(
+    try {
+      // const result = await models.sequelize.transaction(async (t) => {
+      transactionItem = await models.Transaction.create(
         {
           userId: userId,
           transaction_name: `order #${transactionName}`,
@@ -97,15 +87,40 @@ exports.postSetTransaction = async (req, res, next) => {
         { transaction: t }
       );
 
-      return createTransaction;
-    });
+      const subTrans = productModelInCart.map((a) => {
+        return models.SubTransaction.create(
+          {
+            transactionId: transactionItem.id,
+            bookId: a.bookId,
+            count: a.count,
+            original_price: a.Book.price,
+          },
+          { transaction: t }
+        );
+      });
+      await Promise.all(subTrans);
+
+      await t.commit();
+    } catch (err) {
+      await t.rollback();
+    }
+    //return createTransaction;
+    // });
+    // const allTrans = await models.Transaction.findAll({
+    //   include: [
+    //     {
+    //       model: models.SubTransaction,
+    //       as: 'TransactionItem',
+    //     },
+    //   ],
+    // });
 
     const transaction = await models.Transaction.findOne({
-      where: { transaction_name: `order #${transactionName}` },
+      where: { id: transactionItem.id },
       include: [
         {
           model: models.SubTransaction,
-          as: 'SubTransaction',
+          as: 'TransactionItem',
           attributes: [
             'count',
             'original_price',
@@ -125,12 +140,12 @@ exports.postSetTransaction = async (req, res, next) => {
           ],
         },
       ],
-      group: [
-        'Transaction.id',
-        'SubTransaction.id',
-        'SubTransaction.Book.id',
-        'SubTransaction.Book.Author.id',
-      ],
+      // group: [
+      //   'Transaction.id',
+      //   'SubTransaction.id',
+      //   'SubTransaction.Book.id',
+      //   'SubTransaction.Book.Author.id',
+      // ],
     });
 
     req.transaction = result;

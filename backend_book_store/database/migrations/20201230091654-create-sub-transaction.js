@@ -6,31 +6,31 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      transaction_name: {
-        type: Sequelize.STRING
+      transactionId: {
+        type: Sequelize.INTEGER,
       },
       bookId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       count: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       original_price: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('SubTransactions');
-  }
+  },
 };
