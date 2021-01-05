@@ -32,24 +32,24 @@ exports.getAllNotifications = async (req, res) => {
 
 exports.deleteOneItem = async (req, res) => {
   try {
-    const { notificationId } = req.query;
+    const { id } = req.query;
     const { userId } = req.decoded;
 
-    if (!notificationId) {
+    if (!id) {
       return new Error('no notification Id to delete item');
     }
 
     await models.Notification.destroy({
       where: {
         userId,
-        id: notificationId,
+        id,
       },
     });
 
     res.status(201).json({
       error: false,
       message: 'delete one notification',
-      id: notificationId,
+      id,
     });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
@@ -59,9 +59,9 @@ exports.deleteOneItem = async (req, res) => {
 exports.UpdateOneItem = async (req, res) => {
   try {
     const { userId } = req.decoded;
-    const { notificationId } = req.body;
+    const { id } = req.body;
 
-    if (!notificationId) {
+    if (!id) {
       return new Error('no notification Id to update item');
     }
 
@@ -69,7 +69,7 @@ exports.UpdateOneItem = async (req, res) => {
       {
         where: {
           userId,
-          id: notificationId,
+          id,
         },
       },
       {
@@ -80,11 +80,33 @@ exports.UpdateOneItem = async (req, res) => {
     res.status(200).json({
       error: false,
       message: 'notification is read',
-      id: notificationId,
+      id,
     });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }
 };
 
-exports.AddOneItem;
+exports.AddOneItem = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+    const { commentId, comment, bookId, reply, replyId } = req.body;
+    const { comment, newComment } = req.payload;
+
+    await models.Notification.create({
+      id: commentId,
+      userId,
+      type: `reply to comments by ${reply}`,
+      payload: comment.comment,
+      read: false,
+    });
+
+    res.status(201).json({
+      error: false,
+      message: 'create notification',
+      newComment,
+    });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};

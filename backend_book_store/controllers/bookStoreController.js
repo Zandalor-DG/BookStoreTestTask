@@ -182,7 +182,7 @@ exports.getBook = async (req, res) => {
   }
 };
 
-exports.commentBook = async (req, res) => {
+exports.commentBook = async (req, res, next) => {
   try {
     const { userId } = req.decoded;
     const { comment, bookId, reply, replyId } = req.body;
@@ -190,7 +190,7 @@ exports.commentBook = async (req, res) => {
       throw new Error('Not comment or bookId');
     }
 
-    await models.Comment.create({
+    const comment = await models.Comment.create({
       userId,
       comment,
       replyId: !replyId ? null : replyId,
@@ -216,9 +216,8 @@ exports.commentBook = async (req, res) => {
       order: [['createdAt', 'ASC']],
     });
 
-    res
-      .status(201)
-      .json({ error: false, message: 'Comment create', comment: newComment });
+    req.payload = { newComment, comment };
+    next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }
