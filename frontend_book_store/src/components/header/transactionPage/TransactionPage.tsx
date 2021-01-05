@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { allTransactionItems } from '../../../store/transactionStore/thunkTransaction';
+import css from './TransactionPage.module.css';
 import TransactionPageItem from './TransactionPageItem';
 
 const TransactionPage: React.FC = () => {
@@ -16,9 +17,17 @@ const TransactionPage: React.FC = () => {
     }, []);
 
     const panel = transaction?.map((a) => {
+        const totalPrice = a.TransactionItem.reduce((acc, curr) => {
+            return acc + curr.original_price * curr.count;
+        }, 0);
         return (
             <Panel header={a.transaction_name} key={a.id}>
-                <TransactionPageItem transactionItem={a.TransactionItem} />
+                <div className={css.transactionPage__column}>
+                    <TransactionPageItem transactionItem={a.TransactionItem} />
+                </div>
+                <div className={css.transactionPage__column}>
+                    <span className={css.transactionPage__totalPrice}>total price: {totalPrice}</span>
+                </div>
             </Panel>
         );
     });

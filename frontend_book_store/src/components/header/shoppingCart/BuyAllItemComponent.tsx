@@ -5,14 +5,20 @@ import React from 'react';
 import css from './ShoppingCart.module.css';
 
 interface IBuyAllItemComponent {
-    onBuyAllItem: () => void;
+    disableButton: boolean;
     totalPrice: number;
+    onBuyAllItem: () => void;
 }
 
-const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({ onBuyAllItem, totalPrice }: IBuyAllItemComponent) => {
+const BuyAllItemComponent: React.FC<IBuyAllItemComponent> = ({
+    onBuyAllItem,
+    totalPrice,
+    disableButton,
+}: IBuyAllItemComponent) => {
     return (
         <>
             <Button
+                disabled={disableButton}
                 className={css.allItems__button}
                 type="primary"
                 shape="round"

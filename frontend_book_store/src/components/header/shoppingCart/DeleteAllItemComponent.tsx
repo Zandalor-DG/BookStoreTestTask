@@ -5,13 +5,18 @@ import React from 'react';
 import css from './ShoppingCart.module.css';
 
 interface IDeleteAllItemComponent {
+    disableButton: boolean;
     onDeleteAllItem: () => void;
 }
 
-const DeleteAllItem: React.FC<IDeleteAllItemComponent> = ({ onDeleteAllItem }: IDeleteAllItemComponent) => {
+const DeleteAllItem: React.FC<IDeleteAllItemComponent> = ({
+    onDeleteAllItem,
+    disableButton,
+}: IDeleteAllItemComponent) => {
     return (
         <>
             <Button
+                disabled={disableButton}
                 className={css.allItems__button}
                 type="primary"
                 shape="round"

@@ -62,11 +62,13 @@ export const deleteItemCart = (itemId: number) => async (dispatch: AppDispatch):
     }
 };
 
-export const deleteAllItems = () => async (dispatch: AppDispatch): Promise<void> => {
+export const deleteAllItems = () => async (dispatch: AppDispatch): Promise<boolean> => {
     try {
         await deleteDeleteAllItems();
         dispatch(setDeleteAllItemsCart());
+        return true;
     } catch (err) {
         dispatch(setErrorShoppingCart(err.message));
+        return false;
     }
 };

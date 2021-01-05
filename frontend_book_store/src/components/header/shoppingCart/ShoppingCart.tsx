@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import {
@@ -17,6 +17,7 @@ import css from './ShoppingCart.module.css';
 const ShoppingCart: React.FC = () => {
     const dispatch: any = useDispatch();
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
+    const [disableButton, setDisableButton] = useState(false);
     const totalPrice = React.useMemo(() => {
         if (!data) return 0;
         return data.reduce((acc, curr) => {
@@ -47,19 +48,28 @@ const ShoppingCart: React.FC = () => {
     };
 
     const onDeleteAllItem = () => {
-        dispatch(deleteAllItems());
+        setDisableButton(true);
+        dispatch(deleteAllItems()).then((resp: boolean) => {
+            if (resp) {
+                setDisableButton(false);
+            } else {
+                setDisableButton(false);
+            }
+        });
     };
 
     const onBuyAllItem = () => {
+        setDisableButton(true);
         const transactionName = new Date();
         dispatch(sendTransactionItem(transactionName)).then((resp: boolean) => {
             if (resp) {
                 dispatch(deleteAllItems());
+                setDisableButton(false);
             } else {
                 console.log('error');
+                setDisableButton(false);
             }
         });
-        console.log('buyAll');
     };
 
     const shoppingCart = data?.map((a) => {
@@ -84,8 +94,12 @@ const ShoppingCart: React.FC = () => {
     const shoppingButton =
         data && data?.length > 0 ? (
             <div className={css.shoppingCart__button}>
-                <DeleteAllItem onDeleteAllItem={onDeleteAllItem} />
-                <BuyAllItemComponent totalPrice={totalPrice} onBuyAllItem={onBuyAllItem} />
+                <DeleteAllItem onDeleteAllItem={onDeleteAllItem} disableButton={disableButton} />
+                <BuyAllItemComponent
+                    totalPrice={totalPrice}
+                    onBuyAllItem={onBuyAllItem}
+                    disableButton={disableButton}
+                />
             </div>
         ) : (
             <div>your cart is empty</div>
