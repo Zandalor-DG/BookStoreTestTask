@@ -24,9 +24,9 @@ exports.signUp = async (req, res) => {
     //let data = _pick(user, ['id'], ['fullName'], ['email'], ['dob']); //пример как в созданной моделе уюрать пароль
 
     const token = await updateTokens(user.id);
-    res.status(201).json({ message: 'User created', token });
+    res.status(201).json({ error: false, message: 'User created', token });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
 
@@ -34,14 +34,20 @@ exports.signIn = async (req, res) => {
   try {
     const { email, password } = req.body;
     let avatarUrl = '';
-    if (!email) return res.status(400).json({ message: 'invalid login data' });
+    if (!email)
+      return res
+        .status(400)
+        .json({ error: true, message: 'invalid login data' });
 
     const user = await models.User.findOne({ where: { email: email } });
-    if (!user) return res.status(404).json({ message: 'user not found' });
+    if (!user)
+      return res.status(404).json({ error: true, message: 'user not found' });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
-      return res.status(400).json({ message: 'incorrect password' });
+      return res
+        .status(400)
+        .json({ error: true, message: 'incorrect password' });
 
     const token = await updateTokens(user.id);
     const roleUserAuth = await models.Role.findByPk(user.roleId);
@@ -56,9 +62,9 @@ exports.signIn = async (req, res) => {
       role: roleUserAuth.dataValues.name,
       avatar: !avatarUrl ? '' : avatarUrl.path_name,
     };
-    res.json({ userData, token });
+    res.json({ error: false, message: 'sign in user', userData, token });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: true, message: err.message });
   }
 };
 
@@ -67,7 +73,7 @@ exports.signInByToken = async (req, res) => {
     const payload = req.decoded;
     let avatarUrl = '';
     if (payload.type !== 'access') {
-      return res.status(400).json({ message: 'Invalid token' });
+      return res.status(400).json({ error: true, message: 'Invalid token' });
     }
     const userId = payload.userId;
     const tokenNew = await updateTokens(userId);
@@ -86,8 +92,8 @@ exports.signInByToken = async (req, res) => {
       ...user,
       avatar: !avatarUrl ? '' : avatarUrl.path_name,
     };
-    res.json({ userData, token: tokenNew });
+    res.json({ error: false, userData, token: tokenNew });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ error: true, message: err.message });
   }
 };

@@ -1,14 +1,12 @@
+import qs from 'query-string';
 import { AllFilteringOptions } from '../models/BookStore/allFilteringOptions';
 import { BookStoreData, CommentState } from '../models/BookStore/bookStoreData';
 import { PaginationParams } from '../models/BookStore/paginationParams';
-import qs from 'query-string';
 import axios from './axios';
 
 export interface propsAllBooks {
-    booksResponse: {
-        rows: BookStoreData[];
-        count: number;
-    };
+    rows: BookStoreData[];
+    count: number;
 }
 
 export interface PropsGetBook {
@@ -45,7 +43,7 @@ export const getAllBooks = async ({ pageSize, page, filterState }: PaginationPar
             return qs.stringify(params, { skipNull: true, arrayFormat: 'comma' });
         },
     });
-    const data: propsAllBooks = res.data;
+    const data: propsAllBooks = res.data.booksResponse;
     return data;
 };
 
@@ -53,7 +51,7 @@ export const getBook = async (id: string): Promise<PropsGetBook> => {
     const res = await axios.get('/book/getbook', {
         params: { id },
     });
-    const data: PropsGetBook = res.data;
+    const data: PropsGetBook = res.data.data;
     return data;
 };
 
@@ -71,6 +69,6 @@ export const postAddOrUpdateRate = async ({ rateBook, bookId }: IPostAddOrUpdate
 
 export const getAllFilteringOptions = async (): Promise<AllFilteringOptions> => {
     const res = await axios.get('/book/allfilteringoptions');
-    const data: AllFilteringOptions = res.data;
+    const data: AllFilteringOptions = res.data.allFilteringOptions;
     return data;
 };

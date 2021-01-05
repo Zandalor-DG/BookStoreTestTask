@@ -37,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
         as: 'CommentUser',
         onDelete: 'CASCADE',
       });
+      User.hasMany(models.Notification, {
+        foreignKey: 'userId',
+        as: 'NotificationUser',
+        onDelete: 'CASCADE',
+      });
     }
   }
   User.init(

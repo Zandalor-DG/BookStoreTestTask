@@ -125,13 +125,13 @@ exports.postAddItemCart = async (req, res) => {
 
     if (value) {
       cartId = await models.Cart.update(
-        { count: value },
         {
           where: {
             userId,
             bookId: itemId,
           },
-        }
+        },
+        { count: value }
       );
     }
     const id = !itemCart.id ? cartId.id : itemCart.id;

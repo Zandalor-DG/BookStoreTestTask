@@ -1,25 +1,23 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Comment extends Model {
+  class Notification extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Comment.belongsTo(models.User, {
-        as: 'CommentUser',
-        foreignKey: 'userId',
+      Notification.belongsTo(models.Comment, {
+        foreignKey: 'id', //сюда ложить айди коментария или то на что ссылка
       });
-      Comment.belongsTo(models.Book, {
-        as: 'CommentBook',
-        foreignKey: 'bookId',
+      Notification.belongsTo(models.User, {
+        foreignKey: 'userId',
       });
       // define association here
     }
   }
-  Comment.init(
+  Notification.init(
     {
       id: {
         allowNull: false,
@@ -27,16 +25,15 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      bookId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
-      comment: DataTypes.STRING,
-      replyId: DataTypes.INTEGER,
-      reply: DataTypes.STRING,
+      type: DataTypes.STRING,
+      payload: DataTypes.JSON,
+      read: DataTypes.BOOLEAN,
     },
     {
       sequelize,
-      modelName: 'Comment',
+      modelName: 'Notification',
     }
   );
-  return Comment;
+  return Notification;
 };

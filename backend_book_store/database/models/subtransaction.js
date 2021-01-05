@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       // });
       SubTransaction.belongsTo(models.Book, {
         foreignKey: 'bookId',
-        onDelete: 'CASCADE',
       });
       // define association here
     }

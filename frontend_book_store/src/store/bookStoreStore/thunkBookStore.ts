@@ -1,10 +1,10 @@
 import {
-    IPostAddComment,
     getAllBooks,
     getAllFilteringOptions,
     getBook,
-    postAddComment,
+    IPostAddComment,
     IPostAddOrUpdateRate,
+    postAddComment,
     postAddOrUpdateRate,
 } from '../../api/apiBookStore';
 import { PaginationParams } from '../../models/BookStore/paginationParams';
@@ -24,8 +24,8 @@ export const allBooks = ({ page, pageSize, filterState }: PaginationParams) => a
 ): Promise<void> => {
     try {
         const data = await getAllBooks({ page, pageSize, filterState });
-        dispatch(setBookStoreState(data.booksResponse.rows));
-        dispatch(setTotalPage(data.booksResponse.count));
+        dispatch(setBookStoreState(data.rows));
+        dispatch(setTotalPage(data.count));
     } catch (err) {
         dispatch(setErrorBookStore(err.message));
     }

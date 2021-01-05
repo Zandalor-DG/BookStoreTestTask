@@ -67,9 +67,13 @@ exports.allBooks = async (req, res) => {
             },
     });
 
-    res.status(201).json({ booksResponse });
+    res.status(201).json({
+      error: false,
+      message: 'all book of filtered book',
+      booksResponse,
+    });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
 
@@ -87,9 +91,13 @@ exports.allFilteringOptions = async (req, res) => {
       minPrice,
       maxPrice,
     };
-    res.status(201).json(allFilteringOptions);
+    res.status(201).json({
+      error: false,
+      message: 'all filtering options',
+      allFilteringOptions,
+    });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
 
@@ -160,7 +168,7 @@ exports.getBook = async (req, res) => {
         [Sequelize.fn('sum', Sequelize.col('rate')), 'total'],
       ],
     });
-    test = JSON.stringify(commentsBook);
+
     const data = {
       book,
       commentsBook,
@@ -168,9 +176,9 @@ exports.getBook = async (req, res) => {
       userRate: !userRate ? 'notRate' : userRate[0]?.rate,
     };
 
-    res.status(201).json(data);
+    res.status(201).json({ error: false, message: 'get your book', data });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
 
@@ -208,9 +216,11 @@ exports.commentBook = async (req, res) => {
       order: [['createdAt', 'ASC']],
     });
 
-    res.status(201).json({ message: 'Comment create', comment: newComment });
+    res
+      .status(201)
+      .json({ error: false, message: 'Comment create', comment: newComment });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
 
@@ -256,8 +266,8 @@ exports.rateBook = async (req, res) => {
       rateBookUpdated[0].dataValues.total /
       rateBookUpdated[0].dataValues.overall;
 
-    res.status(201).json({ message: 'rate created', rate });
+    res.status(201).json({ error: false, message: 'rate created', rate });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ error: true, message: err.message });
   }
 };
