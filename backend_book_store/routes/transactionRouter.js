@@ -1,7 +1,7 @@
 const express = require('express');
 const transactionController = require('../controllers/transactionController');
 const tokenChecker = require('../middleware/tokenChecker');
-const mailerSMTP = require('../middleware/nodemailer');
+const mailerSMTP = require('../middleware/mailerSMTP');
 
 const transactionRouter = express.Router();
 

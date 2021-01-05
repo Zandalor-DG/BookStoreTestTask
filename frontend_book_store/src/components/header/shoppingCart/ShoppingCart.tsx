@@ -17,14 +17,12 @@ import css from './ShoppingCart.module.css';
 const ShoppingCart: React.FC = () => {
     const dispatch: any = useDispatch();
     const data = useSelector((state: StateReduxType) => state.shoppingCardState.productInCart);
-    let totalPrice = 0;
-
-    // useEffect(() => {
-    //     dispatch(allItemsCart());
-    //     console.log('useEffect');
-    // }, []);
-
-    console.log('body');
+    const totalPrice = React.useMemo(() => {
+        if (!data) return 0;
+        return data.reduce((acc, curr) => {
+            return acc + curr.Book.totalPrice;
+        }, 0);
+    }, [data]);
 
     const onClickCounter = (value: string | number | undefined, itemId: number, count: number) => {
         switch (value) {
@@ -65,7 +63,7 @@ const ShoppingCart: React.FC = () => {
     };
 
     const shoppingCart = data?.map((a) => {
-        totalPrice += a.Book.totalPrice;
+        // totalPrice += a.Book.totalPrice;
         //setPriceAllItems(priceAllItems + a.Book.price);
         return (
             <React.Fragment key={a.id}>
@@ -77,7 +75,6 @@ const ShoppingCart: React.FC = () => {
                     onDeletePosition={onDeletePosition}
                     path_name={a.Book.File.path_name}
                     price={a.Book.price}
-                    totalPrice={a.Book.totalPrice}
                     count={a.count}
                 />
             </React.Fragment>

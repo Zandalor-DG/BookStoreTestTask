@@ -4,10 +4,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StateReduxType } from '../../../store/reducers';
 import { allTransactionItems } from '../../../store/transactionStore/thunkTransaction';
+import TransactionPageItem from './TransactionPageItem';
 
 const TransactionPage: React.FC = () => {
     const { Panel } = Collapse;
-    const totalPrice = 0;
     const dispatch = useDispatch();
     const transaction = useSelector((state: StateReduxType) => state.transactionState.transactions);
 
@@ -15,28 +15,15 @@ const TransactionPage: React.FC = () => {
         dispatch(allTransactionItems());
     }, []);
 
-    const panel = transaction?.map((a, i) => {
-        //totalPrice = a.TransactionItem.map((elem) => elem.total_price + totalPrice);
+    const panel = transaction?.map((a) => {
         return (
             <Panel header={a.transaction_name} key={a.id}>
-                <div>
-                    <h3>{a.TransactionItem.map((elem) => elem.Book.map((item) => item.name))}</h3>
-                    <h4>by {a.TransactionItem.map((elem) => elem.Book.map((item) => item.Author.name))}</h4>
-                    <p>price: {a.TransactionItem.map((elem) => elem.original_price)}</p>
-                    <p>how much: {a.TransactionItem.map((elem) => elem.count)}</p>
-                </div>
+                <TransactionPageItem transactionItem={a.TransactionItem} />
             </Panel>
         );
     });
 
-    return (
-        <Collapse accordion>
-            <Panel header="This is panel header 1" key="1">
-                {panel}
-            </Panel>
-            <span>Total price: {totalPrice}</span>
-        </Collapse>
-    );
+    return <Collapse accordion>{panel}</Collapse>;
 };
 
 export default TransactionPage;

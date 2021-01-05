@@ -42,4 +42,4 @@ const NavBar: React.FunctionComponent = () => {
     return <div className={css.bookstore__navBar}>{signOrProfilePage}</div>;
 };
 
-export default NavBar;
+export default React.memo(NavBar);

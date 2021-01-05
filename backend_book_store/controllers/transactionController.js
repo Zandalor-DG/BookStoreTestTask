@@ -46,7 +46,6 @@ exports.postSetTransaction = async (req, res, next) => {
     const { userId } = req.decoded;
     const { transactionName } = req.body;
     const t = await models.sequelize.transaction();
-    let totalAllPrice = 0;
     let transactionItem;
 
     if (!transactionName) {
@@ -124,7 +123,7 @@ exports.postSetTransaction = async (req, res, next) => {
       ],
     });
 
-    req.transaction = { transaction, totalAllPrice };
+    req.transaction = transaction;
     next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

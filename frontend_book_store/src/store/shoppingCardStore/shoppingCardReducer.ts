@@ -15,7 +15,18 @@ const ShoppingCardReducer = (state = shoppingCardInitialState, action: ActionSho
             const addItemCounter = state.productInCart ? state.productInCart : [];
             return {
                 ...state,
-                productInCart: addItemCounter.map((a) => (a.id !== action.id ? a : { ...a, count: a.count + 1 })),
+                productInCart: addItemCounter.map((a) =>
+                    a.id !== action.id
+                        ? a
+                        : {
+                              ...a,
+                              count: a.count + 1,
+                              Book: {
+                                  ...a.Book,
+                                  totalPrice: (a.count + 1) * a.Book.price,
+                              },
+                          },
+                ),
             };
         }
         case ActionTypeShoppingCard.RemoveItemCounter: {
@@ -23,7 +34,18 @@ const ShoppingCardReducer = (state = shoppingCardInitialState, action: ActionSho
             return {
                 ...state,
                 productInCart: [
-                    ...removeItemCounter.map((a) => (a.id !== action.id ? a : { ...a, count: a.count - 1 })),
+                    ...removeItemCounter.map((a) =>
+                        a.id !== action.id
+                            ? a
+                            : {
+                                  ...a,
+                                  count: a.count - 1,
+                                  Book: {
+                                      ...a.Book,
+                                      totalPrice: (a.count - 1) * a.Book.price,
+                                  },
+                              },
+                    ),
                 ],
             };
         }

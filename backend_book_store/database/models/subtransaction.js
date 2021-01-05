@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      SubTransaction.belongsTo(models.Transaction, {
-        foreignKey: 'transactionId',
-      });
-      SubTransaction.hasMany(models.Book, {
-        foreignKey: 'id',
+      // SubTransaction.belongsTo(models.Transaction, {
+      //   foreignKey: 'transactionId',
+      // });
+      SubTransaction.belongsTo(models.Book, {
+        foreignKey: 'bookId',
         onDelete: 'CASCADE',
       });
       // define association here

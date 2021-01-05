@@ -9,7 +9,6 @@ export interface ICartItem {
     name: string;
     author: string;
     price: number;
-    totalPrice: number;
     count: number;
     onClickCounter: (value: string | number | undefined, itemId: number, count: number) => void;
     onDeletePosition: (id: number) => void;
@@ -23,7 +22,6 @@ const CartItem: React.FC<ICartItem> = ({
     onDeletePosition,
     path_name,
     price,
-    totalPrice,
     count,
 }: ICartItem) => {
     const increment = count + 1;
