@@ -6,6 +6,7 @@ import { StateReduxType } from '../../../store/reducers';
 import { logOut } from '../../../store/userStore/actionCreatedUser';
 import AccountPage from '../account/AccountPage';
 import Sandbox from '../account/modal/Sandbox';
+import NotificationUser from '../notification/NotificationUser';
 import css from './NavBar.module.css';
 
 const NavBar: React.FunctionComponent = () => {
@@ -37,6 +38,8 @@ const NavBar: React.FunctionComponent = () => {
             <NavLink className={css.navLink} to="/cart">
                 <ShoppingOutlined style={{ fontSize: '30px' }} />
             </NavLink>
+
+            <NotificationUser />
         </>
     );
     return <div className={css.bookstore__navBar}>{signOrProfilePage}</div>;

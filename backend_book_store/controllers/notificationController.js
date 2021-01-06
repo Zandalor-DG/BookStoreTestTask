@@ -91,13 +91,13 @@ exports.AddOneItem = async (req, res) => {
   try {
     const { userId } = req.decoded;
     const { commentId, comment, bookId, reply, replyId } = req.body;
-    const { comment, newComment } = req.payload;
+    const newComment = req.payload;
 
     await models.Notification.create({
       id: commentId,
       userId,
       type: `reply to comments by ${reply}`,
-      payload: comment.comment,
+      payload: comment,
       read: false,
     });
 

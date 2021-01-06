@@ -1,0 +1,30 @@
+.shoppingCart__dropdown {
+    position: relative;
+    display: inline-block;
+    float: right;
+}
+
+.dropdown__content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    right: 0;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown__content .dropdown__link {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown__content .dropdown__link:hover {
+    background-color: #ddd;
+}
+
+.shoppingCart__dropdown .dropdown__content {
+    display: block;
+}

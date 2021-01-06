@@ -190,7 +190,7 @@ exports.commentBook = async (req, res, next) => {
       throw new Error('Not comment or bookId');
     }
 
-    const comment = await models.Comment.create({
+    await models.Comment.create({
       userId,
       comment,
       replyId: !replyId ? null : replyId,
@@ -216,7 +216,7 @@ exports.commentBook = async (req, res, next) => {
       order: [['createdAt', 'ASC']],
     });
 
-    req.payload = { newComment, comment };
+    req.payload = { newComment };
     next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
