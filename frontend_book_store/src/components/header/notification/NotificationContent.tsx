@@ -1,6 +1,6 @@
 import React from 'react';
 import { NotificationUser } from '../../../models/NotificationStore/notification';
-import notificCss from './Notification.module.css';
+import css from './Notification.module.css';
 
 interface INotificationContent {
     notifications: NotificationUser[] | null;
@@ -10,7 +10,7 @@ const NotificationContent: React.FC<INotificationContent> = ({ notifications }: 
     const content = notifications?.map((item) => {
         return (
             <React.Fragment key={item.id}>
-                <a className={notificCss.dropdown__link} href="#">
+                <a className={css.dropdown__link} href="#">
                     <h3>{item.type}</h3>
                     <p>{item.payload}</p>
                 </a>
@@ -20,7 +20,7 @@ const NotificationContent: React.FC<INotificationContent> = ({ notifications }: 
 
     return (
         <>
-            <a className={notificCss.dropdown__link} href="#">
+            <a className={css.dropdown__link} href="#">
                 Link 1
             </a>
             {content}

@@ -2,6 +2,7 @@ import qs from 'query-string';
 import { AllFilteringOptions } from '../models/BookStore/allFilteringOptions';
 import { BookStoreData, CommentState } from '../models/BookStore/bookStoreData';
 import { PaginationParams } from '../models/BookStore/paginationParams';
+import { NotificationUser } from '../models/NotificationStore/notification';
 import axios from './axios';
 
 export interface propsAllBooks {
@@ -14,6 +15,11 @@ export interface PropsGetBook {
     commentsBook: CommentState[];
     rateBook: number;
     userRate: number | 'notRate';
+}
+
+export interface ICommentAndNotification {
+    comments: CommentState[];
+    notification: NotificationUser | null;
 }
 
 export interface IPostAddComment {
@@ -55,9 +61,14 @@ export const getBook = async (id: string): Promise<PropsGetBook> => {
     return data;
 };
 
-export const postAddComment = async ({ comment, bookId, reply, replyId }: IPostAddComment): Promise<CommentState[]> => {
+export const postAddComment = async ({
+    comment,
+    bookId,
+    reply,
+    replyId,
+}: IPostAddComment): Promise<ICommentAndNotification> => {
     const res = await axios.post('/book/comment', { comment, bookId, reply, replyId });
-    const data: CommentState[] = res.data.comment;
+    const data: ICommentAndNotification = res.data.commentAndNotification;
     return data;
 };
 

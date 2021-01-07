@@ -8,6 +8,7 @@ import {
     postAddOrUpdateRate,
 } from '../../api/apiBookStore';
 import { PaginationParams } from '../../models/BookStore/paginationParams';
+import { NotificationUser } from '../../models/NotificationStore/notification';
 import { AppDispatch } from '../reducers';
 import {
     addComment,
@@ -18,6 +19,11 @@ import {
     setErrorBookStore,
     setTotalPage,
 } from './actionCreatedBookStore';
+
+export interface INewComment {
+    preparedness: boolean;
+    data: NotificationUser | null;
+}
 
 export const allBooks = ({ page, pageSize, filterState }: PaginationParams) => async (
     dispatch: AppDispatch,
@@ -42,12 +48,21 @@ export const bookInfo = (id: string) => async (dispatch: AppDispatch): Promise<v
 
 export const addNewComment = ({ comment, bookId, reply, replyId }: IPostAddComment) => async (
     dispatch: AppDispatch,
-): Promise<void> => {
+): Promise<INewComment> => {
     try {
-        const commentData = await postAddComment({ comment, bookId, reply, replyId });
-        dispatch(addComment(commentData));
+        const data = await postAddComment({ comment, bookId, reply, replyId });
+        dispatch(addComment(data.comments));
+        const notification: INewComment = {
+            preparedness: true,
+            data: data.notification,
+        };
+        return notification;
     } catch (err) {
         dispatch(setErrorBookStore(err.message));
+        return {
+            data: null,
+            preparedness: false,
+        };
     }
 };
 

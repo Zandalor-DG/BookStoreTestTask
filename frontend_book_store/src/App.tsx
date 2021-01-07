@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import { baseURL } from './api/axios';
 import './App.css';
 import Body from './components/body/Body';
 import Book from './components/body/book/Book';
@@ -13,10 +14,11 @@ import HeaderContent from './components/header/HeaderContent';
 import NavBarShoppingCart from './components/header/navBarShoppingCart/NavBarShoppingCart';
 import ProfilePage from './components/header/profilePage/ProfilePage';
 import { NotificationUser } from './models/NotificationStore/notification';
+import { AddOneNotification } from './store/notificationStore/actionCreatedNotification';
 import { StateReduxType } from './store/reducers';
 import { loginUserByToken } from './store/userStore/thunkUser';
 
-export const socket = io('http://localhost:4000/');
+export const socket = io(`${baseURL}/`);
 
 const { Header, Footer } = Layout;
 
@@ -24,7 +26,7 @@ const App: React.FC = () => {
     const isInitialize = useSelector((state: StateReduxType) => state.userState.isInitialize);
     const dispatch = useDispatch();
     const user = useSelector((state: StateReduxType) => state.userState.user);
-    let userId;
+    const userId = user?.id;
 
     useEffect(() => {
         if (isInitialize) {
@@ -36,12 +38,12 @@ const App: React.FC = () => {
 
     useEffect(() => {
         socket.on('connect', () => {
-            socket.emit('connection', (userId = user?.id));
+            socket.emit('connection', userId);
         });
-        socket.on('notifications', (notification: NotificationUser) => {
-            //dispatch(addNotification);
+        socket.on('notifications', (data: NotificationUser) => {
+            dispatch(AddOneNotification(data));
         });
-    }, [user?.email]);
+    }, [userId]);
 
     if (!isInitialize) {
         return <Preloader />;

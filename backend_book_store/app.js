@@ -43,9 +43,9 @@ io.on('connect', (socket) => {
   // обрабатываем событие, отправленное с помощью socket.emit ()
   socket.on('connection', (userId) => {
     clients[userId] = socket.id;
-
+    const test = clients[userId];
     console.log(
-      `-------------------${userId}, ------------------- ${socket.id}, ---------------------------- `
+      `-------------------${userId}, ------------------- ${test}, ---------------------------- `
     );
   });
 

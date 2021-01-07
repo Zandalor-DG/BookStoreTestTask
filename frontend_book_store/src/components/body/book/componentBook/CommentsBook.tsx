@@ -6,8 +6,9 @@ import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { baseURL } from '../../../../api/axios';
+import { socket } from '../../../../App';
 import { CommentState } from '../../../../models/BookStore/bookStoreData';
-import { addNewComment } from '../../../../store/bookStoreStore/thunkBookStore';
+import { addNewComment, INewComment } from '../../../../store/bookStoreStore/thunkBookStore';
 import { StateReduxType } from '../../../../store/reducers';
 import CommentList from './CommentList';
 import CommentWrapper from './CommentWrapper';
@@ -32,7 +33,7 @@ export interface IReply {
 
 const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBook) => {
     const user = useSelector((state: StateReduxType) => state.userState.user);
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
     const params: {
         id: string;
     } = useParams();
@@ -66,10 +67,19 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         setSubmitting(true);
         dispatch(
             addNewComment({ comment: value, reply: replyForm?.reply, bookId: params.id, replyId: replyForm?.replyId }),
-        );
-        setSubmitting(false);
-        setValue('');
-        setReply(undefined);
+        ).then((res: INewComment) => {
+            if (res.preparedness) {
+                socket.emit('notificationUser', res.data);
+                //send notification to server
+                setSubmitting(false);
+                setValue('');
+                setReply(undefined);
+            } else {
+                setSubmitting(false);
+                setValue('');
+                setReply(undefined);
+            }
+        });
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

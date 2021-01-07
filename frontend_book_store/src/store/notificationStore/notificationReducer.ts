@@ -9,6 +9,12 @@ const notificationReducer = (state = notificationsInitialState, action: ActionNo
                 ...state,
                 notifications: [...action.notifications],
             };
+        case ActionTypeNotification.AddOneNotification:
+            const addOneItem = state.notifications ? [...state.notifications] : [];
+            return {
+                ...state,
+                notifications: [...addOneItem, { ...action.notification }],
+            };
         case ActionTypeNotification.ReadNotification:
             const readItem = state.notifications ? [...state.notifications] : [];
             return {

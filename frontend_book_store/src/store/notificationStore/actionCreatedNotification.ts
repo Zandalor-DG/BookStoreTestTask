@@ -1,6 +1,7 @@
 import { NotificationUser } from '../../models/NotificationStore/notification';
 import {
     ActionAddAllNotifications,
+    ActionAddOneNotification,
     ActionDeleteAllNotifications,
     ActionDeleteNotification,
     ActionReadAllNotifications,
@@ -12,6 +13,11 @@ import {
 export const addAllNotifications = (notifications: NotificationUser[]): ActionAddAllNotifications => ({
     type: ActionTypeNotification.AddAllNotifications,
     notifications,
+});
+
+export const AddOneNotification = (notification: NotificationUser): ActionAddOneNotification => ({
+    type: ActionTypeNotification.AddOneNotification,
+    notification,
 });
 
 export const readNotification = (id: number): ActionReadNotification => ({

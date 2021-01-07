@@ -2,6 +2,7 @@ import { NotificationUser } from '../../models/NotificationStore/notification';
 
 export enum ActionTypeNotification {
     AddAllNotifications = 'AddAllNotifications',
+    AddOneNotification = 'AddOneNotification',
     ReadNotification = 'ReadNotification',
     DeleteNotification = 'DeleteNotification',
     DeleteAllNotifications = 'DeleteAllNotifications',
@@ -12,6 +13,11 @@ export enum ActionTypeNotification {
 export type ActionAddAllNotifications = {
     type: ActionTypeNotification.AddAllNotifications;
     notifications: NotificationUser[];
+};
+
+export type ActionAddOneNotification = {
+    type: ActionTypeNotification.AddOneNotification;
+    notification: NotificationUser;
 };
 
 export type ActionReadNotification = {
@@ -39,6 +45,7 @@ export type ActionSetErrorNotification = {
 
 export type ActionNotification =
     | ActionAddAllNotifications
+    | ActionAddOneNotification
     | ActionReadNotification
     | ActionDeleteNotification
     | ActionDeleteAllNotifications
