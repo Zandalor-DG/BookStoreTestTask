@@ -56,7 +56,7 @@ exports.deleteOneItem = async (req, res) => {
   }
 };
 
-exports.UpdateOneItem = async (req, res) => {
+exports.updateOneItem = async (req, res) => {
   try {
     const { userId } = req.decoded;
     const { id } = req.body;
@@ -87,12 +87,12 @@ exports.UpdateOneItem = async (req, res) => {
   }
 };
 
-exports.AddOneItem = async (req, res) => {
+exports.addOneItem = async (req, res) => {
   try {
     const { commentId, comment, bookId, reply, replyId } = req.body;
-    const newComment = req.payload;
+    const comments = req.payload;
 
-    await models.Notification.create({
+    const notification = await models.Notification.create({
       id: commentId,
       userId: replyId,
       type: `reply to comments by ${reply}`,
@@ -100,11 +100,56 @@ exports.AddOneItem = async (req, res) => {
       read: false,
     });
 
+    const commentAndNotification = {
+      comments,
+      notification,
+      isNotification: true,
+    };
+
     res.status(201).json({
       error: false,
       message: 'create notification',
-      newComment,
+      commentAndNotification,
     });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};
+
+exports.deleteAllItems = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+
+    await models.Notification.destroy({
+      where: {
+        userId,
+      },
+    });
+
+    res
+      .status(200)
+      .json({ error: false, message: 'All item delete to notifications' });
+  } catch (err) {
+    res.status(400).json({ error: true, message: err.message });
+  }
+};
+
+exports.updateAllItems = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+
+    await models.Notification.update(
+      {
+        where: {
+          userId,
+        },
+      },
+      {
+        read: true,
+      }
+    );
+
+    res.status(200).json({ error: false, message: 'All item update to read' });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

@@ -198,7 +198,7 @@ exports.commentBook = async (req, res, next) => {
       bookId,
     });
 
-    const newComment = await models.Comment.findAll({
+    const comments = await models.Comment.findAll({
       where: { bookId: bookId },
       include: [
         {
@@ -216,7 +216,21 @@ exports.commentBook = async (req, res, next) => {
       order: [['createdAt', 'ASC']],
     });
 
-    req.payload = { newComment };
+    if (!reply && !replyId) {
+      const commentAndNotification = {
+        comments,
+        isNotification: false,
+        notification: null,
+      };
+
+      res.status(200).json({
+        error: false,
+        message: 'not reply user',
+        commentAndNotification,
+      });
+    }
+
+    req.payload = comments;
     next();
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

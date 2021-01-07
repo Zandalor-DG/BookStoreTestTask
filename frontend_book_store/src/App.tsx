@@ -37,8 +37,8 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        socket.on('connect', () => {
-            socket.emit('connection', userId);
+        socket.on('connection', () => {
+            socket.emit('connect', userId);
         });
         socket.on('notifications', (data: NotificationUser) => {
             dispatch(AddOneNotification(data));

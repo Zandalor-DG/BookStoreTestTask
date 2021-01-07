@@ -18,6 +18,7 @@ export interface PropsGetBook {
 }
 
 export interface ICommentAndNotification {
+    isNotification: boolean;
     comments: CommentState[];
     notification: NotificationUser | null;
 }

@@ -37,19 +37,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // });
 
-io.on('connect', (socket) => {
-  //socket.emit('greetings', 'Hey!', { ms: 'jane' }, Buffer.from([4, 3, 3, 1]));
-
-  // обрабатываем событие, отправленное с помощью socket.emit ()
-  socket.on('connection', (userId) => {
+io.on('connection', (socket) => {
+  socket.on('connect', (userId) => {
     clients[userId] = socket.id;
-    const test = clients[userId];
-    console.log(
-      `-------------------${userId}, ------------------- ${test}, ---------------------------- `
-    );
   });
 
-  //socket.emit('notification', getAllNotifications());
+  socket.on('notificationUser', (data) => {
+    const sid = clients[data.userId];
+    socket.socket[sid].emit('notifications', data);
+  });
 
   socket.on(`disconnect`, () => {
     console.log(`Client with id ${socket.id} disconnected`);

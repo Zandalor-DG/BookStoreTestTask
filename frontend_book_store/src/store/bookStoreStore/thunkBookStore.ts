@@ -21,7 +21,7 @@ import {
 } from './actionCreatedBookStore';
 
 export interface INewComment {
-    preparedness: boolean;
+    isNotification: boolean;
     data: NotificationUser | null;
 }
 
@@ -53,7 +53,7 @@ export const addNewComment = ({ comment, bookId, reply, replyId }: IPostAddComme
         const data = await postAddComment({ comment, bookId, reply, replyId });
         dispatch(addComment(data.comments));
         const notification: INewComment = {
-            preparedness: true,
+            isNotification: data.isNotification,
             data: data.notification,
         };
         return notification;
@@ -61,7 +61,7 @@ export const addNewComment = ({ comment, bookId, reply, replyId }: IPostAddComme
         dispatch(setErrorBookStore(err.message));
         return {
             data: null,
-            preparedness: false,
+            isNotification: false,
         };
     }
 };

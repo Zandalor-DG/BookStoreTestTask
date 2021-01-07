@@ -68,7 +68,7 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         dispatch(
             addNewComment({ comment: value, reply: replyForm?.reply, bookId: params.id, replyId: replyForm?.replyId }),
         ).then((res: INewComment) => {
-            if (res.preparedness) {
+            if (res.isNotification) {
                 socket.emit('notificationUser', res.data);
                 //send notification to server
                 setSubmitting(false);
