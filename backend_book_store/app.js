@@ -8,6 +8,7 @@ const cors = require('cors');
 const multer = require('multer');
 const multerUpload = require('./middleware/multerUpload');
 const transactionRouter = require('./routes/transactionRouter');
+const notificationRouter = require('./routes/notificationsRouter');
 
 const app = express();
 const http = require('http');
@@ -27,26 +28,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// io.on(`connection`, (socket) => {
-//   console.log(`Client with id ${socket.id} connected`);
-//   clients.push(socket.id);
-
-//   socket.emit(`message`, `I'm server`);
-
-//   socket.on(`message`, (message) => console.log(`Message: `, message));
-
-// });
-
 io.on('connection', (socket) => {
   console.log(`start socket >>`, clients);
   socket.on('authorizedUser', (userId) => {
-    console.log(`authorized user>>>`, userId);
+    console.log(`////////////////////////////authorized user>>>`, userId);
     clients[userId] = socket.id;
   });
 
   socket.on('notificationUser', (data) => {
     const sid = clients[data.userId];
     io.to(sid).emit('notifications', data);
+    console.log(`--------------------${sid}-------------------------`);
     //socket.socket[sid].emit('notifications', data);
   });
 
@@ -68,5 +60,6 @@ app.use('/user', userRouter);
 app.use('/book', bookStoreRouter);
 app.use('/shoppingcart', shoppingCartRouter);
 app.use('/transaction', transactionRouter);
+app.use('/notification', notificationRouter);
 
 server.listen(4000, () => console.log('server started'));

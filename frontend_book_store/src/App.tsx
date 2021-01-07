@@ -38,11 +38,11 @@ const App: React.FC = () => {
 
     useEffect(() => {
         if (!userId) return;
-        console.log(userId);
-
         socket.emit('authorizedUser', userId);
 
         socket.on('notifications', (data: NotificationUser) => {
+            console.log(`listen notifications`);
+            console.log(`${data.type}`);
             dispatch(AddOneNotification(data));
         });
     }, [userId]);

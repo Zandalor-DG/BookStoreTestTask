@@ -65,7 +65,7 @@ exports.updateOneItem = async (req, res) => {
       return new Error('no notification Id to update item');
     }
 
-    const item = await models.Notification.update(
+    await models.Notification.update(
       {
         where: {
           userId,

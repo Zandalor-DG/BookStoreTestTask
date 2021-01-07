@@ -1,3 +1,4 @@
+import { getAllNotifications } from '../../api/apiNotification';
 import { getAllItemsCart } from '../../api/apiShoppingCard';
 import {
     getLoginByToken,
@@ -12,6 +13,7 @@ import { InputsRegister } from '../../components/header/account/RegisterAccount'
 import { onChangePassword } from '../../components/header/profilePage/ChangePassword';
 import { UserData } from '../../models/User/userData';
 import { userRole } from '../../models/User/userRoleEnum';
+import { addAllNotifications } from '../notificationStore/actionCreatedNotification';
 import { AppDispatch } from '../reducers';
 import { setAddToCart } from '../shoppingCardStore/actionCreatedShoppingCard';
 import {
@@ -51,6 +53,10 @@ export const registerUser = ({ fullName, email, password, dob, roleId }: InputsR
         await postRegisterUser({ fullName, email, password, dob, roleId });
         const user = await getLoginByToken();
         dispatch(setAuthorizedUser(user));
+        const data = await getAllItemsCart();
+        dispatch(setAddToCart(data));
+        const notifications = await getAllNotifications();
+        dispatch(addAllNotifications(notifications));
         return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));
@@ -75,6 +81,8 @@ export const loginUserByToken = () => async (dispatch: AppDispatch): Promise<voi
         dispatch(setInitialUser(user));
         const data = await getAllItemsCart();
         dispatch(setAddToCart(data));
+        const notifications = await getAllNotifications();
+        dispatch(addAllNotifications(notifications));
     } catch (err) {
         dispatch(setUserInitError(err.message));
     }

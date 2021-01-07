@@ -38,7 +38,7 @@ export const readAllNotifications = (): ActionReadAllNotifications => ({
     type: ActionTypeNotification.ReadAllNotifications,
 });
 
-export const serErrorNotification = (error: string): ActionSetErrorNotification => ({
+export const setErrorNotification = (error: string): ActionSetErrorNotification => ({
     type: ActionTypeNotification.SetErrorNotification,
     error,
 });
