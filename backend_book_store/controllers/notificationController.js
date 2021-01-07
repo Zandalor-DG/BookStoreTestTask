@@ -87,35 +87,6 @@ exports.updateOneItem = async (req, res) => {
   }
 };
 
-exports.addOneItem = async (req, res) => {
-  try {
-    const { commentId, comment, bookId, reply, replyId } = req.body;
-    const comments = req.payload;
-
-    const notification = await models.Notification.create({
-      id: commentId,
-      userId: replyId,
-      type: `reply to comments by ${reply}`,
-      payload: comment,
-      read: false,
-    });
-
-    const commentAndNotification = {
-      comments,
-      notification,
-      isNotification: true,
-    };
-
-    res.status(201).json({
-      error: false,
-      message: 'create notification',
-      commentAndNotification,
-    });
-  } catch (err) {
-    res.status(400).json({ error: true, message: err.message });
-  }
-};
-
 exports.deleteAllItems = async (req, res) => {
   try {
     const { userId } = req.decoded;

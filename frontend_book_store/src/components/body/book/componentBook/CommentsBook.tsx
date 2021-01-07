@@ -70,15 +70,10 @@ const CommentsBook: React.FC<PropsCommentsBook> = ({ comments }: PropsCommentsBo
         ).then((res: INewComment) => {
             if (res.isNotification) {
                 socket.emit('notificationUser', res.data);
-                //send notification to server
-                setSubmitting(false);
-                setValue('');
-                setReply(undefined);
-            } else {
-                setSubmitting(false);
-                setValue('');
-                setReply(undefined);
             }
+            setSubmitting(false);
+            setValue('');
+            setReply(undefined);
         });
     };
 

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Notification.belongsTo(models.Comment, {
-        foreignKey: 'id', //сюда ложить айди коментария или то на что ссылка
+        foreignKey: 'commentId', //сюда ложить айди коментария или то на что ссылка
       });
       Notification.belongsTo(models.User, {
         foreignKey: 'userId',
@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      commentId: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
       type: DataTypes.STRING,
       payload: DataTypes.JSON,

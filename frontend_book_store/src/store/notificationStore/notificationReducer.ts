@@ -34,6 +34,7 @@ const notificationReducer = (state = notificationsInitialState, action: ActionNo
                 notifications: readAllNotifications.map((item) => {
                     return {
                         id: item.id,
+                        commentId: item.commentId,
                         payload: item.payload,
                         type: item.type,
                         userId: item.userId,

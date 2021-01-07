@@ -1,5 +1,6 @@
 const models = require('../database/models');
 const { Op, Sequelize } = require('sequelize');
+const addNotification = require('../middleware/addNotification');
 
 const paginate = (page, pageSize) => {
   const offset = (page - 1) * pageSize;
@@ -169,6 +170,8 @@ exports.getBook = async (req, res) => {
       ],
     });
 
+    console.log(commentsBook.id);
+
     const data = {
       book,
       commentsBook,
@@ -190,13 +193,15 @@ exports.commentBook = async (req, res, next) => {
       throw new Error('Not comment or bookId');
     }
 
-    await models.Comment.create({
+    const commentId = await models.Comment.create({
       userId,
       comment,
       replyId: !replyId ? null : replyId,
       reply: !reply ? null : reply,
       bookId,
     });
+
+    req.payload = commentId;
 
     const comments = await models.Comment.findAll({
       where: { bookId: bookId },
@@ -216,22 +221,24 @@ exports.commentBook = async (req, res, next) => {
       order: [['createdAt', 'ASC']],
     });
 
-    if (!reply && !replyId) {
-      const commentAndNotification = {
-        comments,
-        isNotification: false,
-        notification: null,
-      };
+    let commentAndNotification = {
+      comments,
+      isNotification: false,
+      notification: null,
+    };
 
-      res.status(200).json({
-        error: false,
-        message: 'not reply user',
-        commentAndNotification,
-      });
+    if (reply && replyId) {
+      const data = await addNotification(req);
+      commentAndNotification = {
+        comments: commentAndNotification.comments,
+        isNotification: data.isNotification,
+        notification: data.notification,
+      };
     }
 
-    req.payload = comments;
-    next();
+    res
+      .status(200)
+      .json({ erro: false, messge: 'create comment', commentAndNotification });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }

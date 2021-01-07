@@ -38,13 +38,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // });
 
 io.on('connection', (socket) => {
-  socket.on('connect', (userId) => {
+  console.log(`start socket >>`, clients);
+  socket.on('authorizedUser', (userId) => {
+    console.log(`authorized user>>>`, userId);
     clients[userId] = socket.id;
   });
 
   socket.on('notificationUser', (data) => {
     const sid = clients[data.userId];
-    socket.socket[sid].emit('notifications', data);
+    io.to(sid).emit('notifications', data);
+    //socket.socket[sid].emit('notifications', data);
   });
 
   socket.on(`disconnect`, () => {

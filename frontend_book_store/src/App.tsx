@@ -37,9 +37,11 @@ const App: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        socket.on('connection', () => {
-            socket.emit('connect', userId);
-        });
+        if (!userId) return;
+        console.log(userId);
+
+        socket.emit('authorizedUser', userId);
+
         socket.on('notifications', (data: NotificationUser) => {
             dispatch(AddOneNotification(data));
         });
