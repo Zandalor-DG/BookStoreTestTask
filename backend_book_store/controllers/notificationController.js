@@ -51,7 +51,7 @@ exports.deleteOneItem = async (req, res) => {
     res.status(201).json({
       error: false,
       message: 'delete one notification',
-      id: id,
+      id: +id,
     });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });

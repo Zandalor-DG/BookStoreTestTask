@@ -1,30 +1,21 @@
 import { CloseOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { NotificationUser } from '../../../models/NotificationStore/notification';
-import { setOpenNotification } from '../../../store/notificationStore/actionCreatedNotification';
 import css from './Notification.module.css';
 
 interface INotificationContent {
     notifications: NotificationUser[] | null;
     onDeleteNotification: (notificationId: number) => void;
     onReadNotification: (notificationId: number) => void;
+    onOpenNotification: (commentId: number, bookId: number, notificationId: number) => void;
 }
 
 const NotificationText: React.FC<INotificationContent> = ({
     notifications,
     onDeleteNotification,
     onReadNotification,
+    onOpenNotification,
 }: INotificationContent) => {
-    const history = useHistory();
-    const dispatch = useDispatch();
-
-    const onOpenNotification = (commentId: number, bookId: number) => {
-        dispatch(setOpenNotification(commentId));
-        history.push(`/book/${bookId}`, { commentId });
-    };
-
     const content = notifications?.map((item) => {
         return (
             <React.Fragment key={item.id}>
@@ -37,7 +28,7 @@ const NotificationText: React.FC<INotificationContent> = ({
                     </span>
                     <div className={css.link__wrapper}>
                         <span
-                            onClick={() => onOpenNotification(item.commentId, item.Comment.CommentBook.id)}
+                            onClick={() => onOpenNotification(item.commentId, item.Comment.CommentBook.id, item.id)}
                             className={css.wrapper__text}
                         >
                             {item.payload}

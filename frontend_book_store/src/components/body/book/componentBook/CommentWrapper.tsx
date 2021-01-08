@@ -16,6 +16,7 @@ const CommentWrapper: React.FC<React.PropsWithChildren<ICommentWrapper>> = (
     const dispatch = useDispatch();
 
     const ref = useRef<HTMLParagraphElement>(null);
+
     useEffect(() => {
         if (props.id === props.replyId) {
             ref.current?.scrollIntoView({
@@ -29,7 +30,10 @@ const CommentWrapper: React.FC<React.PropsWithChildren<ICommentWrapper>> = (
                 behavior: 'smooth',
                 block: 'center',
             });
-            ref.current.style.backgroundColor = 'tomato';
+            ref.current.style.border = '1px inset tomato';
+            const val = ref.current;
+            setTimeout(() => (val.style.border = ''), 3000);
+
             dispatch(setNullOpenNotification());
         }
     }, [props.replyId, props.id, commentId]);
