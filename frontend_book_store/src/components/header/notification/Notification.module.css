@@ -1,14 +1,15 @@
 .shoppingCart__dropdown {
     position: relative;
-    display: inline-block;
-    float: right;
+    display: flex;
 }
 
 .dropdown__content {
     display: none;
     position: absolute;
+    top: 40px;
+
     background-color: #f1f1f1;
-    min-width: 160px;
+    min-width: 300px;
     right: 0;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -17,8 +18,14 @@
 .dropdown__content .dropdown__link {
     color: black;
     padding: 12px 16px;
+    font-size: 14px;
     text-decoration: none;
-    display: block;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    line-height: normal;
+    width: 100%;
 }
 
 .dropdown__content .dropdown__link:hover {
@@ -27,4 +34,63 @@
 
 .shoppingCart__dropdown .dropdown__content {
     display: block;
+}
+.dropdown__counterOfNotification {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    border-radius: 100%;
+    border: 1px solid tomato;
+    background-color: tomato;
+    color: white;
+    width: 20px;
+    height: 20px;
+}
+.dropDownText__wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.dropdown__title {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    height: 40px;
+    text-align: center;
+    width: 100%;
+}
+.link__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    line-height: normal;
+}
+.title__svg {
+    cursor: pointer;
+    margin-left: 15px;
+}
+.link__wrapper {
+    display: flex;
+    width: 100%;
+    flex-flow: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.wrapper__text {
+    width: 90%;
+    cursor: pointer;
+}
+.wrapper__button {
+    display: flex;
+    width: 10%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    cursor: pointer;
 }

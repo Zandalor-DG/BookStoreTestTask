@@ -7,7 +7,7 @@ const addNotification = async (req) => {
   const notification = await models.Notification.create({
     commentId: id,
     userId: replyId,
-    type: `reply to comments by ${reply}`,
+    type: `reply your comments by ${reply}`,
     payload: comment,
     read: false,
   });

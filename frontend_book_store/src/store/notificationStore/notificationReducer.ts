@@ -25,7 +25,7 @@ const notificationReducer = (state = notificationsInitialState, action: ActionNo
             const deleteItem = state.notifications ? [...state.notifications] : [];
             return {
                 ...state,
-                notifications: deleteItem.filter((item) => item.id !== action.id),
+                notifications: deleteItem.filter((item) => item.id === action.id),
             };
         case ActionTypeNotification.ReadAllNotifications:
             const readAllNotifications = state.notifications ? [...state.notifications] : [];

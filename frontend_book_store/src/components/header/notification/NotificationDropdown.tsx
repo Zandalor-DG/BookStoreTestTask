@@ -1,16 +1,31 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { NotificationUser } from '../../../models/NotificationStore/notification';
+import { deleteNotificationThunk, readNotificationThunk } from '../../../store/notificationStore/thunkNotification';
 import css from './Notification.module.css';
-import NotificationContent from './NotificationContent';
+import NotificationText from './NotificationText';
 
 interface INotificationDropDown {
     notifications: NotificationUser[] | null;
 }
 
 const NotificationDropdown: React.FC<INotificationDropDown> = ({ notifications }: INotificationDropDown) => {
+    const dispatch = useDispatch();
+
+    const onDeleteNotification = (notificationId: number) => {
+        dispatch(deleteNotificationThunk(notificationId));
+    };
+    const onReadNotification = (notificationId: number) => {
+        dispatch(readNotificationThunk(notificationId));
+    };
+
     return (
         <div className={css.dropdown__content}>
-            <NotificationContent notifications={notifications} />
+            <NotificationText
+                notifications={notifications}
+                onDeleteNotification={onDeleteNotification}
+                onReadNotification={onReadNotification}
+            />
         </div>
     );
 };

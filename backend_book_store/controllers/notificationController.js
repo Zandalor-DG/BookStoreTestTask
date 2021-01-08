@@ -58,24 +58,21 @@ exports.deleteOneItem = async (req, res) => {
 
 exports.updateOneItem = async (req, res) => {
   try {
-    const { userId } = req.decoded;
     const { id } = req.body;
+    const { userId } = req.decoded;
 
     if (!id) {
       return new Error('no notification Id to update item');
     }
 
-    await models.Notification.update(
-      {
-        where: {
-          userId,
-          id,
-        },
+    const notification = await models.Notification.findOne({
+      where: {
+        id,
       },
-      {
-        read: true,
-      }
-    );
+    });
+
+    notification.read = true;
+    await notification.save({ fields: ['read'] });
 
     res.status(200).json({
       error: false,

@@ -1,12 +1,6 @@
 const models = require('../database/models');
 const bcrypt = require('bcryptjs');
 
-// const checkValue = (valueCheck, method) => {
-//   if (!valueCheck) {
-//     throw new Error(`${method} is not presented`);
-//   }
-// };
-
 exports.putUser = async (req, res) => {
   try {
     const { oldPassword, newPassword, user } = req.body;
@@ -61,15 +55,6 @@ exports.uploadAvatar = async (req, res) => {
       path_name: path,
     });
 
-    /*.then(function(user) {
-    // you can now access the newly created user
-    console.log('success', user.toJSON());
-})
-.catch(function(err) {
-    // print the error details
-    console.log(err, request.body.email);
-}); */
-
     await models.User.update(
       {
         avatarId: avatar.id,
@@ -82,34 +67,3 @@ exports.uploadAvatar = async (req, res) => {
     res.status(400).json({ error: true, message: err.message }).end();
   }
 };
-
-// exports.deleteUser = async (req, res) => {
-//   try {
-//     checkValue(req.body, res, 'deleteUser');
-//     const { id } = req.body;
-//     if (!id) {
-//       throw new Error('Id is not presented');
-//     }
-
-//     models.User.destroy({
-//       where: {
-//         id: id,
-//       },
-//     });
-//     res.status(200).json({ error: false, message: 'User deleted' });
-//   } catch (err) {
-//     res.status(400).json({ error: true, message: err.message });
-//   }
-// };
-
-// exports.getAllUsers = async (req, res) => {
-//   try {
-//     const allUsers = await models.User.findAll({
-//       raw: true,
-//       attributes: { exclude: ['password'] },
-//     });
-//     res.status(200).json({ message: 'All users', allUsers });
-//   } catch (err) {
-//     res.status(500).json({ error: true, message: err.message });
-//   }
-// };
