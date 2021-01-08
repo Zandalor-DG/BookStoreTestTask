@@ -14,7 +14,7 @@ import HeaderContent from './components/header/HeaderContent';
 import NavBarShoppingCart from './components/header/navBarShoppingCart/NavBarShoppingCart';
 import ProfilePage from './components/header/profilePage/ProfilePage';
 import { NotificationUser } from './models/NotificationStore/notification';
-import { AddOneNotification } from './store/notificationStore/actionCreatedNotification';
+import { addOneNotification } from './store/notificationStore/actionCreatedNotification';
 import { StateReduxType } from './store/reducers';
 import { loginUserByToken } from './store/userStore/thunkUser';
 
@@ -43,7 +43,7 @@ const App: React.FC = () => {
         socket.on('notifications', (data: NotificationUser) => {
             console.log(`listen notifications`);
             console.log(`${data.type}`);
-            dispatch(AddOneNotification(data));
+            dispatch(addOneNotification(data));
         });
     }, [userId]);
 

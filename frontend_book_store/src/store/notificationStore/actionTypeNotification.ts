@@ -7,12 +7,23 @@ export enum ActionTypeNotification {
     DeleteNotification = 'DeleteNotification',
     DeleteAllNotifications = 'DeleteAllNotifications',
     ReadAllNotifications = 'ReadAllNotifications',
+    SetOpenNotification = 'SetOpenNotification',
+    SetNullOpenNotification = 'SetNullOpenNotification',
     SetErrorNotification = 'SetErrorNotification',
 }
 
 export type ActionAddAllNotifications = {
     type: ActionTypeNotification.AddAllNotifications;
     notifications: NotificationUser[];
+};
+
+export type ActionSetOpenNotification = {
+    type: ActionTypeNotification.SetOpenNotification;
+    openNotification: number;
+};
+
+export type ActionSetNullOpenNotification = {
+    type: ActionTypeNotification.SetNullOpenNotification;
 };
 
 export type ActionAddOneNotification = {
@@ -46,6 +57,8 @@ export type ActionSetErrorNotification = {
 export type ActionNotification =
     | ActionAddAllNotifications
     | ActionAddOneNotification
+    | ActionSetOpenNotification
+    | ActionSetNullOpenNotification
     | ActionReadNotification
     | ActionDeleteNotification
     | ActionDeleteAllNotifications

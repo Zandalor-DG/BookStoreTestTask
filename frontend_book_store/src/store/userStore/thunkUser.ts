@@ -39,6 +39,8 @@ export const loginUser = ({ email, password }: InputsLogin) => async (dispatch: 
         dispatch(setAuthorizedUser(user));
         const data = await getAllItemsCart();
         dispatch(setAddToCart(data));
+        const notifications = await getAllNotifications();
+        dispatch(addAllNotifications(notifications));
         return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));
@@ -53,10 +55,7 @@ export const registerUser = ({ fullName, email, password, dob, roleId }: InputsR
         await postRegisterUser({ fullName, email, password, dob, roleId });
         const user = await getLoginByToken();
         dispatch(setAuthorizedUser(user));
-        const data = await getAllItemsCart();
-        dispatch(setAddToCart(data));
-        const notifications = await getAllNotifications();
-        dispatch(addAllNotifications(notifications));
+
         return true;
     } catch (err) {
         dispatch(setErrorUser(err.message));

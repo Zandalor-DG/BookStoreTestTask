@@ -1,4 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNullOpenNotification } from '../../../../store/notificationStore/actionCreatedNotification';
+import { StateReduxType } from '../../../../store/reducers';
 
 export interface ICommentWrapper {
     id: number | undefined;
@@ -9,6 +12,9 @@ export interface ICommentWrapper {
 const CommentWrapper: React.FC<React.PropsWithChildren<ICommentWrapper>> = (
     props: React.PropsWithChildren<ICommentWrapper>,
 ) => {
+    const commentId = useSelector((state: StateReduxType) => state.notificationsState.openNotification);
+    const dispatch = useDispatch();
+
     const ref = useRef<HTMLParagraphElement>(null);
     useEffect(() => {
         if (props.id === props.replyId) {
@@ -18,7 +24,15 @@ const CommentWrapper: React.FC<React.PropsWithChildren<ICommentWrapper>> = (
             });
             props.setIdToReply(null);
         }
-    }, [props.replyId, props.id]);
+        if (commentId === props.id && ref.current) {
+            ref.current?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+            ref.current.style.backgroundColor = 'tomato';
+            dispatch(setNullOpenNotification());
+        }
+    }, [props.replyId, props.id, commentId]);
     return <p ref={ref}>{props.children}</p>;
 };
 

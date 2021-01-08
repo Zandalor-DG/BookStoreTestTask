@@ -7,6 +7,8 @@ import {
     ActionReadAllNotifications,
     ActionReadNotification,
     ActionSetErrorNotification,
+    ActionSetNullOpenNotification,
+    ActionSetOpenNotification,
     ActionTypeNotification,
 } from './actionTypeNotification';
 
@@ -15,9 +17,18 @@ export const addAllNotifications = (notifications: NotificationUser[]): ActionAd
     notifications,
 });
 
-export const AddOneNotification = (notification: NotificationUser): ActionAddOneNotification => ({
+export const addOneNotification = (notification: NotificationUser): ActionAddOneNotification => ({
     type: ActionTypeNotification.AddOneNotification,
     notification,
+});
+
+export const setOpenNotification = (openNotification: number): ActionSetOpenNotification => ({
+    type: ActionTypeNotification.SetOpenNotification,
+    openNotification,
+});
+
+export const setNullOpenNotification = (): ActionSetNullOpenNotification => ({
+    type: ActionTypeNotification.SetNullOpenNotification,
 });
 
 export const readNotification = (id: number): ActionReadNotification => ({

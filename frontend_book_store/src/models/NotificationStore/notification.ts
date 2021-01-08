@@ -5,4 +5,9 @@ export interface NotificationUser {
     type: string;
     payload: JSON;
     read: boolean;
+    Comment: {
+        CommentBook: {
+            id: number;
+        };
+    };
 }

@@ -18,6 +18,9 @@ const NotificationDropdown: React.FC<INotificationDropDown> = ({ notifications }
     const onReadNotification = (notificationId: number) => {
         dispatch(readNotificationThunk(notificationId));
     };
+    // const onOpenNotification = () => {
+    //     dispatch()
+    // }
 
     return (
         <div className={css.dropdown__content}>

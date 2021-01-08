@@ -193,7 +193,7 @@ exports.commentBook = async (req, res, next) => {
       throw new Error('Not comment or bookId');
     }
 
-    const commentId = await models.Comment.create({
+    const newComment = await models.Comment.create({
       userId,
       comment,
       replyId: !replyId ? null : replyId,
@@ -201,7 +201,11 @@ exports.commentBook = async (req, res, next) => {
       bookId,
     });
 
-    req.payload = commentId;
+    const replyUserId = await models.Comment.findOne({
+      where: { id: replyId },
+    });
+
+    req.payload = { replyUserId: replyUserId.userId, commentId: newComment.id };
 
     const comments = await models.Comment.findAll({
       where: { bookId: bookId },
@@ -238,7 +242,7 @@ exports.commentBook = async (req, res, next) => {
 
     res
       .status(200)
-      .json({ erro: false, messge: 'create comment', commentAndNotification });
+      .json({ error: false, messge: 'create comment', commentAndNotification });
   } catch (err) {
     res.status(400).json({ error: true, message: err.message });
   }
