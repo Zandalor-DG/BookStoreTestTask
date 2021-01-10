@@ -19,6 +19,9 @@ const NotificationText: React.FC<INotificationContent> = ({
     const content = notifications?.map((item) => {
         return (
             <React.Fragment key={item.id}>
+                <div className={css.dropdown__borderTop}>
+                    <div className={css.dropdown__line}></div>
+                </div>
                 <div className={css.dropdown__link}>
                     <span className={css.link__title}>
                         {item.type}

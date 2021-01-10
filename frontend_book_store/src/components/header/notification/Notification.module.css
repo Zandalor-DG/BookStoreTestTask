@@ -94,3 +94,15 @@
     align-items: flex-end;
     cursor: pointer;
 }
+.dropdown__borderTop {
+    width: 100%;
+    height: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdown__line {
+    background-color: gray;
+    width: 90%;
+    height: 2px;
+}

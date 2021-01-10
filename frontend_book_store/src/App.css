@@ -4,11 +4,6 @@
     margin: 0;
     padding: 0;
 }
-.code-box-demo {
-    /* display: flex;
-    flex-flow: column;
-    text-align: center; */
-}
 .ant-layout {
     display: flex;
     min-height: 100vh;
