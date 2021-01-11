@@ -12,7 +12,6 @@ const notificationRouter = require('./routes/notificationsRouter');
 
 const app = express();
 const http = require('http');
-const { getAllNotifications } = require('./controllers/notificationController');
 const server = http.createServer(app);
 const io = require('socket.io')(server, {
   cors: {
